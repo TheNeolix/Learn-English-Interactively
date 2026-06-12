@@ -1,0 +1,12 @@
+{
+  "description": "Olvasd el az állítást, és döntsd el, hogy igaz vagy hamis!",
+  "items": [
+    { "question": "\"I am\" – Ez helyes: \"Én vagyok\".", "answer": true, "explanation": "Helyes! Az \"I am\" valóban azt jelenti: \"Én vagyok\"." },
+    { "question": "\"She are happy.\" – Ez helyes angol mondat.", "answer": false, "explanation": "Helytelen! A helyes forma: \"She is happy.\" – Egyes szám harmadik személlyel \"is\"-t használunk." },
+    { "question": "\"They is at home.\" – Ez helyes angol mondat.", "answer": false, "explanation": "Helytelen! A helyes forma: \"They are at home.\" – Többes számban \"are\"-t használunk." },
+    { "question": "\"We are students.\" – Ez helyes angol mondat.", "answer": true, "explanation": "Helyes! Többes szám első személlyel az \"are\"-t használjuk." },
+    { "question": "Az \"is\" alakot az \"I\" (én) névmással használjuk.", "answer": false, "explanation": "Helytelen! Az \"I\" névmással az \"am\" alakot használjuk: \"I am\"." },
+    { "question": "\"You is tired.\" – Ez helyes angol mondat.", "answer": false, "explanation": "Helytelen! A helyes forma: \"You are tired.\"" },
+    { "question": "A \"to be\" igének jelen időben három alakja van: am, is, are.", "answer": true, "explanation": "Helyes! Ez a három alak: I am, he/she/it is, you/we/they are." }
+  ]
+}

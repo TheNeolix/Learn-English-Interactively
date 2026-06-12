@@ -1,0 +1,15 @@
+{
+  "description": "Rakd a szavakat a megfelelő sorrendbe, hogy helyes angol mondatokat kapj. Kattints a szavakra a sorrend kialakításához!",
+  "items": [
+    { "scrambled": ["I", "am", "a", "student"], "correct": "I am a student.", "hu": "Én diák vagyok." },
+    { "scrambled": ["They", "are", "not", "tired"], "correct": "They are not tired.", "hu": "Ők nem fáradtak." },
+    { "scrambled": ["He", "is", "my", "father"], "correct": "He is my father.", "hu": "Ő az apám." },
+    { "scrambled": ["We", "are", "in", "the", "room"], "correct": "We are in the room.", "hu": "A szobában vagyunk." },
+    { "scrambled": ["She", "wants", "an", "apple"], "correct": "She wants an apple.", "hu": "Ő egy almát kér." },
+    { "scrambled": ["This", "car", "is", "green"], "correct": "This car is green.", "hu": "Ez az autó zöld." },
+    { "scrambled": ["Where", "is", "the", "teacher"], "correct": "Where is the teacher?", "hu": "Hol van a tanár?" },
+    { "scrambled": ["I", "like", "cold", "milk"], "correct": "I like cold milk.", "hu": "Szeretem a hideg tejet." },
+    { "scrambled": ["Is", "that", "house", "big"], "correct": "Is that house big?", "hu": "Nagy az a ház?" },
+    { "scrambled": ["The", "cat", "is", "on", "the", "bed"], "correct": "The cat is on the bed.", "hu": "A macska az ágyon van." }
+  ]
+}

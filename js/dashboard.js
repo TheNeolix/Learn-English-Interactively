@@ -729,7 +729,7 @@ async function renderWordsTemplate(workspace, data, moduleData) {
     } else {
         try {
             // Append version parameter to bust browser caches for static content updates
-            const response = await fetch(source + "?v=1.0.3");
+            const response = await fetch(source + "?v=1.0.4");
             if (!response.ok) throw new Error("HTTP error " + response.status);
             items = await response.json();
             vocabCache[source] = items;
@@ -779,8 +779,39 @@ async function renderWordsTemplate(workspace, data, moduleData) {
 }
 
 // LYUKAS MONDATOK (Fill in the blanks) — Input fields
-function renderFillBlanksTemplate(workspace, data) {
-    if (data.items.length === 0) {
+async function renderFillBlanksTemplate(workspace, data) {
+    const source = data.dataSource;
+    if (source && !data.items) {
+        if (vocabCache[source]) {
+            const cached = vocabCache[source];
+            data.items = cached.items || [];
+            if (cached.description) data.description = cached.description;
+        } else {
+            workspace.innerHTML = `
+                <div class="empty-state-section" style="min-height: 200px;">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⏳</div>
+                        <h2>Feladatok betöltése...</h2>
+                        <div class="empty-state-pulse"></div>
+                    </div>
+                </div>
+            `;
+            try {
+                const response = await fetch(source + "?v=1.0.4");
+                if (!response.ok) throw new Error("HTTP error " + response.status);
+                const fetched = await response.json();
+                vocabCache[source] = fetched;
+                data.items = fetched.items || [];
+                if (fetched.description) data.description = fetched.description;
+            } catch (error) {
+                console.error("Hiba a feladatok betöltésekor:", error);
+                workspace.innerHTML = renderEmptyState("Lyukas mondatok", "Nem sikerült betölteni a feladatokat a szerverről. Kérjük, próbáld újra később!");
+                return;
+            }
+        }
+    }
+
+    if (!data.items || data.items.length === 0) {
         workspace.innerHTML = renderEmptyState("Lyukas mondatok", "Ehhez a leckéhez hamarosan feltöltjük a feladatokat.");
         return;
     }
@@ -815,8 +846,39 @@ function renderFillBlanksTemplate(workspace, data) {
 }
 
 // SZÓRENDEZÉS (Word Ordering) — Draggable word chips
-function renderWordOrderTemplate(workspace, data) {
-    if (data.items.length === 0) {
+async function renderWordOrderTemplate(workspace, data) {
+    const source = data.dataSource;
+    if (source && !data.items) {
+        if (vocabCache[source]) {
+            const cached = vocabCache[source];
+            data.items = cached.items || [];
+            if (cached.description) data.description = cached.description;
+        } else {
+            workspace.innerHTML = `
+                <div class="empty-state-section" style="min-height: 200px;">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⏳</div>
+                        <h2>Feladatok betöltése...</h2>
+                        <div class="empty-state-pulse"></div>
+                    </div>
+                </div>
+            `;
+            try {
+                const response = await fetch(source + "?v=1.0.4");
+                if (!response.ok) throw new Error("HTTP error " + response.status);
+                const fetched = await response.json();
+                vocabCache[source] = fetched;
+                data.items = fetched.items || [];
+                if (fetched.description) data.description = fetched.description;
+            } catch (error) {
+                console.error("Hiba a feladatok betöltésekor:", error);
+                workspace.innerHTML = renderEmptyState("Szórendezés", "Nem sikerült betölteni a feladatokat a szerverről. Kérjük, próbáld újra később!");
+                return;
+            }
+        }
+    }
+
+    if (!data.items || data.items.length === 0) {
         workspace.innerHTML = renderEmptyState("Szórendezés", "Ehhez a leckéhez hamarosan feltöltjük a feladatokat.");
         return;
     }
@@ -824,7 +886,8 @@ function renderWordOrderTemplate(workspace, data) {
     let questionsHtml = "";
     data.items.forEach((item, i) => {
         // Shuffle the scrambled array for display
-        const shuffled = [...item.scrambled].sort(() => Math.random() - 0.5);
+        const scrambledArray = item.scrambled || [];
+        const shuffled = [...scrambledArray].sort(() => Math.random() - 0.5);
         const chipsHtml = shuffled.map(word => 
             `<button class="word-chip" onclick="selectWordChip(this, ${i})">${word}</button>`
         ).join("");
@@ -852,7 +915,7 @@ function renderWordOrderTemplate(workspace, data) {
         <div class="lesson-view">
             <section class="practice-box">
                 <h2>🔀 Szórendezés – Rakd össze a mondatot!</h2>
-                <p class="section-instruction">Kattints a szavakra a helyes sorrendben, hogy kiadják az angol mondatot.</p>
+                <p class="section-instruction">${data.description || 'Kattints a szavakra a helyes sorrendben, hogy kiadják az angol mondatot.'}</p>
                 <div class="word-order-list">${questionsHtml}</div>
             </section>
             ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, true)}
@@ -861,8 +924,39 @@ function renderWordOrderTemplate(workspace, data) {
 }
 
 // IGAZ VAGY HAMIS (True or False) — Two-button quiz
-function renderTrueFalseTemplate(workspace, data) {
-    if (data.items.length === 0) {
+async function renderTrueFalseTemplate(workspace, data) {
+    const source = data.dataSource;
+    if (source && !data.items) {
+        if (vocabCache[source]) {
+            const cached = vocabCache[source];
+            data.items = cached.items || [];
+            if (cached.description) data.description = cached.description;
+        } else {
+            workspace.innerHTML = `
+                <div class="empty-state-section" style="min-height: 200px;">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⏳</div>
+                        <h2>Feladatok betöltése...</h2>
+                        <div class="empty-state-pulse"></div>
+                    </div>
+                </div>
+            `;
+            try {
+                const response = await fetch(source + "?v=1.0.4");
+                if (!response.ok) throw new Error("HTTP error " + response.status);
+                const fetched = await response.json();
+                vocabCache[source] = fetched;
+                data.items = fetched.items || [];
+                if (fetched.description) data.description = fetched.description;
+            } catch (error) {
+                console.error("Hiba a feladatok betöltésekor:", error);
+                workspace.innerHTML = renderEmptyState("Igaz vagy Hamis", "Nem sikerült betölteni a feladatokat a szerverről. Kérjük, próbáld újra később!");
+                return;
+            }
+        }
+    }
+
+    if (!data.items || data.items.length === 0) {
         workspace.innerHTML = renderEmptyState("Igaz vagy Hamis", "Ehhez a leckéhez hamarosan feltöltjük a feladatokat.");
         return;
     }
@@ -889,7 +983,7 @@ function renderTrueFalseTemplate(workspace, data) {
         <div class="lesson-view">
             <section class="practice-box">
                 <h2>✅ Igaz vagy Hamis – Döntsd el!</h2>
-                <p class="section-instruction">Olvasd el az állítást, és döntsd el, hogy igaz vagy hamis!</p>
+                <p class="section-instruction">${data.description || 'Olvasd el az állítást, és döntsd el, hogy igaz vagy hamis!'}</p>
                 <div class="quiz-list">${quizHtml}</div>
             </section>
             ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, true)}
@@ -898,8 +992,39 @@ function renderTrueFalseTemplate(workspace, data) {
 }
 
 // FEJEZET VIZSGA (Section Exam) — Mixed question types
-function renderSectionExamTemplate(workspace, data) {
-    if (data.items.length === 0) {
+async function renderSectionExamTemplate(workspace, data) {
+    const source = data.dataSource;
+    if (source && !data.items) {
+        if (vocabCache[source]) {
+            const cached = vocabCache[source];
+            data.items = cached.items || [];
+            if (cached.description) data.description = cached.description;
+        } else {
+            workspace.innerHTML = `
+                <div class="empty-state-section" style="min-height: 200px;">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⏳</div>
+                        <h2>Vizsga betöltése...</h2>
+                        <div class="empty-state-pulse"></div>
+                    </div>
+                </div>
+            `;
+            try {
+                const response = await fetch(source + "?v=1.0.4");
+                if (!response.ok) throw new Error("HTTP error " + response.status);
+                const fetched = await response.json();
+                vocabCache[source] = fetched;
+                data.items = fetched.items || [];
+                if (fetched.description) data.description = fetched.description;
+            } catch (error) {
+                console.error("Hiba a vizsga betöltésekor:", error);
+                workspace.innerHTML = renderEmptyState("Fejezet vizsga", "Nem sikerült betölteni a vizsgát a szerverről. Kérjük, próbáld újra később!");
+                return;
+            }
+        }
+    }
+
+    if (!data.items || data.items.length === 0) {
         workspace.innerHTML = renderEmptyState("Fejezet vizsga", "A vizsga hamarosan elérhető lesz. Addig gyakorolj a többi feladattal!");
         return;
     }
@@ -925,7 +1050,8 @@ function renderSectionExamTemplate(workspace, data) {
                 </div>
             `;
         } else if (item.type === "order") {
-            const shuffled = [...item.scrambled].sort(() => Math.random() - 0.5);
+            const scrambledArray = item.scrambled || [];
+            const shuffled = [...scrambledArray].sort(() => Math.random() - 0.5);
             const chipsHtml = shuffled.map(word =>
                 `<button class="word-chip" onclick="selectWordChip(this, ${i}, true)">${word}</button>`
             ).join("");
@@ -951,7 +1077,7 @@ function renderSectionExamTemplate(workspace, data) {
             <section class="practice-box exam-section">
                 <div class="exam-header">
                     <h2>🏆 Fejezet vizsga</h2>
-                    <p class="section-instruction">Ez a fejezet összefoglaló vizsgája. Válaszolj az összes kérdésre, majd nyomj az értékelésre!</p>
+                    <p class="section-instruction">${data.description || 'Ez a fejezet összefoglaló vizsgája. Válaszolj az összes kérdésre, majd nyomj az értékelésre!'}</p>
                 </div>
                 <div class="exam-list">${questionsHtml}</div>
                 <div class="exam-footer">
@@ -1066,9 +1192,13 @@ function checkWordOrder(index) {
     const correctAnswer = answerZone.getAttribute("data-correct");
 
     const placedChips = answerZone.querySelectorAll(".word-chip.placed");
-    const userAnswer = Array.from(placedChips).map(c => c.textContent).join(" ") + ".";
+    const userAnswer = Array.from(placedChips).map(c => c.textContent).join(" ");
 
-    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+    // Normalize both user input and correct answer (remove trailing punctuation & collapse whitespace)
+    const cleanUser = userAnswer.toLowerCase().replace(/[.?!,]/g, "").replace(/\s+/g, " ").trim();
+    const cleanCorrect = correctAnswer.toLowerCase().replace(/[.?!,]/g, "").replace(/\s+/g, " ").trim();
+
+    if (cleanUser === cleanCorrect) {
         feedback.innerHTML = `✓ Helyes! A mondat: "${correctAnswer}"`;
         feedback.className = "quiz-feedback correct";
     } else {
@@ -1145,9 +1275,13 @@ function gradeExam() {
             const answerZone = document.getElementById(`answer-zone-${i}`);
             const correctAnswer = answerZone?.getAttribute("data-correct") || "";
             const placedChips = answerZone?.querySelectorAll(".word-chip.placed") || [];
-            const userAnswer = Array.from(placedChips).map(c => c.textContent).join(" ") + ".";
+            const userAnswer = Array.from(placedChips).map(c => c.textContent).join(" ");
 
-            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+            // Normalize both user input and correct answer (remove trailing punctuation & collapse whitespace)
+            const cleanUser = userAnswer.toLowerCase().replace(/[.?!,]/g, "").replace(/\s+/g, " ").trim();
+            const cleanCorrect = correctAnswer.toLowerCase().replace(/[.?!,]/g, "").replace(/\s+/g, " ").trim();
+
+            if (cleanUser === cleanCorrect) {
                 correct++;
                 feedback.innerHTML = `✓ Helyes!`;
                 feedback.className = "quiz-feedback correct";

@@ -1,0 +1,15 @@
+{
+  "description": "A vizsga kitöltésével mérheted le a fejezetben szerzett tudásod. Legalább 50%-ot kell elérned a sikeres vizsgához.",
+  "items": [
+    { "question": "I ___ a student.", "type": "fill", "answer": "am" },
+    { "question": "\"He are happy\" – ez helyes?", "type": "tf", "answer": false, "explanation": "A helyes: \"He is happy.\"" },
+    { "question": "She ___ my sister.", "type": "fill", "answer": "is" },
+    { "question": "Rendezd: \"are / We / tired\"", "type": "order", "correct": "We are tired.", "scrambled": ["are", "We", "tired"] },
+    { "question": "They ___ at school.", "type": "fill", "answer": "are" },
+    { "question": "\"It am cold\" – ez helyes mondat?", "type": "tf", "answer": false, "explanation": "A helyes: \"It is cold.\"" },
+    { "question": "You ___ very kind.", "type": "fill", "answer": "are" },
+    { "question": "Rendezd: \"is / He / tall / very\"", "type": "order", "correct": "He is very tall.", "scrambled": ["is", "He", "tall", "very"] },
+    { "question": "\"We are happy\" – ez helyes?", "type": "tf", "answer": true, "explanation": "Helyes! Többes szám első személlyel az \"are\"-t használjuk." },
+    { "question": "It ___ a beautiful day.", "type": "fill", "answer": "is" }
+  ]
+}
