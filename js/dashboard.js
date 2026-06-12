@@ -791,11 +791,11 @@ function renderFillBlanksTemplate(workspace, data) {
             <div class="fill-blank-item" data-index="${i}" style="animation-delay: ${i * 0.06}s">
                 <p class="fill-blank-sentence">
                     <span class="question-number">${i + 1}.</span>
-                    ${item.sentence.replace("___", `<input type="text" class="fill-blank-input" id="fill-input-${i}" placeholder="..." autocomplete="off">`) }
+                    ${item.sentence.replace(/_{3,}/, `<input type="text" class="fill-blank-input" id="fill-input-${i}" placeholder="..." autocomplete="off">`) }
                     <span class="fill-hint">${item.hint}</span>
                 </p>
                 <div class="fill-blank-actions">
-                    <button class="btn btn-check" onclick="checkFillBlank(${i}, '${item.answer}')">Ellenőrzés</button>
+                    <button class="btn btn-check" onclick="checkFillBlank(${i})">Ellenőrzés</button>
                 </div>
                 <div class="quiz-feedback" id="fill-feedback-${i}"></div>
             </div>
@@ -806,7 +806,7 @@ function renderFillBlanksTemplate(workspace, data) {
         <div class="lesson-view">
             <section class="practice-box">
                 <h2>✏️ Lyukas mondatok – Töltsd ki a hiányzó szót!</h2>
-                <p class="section-instruction">Írd be a megfelelő alakját a "to be" igének (am, is, are) a hiányzó helyre.</p>
+                <p class="section-instruction">${data.description || 'Írd be a megfelelő alakját a "to be" igének (am, is, are) a hiányzó helyre.'}</p>
                 <div class="fill-blanks-list">${questionsHtml}</div>
             </section>
             ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, true)}
@@ -910,7 +910,7 @@ function renderSectionExamTemplate(workspace, data) {
 
         if (item.type === "fill") {
             questionContentHtml = `
-                <p class="exam-question"><span class="question-number">${i + 1}.</span> ${item.question.replace("___", `<input type="text" class="fill-blank-input exam-input" id="exam-input-${i}" placeholder="..." autocomplete="off">`)}</p>
+                <p class="exam-question"><span class="question-number">${i + 1}.</span> ${item.question.replace(/_{3,}/, `<input type="text" class="fill-blank-input exam-input" id="exam-input-${i}" placeholder="..." autocomplete="off">`)}</p>
             `;
         } else if (item.type === "tf") {
             questionContentHtml = `
@@ -985,18 +985,25 @@ function renderEmptyState(title, message) {
 // =====================================================================
 
 // Fill in the blanks checker
-function checkFillBlank(index, correctAnswer) {
+function checkFillBlank(index) {
+    const data = learningContent[currentLevel][currentSection].subsections.fillBlanks;
+    const item = data.items[index];
+    const correctAnswer = item.answer;
     const input = document.getElementById(`fill-input-${index}`);
     const feedback = document.getElementById(`fill-feedback-${index}`);
     const userAnswer = input.value.trim().toLowerCase();
 
-    if (userAnswer === correctAnswer.toLowerCase()) {
+    // Support multiple options split by '/' (e.g. "isn't/is not")
+    const possibleAnswers = correctAnswer.toLowerCase().split("/").map(ans => ans.trim());
+
+    if (possibleAnswers.includes(userAnswer)) {
         feedback.innerHTML = `✓ Helyes válasz! Ügyes vagy!`;
         feedback.className = "quiz-feedback correct";
         input.classList.add("input-correct");
         input.classList.remove("input-incorrect");
     } else {
-        feedback.innerHTML = `✗ Nem jó. A helyes válasz: <strong>${correctAnswer}</strong>`;
+        const displayAnswer = correctAnswer.replace(/\//g, " / ");
+        feedback.innerHTML = `✗ Nem jó. A helyes válasz: <strong>${displayAnswer}</strong>`;
         feedback.className = "quiz-feedback incorrect";
         input.classList.add("input-incorrect");
         input.classList.remove("input-correct");
@@ -1118,13 +1125,16 @@ function gradeExam() {
         if (item.type === "fill") {
             const input = document.getElementById(`exam-input-${i}`);
             const userAnswer = input ? input.value.trim().toLowerCase() : "";
-            if (userAnswer === item.answer.toLowerCase()) {
+            const possibleAnswers = item.answer.toLowerCase().split("/").map(ans => ans.trim());
+
+            if (possibleAnswers.includes(userAnswer)) {
                 correct++;
                 feedback.innerHTML = `✓ Helyes!`;
                 feedback.className = "quiz-feedback correct";
                 if (input) { input.classList.add("input-correct"); input.classList.remove("input-incorrect"); }
             } else {
-                feedback.innerHTML = `✗ A helyes válasz: <strong>${item.answer}</strong>`;
+                const displayAnswer = item.answer.replace(/\//g, " / ");
+                feedback.innerHTML = `✗ A helyes válasz: <strong>${displayAnswer}</strong>`;
                 feedback.className = "quiz-feedback incorrect";
                 if (input) { input.classList.add("input-incorrect"); input.classList.remove("input-correct"); }
             }

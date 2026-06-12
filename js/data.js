@@ -22,15 +22,18 @@ const learningContent = {
                     title: "Lyukas mondatok",
                     icon: "✏️",
                     type: "fill_blanks",
+                    description: "Egészítsd ki a mondatokat a létige (am, is, are) megfelelő alakjával. A (+) jel a kijelentő, a (-) jel pedig a tagadó formát jelöli (pl. am not, isn't, aren't).",
                     items: [
-                        { sentence: "I ___ a student.", answer: "am", hint: "(én vagyok)" },
-                        { sentence: "She ___ very tall.", answer: "is", hint: "(ő magas)" },
-                        { sentence: "We ___ happy today.", answer: "are", hint: "(mi boldogak vagyunk)" },
-                        { sentence: "He ___ my brother.", answer: "is", hint: "(ő a testvérem)" },
-                        { sentence: "They ___ at school.", answer: "are", hint: "(ők iskolában vannak)" },
-                        { sentence: "You ___ a good friend.", answer: "are", hint: "(te jó barát vagy)" },
-                        { sentence: "It ___ a beautiful day.", answer: "is", hint: "(szép nap van)" },
-                        { sentence: "I ___ not tired.", answer: "am", hint: "(nem vagyok fáradt)" }
+                        { sentence: "I ______ a student.", answer: "am", hint: "(+)" },
+                        { sentence: "You ______ tired today.", answer: "are", hint: "(+)" },
+                        { sentence: "He ______ a doctor. He is a teacher.", answer: "isn't/is not", hint: "(-)" },
+                        { sentence: "She ______ my mother.", answer: "is", hint: "(+)" },
+                        { sentence: "It ______ a big house. It is small.", answer: "isn't/is not", hint: "(-)" },
+                        { sentence: "We ______ in the kitchen.", answer: "are", hint: "(+)" },
+                        { sentence: "They ______ my friends.", answer: "are", hint: "(+)" },
+                        { sentence: "I ______ hungry. I want an apple.", answer: "am", hint: "(+)" },
+                        { sentence: "The cat ______ on the table. It is under the chair.", answer: "isn't/is not", hint: "(-)" },
+                        { sentence: "The children ______ happy today.", answer: "are", hint: "(+)" }
                     ]
                 },
                 wordOrder: {
