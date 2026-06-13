@@ -88,5 +88,93 @@ const learningContent = {
                 }
             }
         }
+    },
+    B1: {
+        ToBe: {
+            title: "Első lecke: A \"Lenni\" Ige (The Verb \"TO BE\")",
+            explanation: "Az A2 szinten a \"to be\" ige haladó használatát tanuljuk meg, beleértve a múlt idejű alakokat (was/were) és a tagadó formákat.",
+            subsections: {
+                explanation: {
+                    title: "Magyarázat",
+                    icon: "📚",
+                    type: "explanation",
+                    content: "Az A2 szinten a \"to be\" ige haladó használatát tanuljuk meg, beleértve a múlt idejű alakokat (<strong>was/were</strong>) és a tagadó formákat."
+                },
+                words: {
+                    title: "Szavak",
+                    icon: "📖",
+                    type: "words",
+                    items: []
+                },
+                fillBlanks: {
+                    title: "Lyukas mondatok",
+                    icon: "✏️",
+                    type: "fill_blanks",
+                    items: []
+                },
+                wordOrder: {
+                    title: "Szórendezés",
+                    icon: "🔀",
+                    type: "word_order",
+                    items: []
+                },
+                trueFalse: {
+                    title: "Igaz vagy Hamis",
+                    icon: "✅",
+                    type: "true_false",
+                    items: []
+                },
+                sectionExam: {
+                    title: "Fejezet vizsga",
+                    icon: "🏆",
+                    type: "section_exam",
+                    items: []
+                }
+            }
+        }
+    },
+    B2: {
+        ToBe: {
+            title: "Első lecke: A \"Lenni\" Ige (The Verb \"TO BE\")",
+            explanation: "Az A2 szinten a \"to be\" ige haladó használatát tanuljuk meg, beleértve a múlt idejű alakokat (was/were) és a tagadó formákat.",
+            subsections: {
+                explanation: {
+                    title: "Magyarázat",
+                    icon: "📚",
+                    type: "explanation",
+                    content: "Az A2 szinten a \"to be\" ige haladó használatát tanuljuk meg, beleértve a múlt idejű alakokat (<strong>was/were</strong>) és a tagadó formákat."
+                },
+                words: {
+                    title: "Szavak",
+                    icon: "📖",
+                    type: "words",
+                    items: []
+                },
+                fillBlanks: {
+                    title: "Lyukas mondatok",
+                    icon: "✏️",
+                    type: "fill_blanks",
+                    items: []
+                },
+                wordOrder: {
+                    title: "Szórendezés",
+                    icon: "🔀",
+                    type: "word_order",
+                    items: []
+                },
+                trueFalse: {
+                    title: "Igaz vagy Hamis",
+                    icon: "✅",
+                    type: "true_false",
+                    items: []
+                },
+                sectionExam: {
+                    title: "Fejezet vizsga",
+                    icon: "🏆",
+                    type: "section_exam",
+                    items: []
+                }
+            }
+        }
     }
 };
