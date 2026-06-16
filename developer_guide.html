@@ -1,0 +1,2708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeolixStudio Learn English - Developer Guide & Interactive Code Portal</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- PrismJS Dark Syntax Highlighting Theme -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Color System - Matching main application OKLCH colors */
+            --color-bg-base: oklch(0.15 0.01 260);
+            --color-bg-surface: oklch(0.2 0.02 260 / 0.6);
+            --color-text-main: oklch(0.95 0.01 260);
+            --color-text-muted: oklch(0.7 0.02 260);
+            
+            --color-accent-in: oklch(0.75 0.15 250);
+            --color-accent-on: oklch(0.75 0.18 310);
+            --color-accent-at: oklch(0.8 0.18 150);
+            
+            --color-success: oklch(0.75 0.2 150);
+            --color-error: oklch(0.65 0.2 25);
+            
+            --glass-border: 1px solid oklch(1 0 0 / 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --transition-base: 0.3s ease;
+        }
+
+        /* Global Resets */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-bg-base);
+            background-image: 
+                radial-gradient(circle at 10% 30%, oklch(0.25 0.05 260 / 0.35), transparent 30%),
+                radial-gradient(circle at 90% 70%, oklch(0.25 0.05 310 / 0.35), transparent 30%);
+            background-attachment: fixed;
+            color: var(--color-text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Title / Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--color-bg-surface);
+            border: var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--color-accent-in), var(--color-accent-on));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Codebase Architecture Banner */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .arch-card {
+            background: var(--color-bg-surface);
+            border: var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform var(--transition-base);
+        }
+
+        .arch-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-accent-in);
+        }
+
+        .arch-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-accent-in);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .arch-card p {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Control Panel (Search & Filters) */
+        .controls-panel {
+            background: var(--color-bg-surface);
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 1.2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--color-text-main);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color var(--transition-base), box-shadow var(--transition-base);
+        }
+
+        .search-input:focus {
+            border-color: var(--color-accent-in);
+            box-shadow: 0 0 10px oklch(0.75 0.15 250 / 0.3);
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            min-width: 80px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-text-muted);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .chip:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text-main);
+        }
+
+        .chip.active {
+            background: var(--color-accent-in);
+            border-color: var(--color-accent-in);
+            color: #000;
+            font-weight: 500;
+            box-shadow: 0 0 10px oklch(0.75 0.15 250 / 0.4);
+        }
+
+        .chip.active.purple {
+            background: var(--color-accent-on);
+            border-color: var(--color-accent-on);
+            box-shadow: 0 0 10px oklch(0.75 0.18 310 / 0.4);
+        }
+
+        /* Action Buttons */
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--color-accent-in);
+            color: var(--color-accent-in);
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .action-btn:hover {
+            background: var(--color-accent-in);
+            color: #000;
+            box-shadow: 0 0 10px var(--color-accent-in);
+        }
+
+        .stats-summary {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Accordion Cards */
+        .functions-list {
+            margin-top: 2rem;
+        }
+
+        .function-card {
+            background: var(--color-bg-surface);
+            border: var(--glass-border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            overflow: hidden;
+            transition: border-color var(--transition-base), box-shadow var(--transition-base);
+        }
+
+        .function-card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .function-card.open {
+            border-color: var(--color-accent-in);
+            box-shadow: 0 0 15px oklch(0.75 0.15 250 / 0.25);
+        }
+
+        /* Accordion Header */
+        .function-header {
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .function-title-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .function-name {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-file {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text-main);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: monospace;
+        }
+
+        .badge-module {
+            background: oklch(0.75 0.15 250 / 0.15);
+            border: 1px solid var(--color-accent-in);
+            color: var(--color-accent-in);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .arrow-icon {
+            font-size: 1.2rem;
+            color: var(--color-text-muted);
+            transition: transform var(--transition-base);
+        }
+
+        .function-card.open .arrow-icon {
+            transform: rotate(180deg);
+            color: var(--color-accent-in);
+        }
+
+        /* Accordion Body */
+        .function-body {
+            display: none;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .function-card.open .function-body {
+            display: block;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.2rem 0;
+        }
+
+        .meta-item h4 {
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-accent-on);
+            margin-bottom: 0.4rem;
+        }
+
+        .meta-item p {
+            font-size: 0.95rem;
+            color: var(--color-text-main);
+        }
+
+        /* Tables for params & returns */
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+        }
+
+        .doc-table th, .doc-table td {
+            text-align: left;
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .doc-table th {
+            color: var(--color-text-muted);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .doc-table td.param-name {
+            font-family: monospace;
+            color: var(--color-accent-in);
+            font-weight: 600;
+        }
+
+        .doc-table td.param-type {
+            font-family: monospace;
+            color: var(--color-accent-on);
+        }
+
+        /* Code Block Container */
+        .code-container {
+            position: relative;
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .code-header {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-copy {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--color-text-muted);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            font-size: 0.75rem;
+        }
+
+        .btn-copy:hover {
+            color: var(--color-text-main);
+            border-color: var(--color-accent-in);
+        }
+
+        /* Adjust Prism background to match custom glass base */
+        pre[class*="language-"] {
+            margin: 0 !important;
+            padding: 1.2rem !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            font-size: 0.85rem !important;
+            line-height: 1.5 !important;
+        }
+
+        /* Architectural Connections Overview */
+        .overview-section {
+            background: var(--color-bg-surface);
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .overview-section h2 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            color: var(--color-accent-in);
+            margin-bottom: 1rem;
+        }
+
+        .overview-section p {
+            margin-bottom: 1.2rem;
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        .flow-diagram {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: monospace;
+            color: var(--color-accent-on);
+            white-space: pre-wrap;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 1.5rem 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--color-text-muted);
+            background: var(--color-bg-surface);
+            border: var(--glass-border);
+            border-radius: 12px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <header>
+        <h1>NeolixStudio Learn English</h1>
+        <div class="subtitle">Interactive Codebase Portal & Function Documentation</div>
+        <p style="font-size: 0.95rem; color: var(--color-text-muted); max-width: 800px; margin: 0 auto;">
+            This developer guide is designed for onboarding and reference. Use this portal to search, filter, and inspect JavaScript functions, their parameters, descriptions, and code blocks without interfering with the active application state.
+        </p>
+    </header>
+
+    <!-- Project Architecture Overview -->
+    <section class="overview-section">
+        <h2>App Architecture & Data Flow</h2>
+        <p>
+            The <strong>Learn English Interactively</strong> application is built as a client-side single-page dashboard (<code>dashboard.html</code>) connected to a landing page (<code>index.html</code>). It utilizes <strong>Supabase</strong> for user authentication, database persistence (saving XP, exercises, and lesson details in the <code>user_progress</code> table), and subscription management (role and tier checks in the <code>user_subscriptions</code> table).
+        </p>
+        <p>
+            The project also integrates a offline-friendly <strong>Guest Mode</strong> which falls back to LocalStorage (<code>neolix_guest_progress</code>) to persist guest results up to a 20% limit. When a guest registers a new account, guest data is migrated dynamically to Supabase user metadata during sign-up.
+        </p>
+
+        <div class="flow-diagram">
++-----------------------------------------------------------------------------------+
+|                                 USER INTERFACE                                    |
+|          [Landing Page: index.html]           |        [Learning Panel: dashboard.html]   |
++-----------------------------------------------------------------------------------+
+                               |                                           |
+                 Auth Modals & Level Selection                   Answering Quiz Questions
+                               |                                           |
+                               v                                           v
++-----------------------------------------------------------------------------------+
+|                             PROGRESS MANAGEMENT LOGIC                             |
+|          [landing.js]                                 [dashboard.js]              |
+|          - Supabase Auth Forms                        - ProgressManager           |
+|          - Guest Login redirection                    - Template DOM Rendering    |
+|          - Signup / Sign-in logic                     - Exercise grading handlers |
++-----------------------------------------------------------------------------------+
+            | (registered user session)                         | (guest session)
+            v                                                   v
++---------------------------------------+           +-------------------------------+
+|           SUPABASE DATABASE           |           |        LOCALSTORAGE CACHE     |
+|   - user_progress table               |           |  - Key:                       |
+|     (points, completed, scores)       |           |    "neolix_guest_progress"    |
+|   - user_subscriptions table          |           |                               |
+|     (role, subscription_tier)         |           |                               |
++---------------------------------------+           +-------------------------------+</div>
+    </section>
+
+    <!-- File Cards Info -->
+    <div class="arch-grid">
+        <div class="arch-card">
+            <h3>config.js</h3>
+            <p>Holds project-wide configuration constants. Exposes Supabase endpoint URL and public Anon credentials globally.</p>
+        </div>
+        <div class="arch-card">
+            <h3>data.js</h3>
+            <p>Acts as the curriculum definition. Defines lessons, subsections structure, titles, localizations (HU, EN, SK), icons, and data file sources.</p>
+        </div>
+        <div class="arch-card">
+            <h3>landing.js</h3>
+            <p>Manages user authentication modals, signup/registration tabs, guest entry redirection, and the Supabase signUp/signIn triggers.</p>
+        </div>
+        <div class="arch-card">
+            <h3>dashboard.js</h3>
+            <p>The core application script. Loads user progress, parses templates, handles stopwatch trackers, grades exercises, and saves points to DB.</p>
+        </div>
+        <div class="arch-card">
+            <h3>nav.js</h3>
+            <p>Implements interactive navigation drawer logic for tablets and mobile viewports, including Escape key accessibility hooks.</p>
+        </div>
+    </div>
+
+    <!-- Controls Panel -->
+    <section class="controls-panel">
+        <div class="search-wrapper">
+            <input type="text" class="search-input" id="search-box" placeholder="Search by function name, description, parameters, or keywords...">
+        </div>
+        
+        <div class="filter-group">
+            <div class="filter-label">Module:</div>
+            <div class="filter-chips" id="module-filters">
+                <span class="chip active" data-filter="all">All</span>
+                <span class="chip" data-filter="auth">Auth & Supabase</span>
+                <span class="chip" data-filter="progress">Haladás & Állapot</span>
+                <span class="chip" data-filter="render">Renderelő Motor</span>
+                <span class="chip" data-filter="interactive">Interaktív Mechanikák</span>
+                <span class="chip" data-filter="dom">DOM Segédek & UI</span>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <div class="filter-label">File:</div>
+            <div class="filter-chips" id="file-filters">
+                <span class="chip active purple" data-filter="all">All Files</span>
+                <span class="chip" data-filter="config.js">config.js</span>
+                <span class="chip" data-filter="data.js">data.js</span>
+                <span class="chip" data-filter="landing.js">landing.js</span>
+                <span class="chip" data-filter="dashboard.js">dashboard.js</span>
+                <span class="chip" data-filter="nav.js">nav.js</span>
+            </div>
+        </div>
+
+        <div class="actions-row">
+            <div class="stats-summary" id="stats-text">Total: 45 functions | Filtered: 45</div>
+            <div>
+                <button class="action-btn" onclick="toggleAllAccordions(true)">Expand All</button>
+                <button class="action-btn" onclick="toggleAllAccordions(false)" style="margin-left: 0.5rem;">Collapse All</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="empty-state">
+        <h3>No functions found matching your criteria!</h3>
+        <p>Try clearing your search query or choosing different filter chips.</p>
+    </div>
+
+    <!-- Functions List Container -->
+    <div class="functions-list" id="functions-container">
+
+        <!-- MODULE 1: AUTH & SUPABASE INTEGRATION -->
+        
+        <!-- landing.js - Supabase Client Init -->
+        <div class="function-card" data-module="auth" data-file="landing.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">Supabase Client Setup (Landing)</span>
+                    <span class="badge-file">landing.js</span>
+                    <span class="badge-module">Auth & Supabase</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Initializes the Supabase client library on the landing page, registers global session state change listeners (SIGNED_IN, SIGNED_OUT), and manages signup email verification redirects.</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Context & Details</h4>
+                        <p>If Supabase configuration details are not set in config.js, it gracefully catches the error and falls back to LocalStorage guest workflows.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>landing.js (Lines: 4 - 83)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">    // 1. Initialize Supabase Client
+    let supabaseClient = null;
+    if (typeof SUPABASE_URL !== "undefined" && typeof SUPABASE_ANON_KEY !== "undefined" && SUPABASE_URL !== "YOUR_SUPABASE_URL") {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+
+    // Track if user is currently logged in
+    let isUserLoggedIn = false;
+
+    // ... (UI updates based on session) ...
+
+    if (supabaseClient) {
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN') {
+                updateLandingUI(session);
+
+                // If they just arrived via an email verification link
+                if (window.location.hash.includes("type=signup") || window.location.hash.includes("access_token")) {
+                    const successModal = document.getElementById("verification-success-modal");
+                    if (successModal) {
+                        successModal.classList.add("is-active");
+                        successModal.setAttribute("aria-hidden", "false");
+                    }
+                    window.history.replaceState(null, null, window.location.pathname);
+                }
+            } else if (event === 'SIGNED_OUT') {
+                updateLandingUI(null);
+            }
+        });
+
+        // Initial check on page load
+        supabaseClient.auth.getSession().then(({ data: { session } }) => {
+            updateLandingUI(session);
+        });
+    } else {
+        updateLandingUI(null);
+    }</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- landing.js - updateLandingUI -->
+        <div class="function-card" data-module="auth" data-file="landing.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">updateLandingUI(session)</span>
+                    <span class="badge-file">landing.js</span>
+                    <span class="badge-module">Auth & Supabase</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Updates header elements on the landing page based on active authentication details (Supabase account session vs LocalStorage guest progress object).</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Parameters</h4>
+                        <table class="doc-table">
+                            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+                            <tr><td class="param-name">session</td><td class="param-type">Object | null</td><td>The Supabase authentication session payload.</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>landing.js (Lines: 13 - 54)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">    function updateLandingUI(session) {
+        const navLoginLink = document.querySelector('a[href="#login"]') || document.querySelector('a[href="dashboard.html"]');
+        const profileBtn = document.getElementById('user-profile-btn');
+        
+        if (session) {
+            isUserLoggedIn = true;
+            if (navLoginLink) {
+                navLoginLink.textContent = "Tanuló Felület";
+                navLoginLink.href = "dashboard.html";
+            }
+            if (profileBtn) {
+                const username = session.user?.user_metadata?.username || session.user?.email?.split('@')[0] || "Felhasználó";
+                profileBtn.textContent = `Szia, ${username}!`;
+                profileBtn.style.display = "inline-block";
+            }
+        } else {
+            // Check for active guest
+            const guestProgress = localStorage.getItem("neolix_guest_progress");
+            const isGuestLoggedOut = localStorage.getItem("guest_logged_out") === "true";
+            
+            if (guestProgress && !isGuestLoggedOut) {
+                isUserLoggedIn = true; // Functionally logged in for UI
+                if (navLoginLink) {
+                    navLoginLink.textContent = "Tanuló Felület";
+                    navLoginLink.href = "dashboard.html";
+                }
+                if (profileBtn) {
+                    profileBtn.textContent = `Szia, Vendég!`;
+                    profileBtn.style.display = "inline-block";
+                }
+            } else {
+                isUserLoggedIn = false;
+                if (navLoginLink) {
+                    navLoginLink.textContent = "Bejelentkezés / Regisztráció";
+                    navLoginLink.href = "#login";
+                }
+                if (profileBtn) {
+                    profileBtn.style.display = "none";
+                }
+            }
+        }
+    }</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- landing.js - Auth Form Handler -->
+        <div class="function-card" data-module="auth" data-file="landing.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">Auth Form Submit Handler</span>
+                    <span class="badge-file">landing.js</span>
+                    <span class="badge-module">Auth & Supabase</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Processes signup or login requests. Upon registration, it checks for active offline guest data (scores, points) and binds them inside the Supabase <code>signUp</code> options metadata container (guest_migration) to trigger data sync in the database.</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Core Steps</h4>
+                        <p>Validates text credentials, reads local progress configurations, sends registration/login request, handles auth errors, and pops open the confirmation modal dialog on success.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>landing.js (Lines: 233 - 343)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">    const authForm = document.getElementById("auth-form");
+    if (authForm) {
+        authForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("auth-email").value.trim();
+            const password = document.getElementById("auth-password").value;
+            const username = document.getElementById("auth-username").value.trim();
+            const ageRange = document.getElementById("auth-age").value;
+            const errorEl = document.getElementById("auth-error");
+
+            errorEl.textContent = "";
+
+            if (!supabaseClient) {
+                errorEl.textContent = "Supabase kapcsolat nincs beállítva a js/config.js-ben!";
+                return;
+            }
+
+            try {
+                if (isRegisterMode) {
+                    if (!username) {
+                        errorEl.textContent = "Kérjük, adj meg egy felhasználónevet!";
+                        return;
+                    }
+                    if (!ageRange) {
+                        errorEl.textContent = "Kérjük, válaszd ki az életkorodat!";
+                        return;
+                    }
+
+                    // Check for existing guest data to migrate
+                    const guestKey = "neolix_guest_progress";
+                    const guestDataRaw = localStorage.getItem(guestKey);
+                    let initialPoints = 0;
+                    let initialCompleted = {};
+                    let initialScores = {};
+
+                    if (guestDataRaw) {
+                        try {
+                            const guestData = JSON.parse(guestDataRaw);
+                            initialPoints = guestData.points || 0;
+                            initialCompleted = guestData.completed || {};
+                            initialScores = guestData.scores || {};
+                        } catch(e) {
+                            console.warn("Hiba a vendég adatok beolvasásakor", e);
+                        }
+                    }
+
+                    const { data, error } = await supabaseClient.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: {
+                                username: username,
+                                name: username,
+                                age_range: ageRange,
+                                guest_migration: {
+                                    points: initialPoints,
+                                    completed: initialCompleted,
+                                    scores: initialScores
+                                }
+                            }
+                        }
+                    });
+
+                    if (error) {
+                        errorEl.textContent = error.message;
+                        return;
+                    }
+
+                    const user = data.user;
+                    if (user) {
+                        if (data.session) {
+                            localStorage.setItem("selectedLevel", "A1");
+                            window.location.href = "dashboard.html";
+                        } else {
+                            const authModal = document.getElementById("login-modal");
+                            if (authModal) {
+                                authModal.classList.remove("is-active");
+                                authModal.setAttribute("aria-hidden", "true");
+                            }
+                            
+                            const verifyModal = document.getElementById("verify-email-modal");
+                            if (verifyModal) {
+                                verifyModal.classList.add("is-active");
+                                verifyModal.setAttribute("aria-hidden", "false");
+                            }
+                        }
+                    }
+                } else {
+                    // Sign-in flow
+                    const { data, error } = await supabaseClient.auth.signInWithPassword({
+                        email,
+                        password
+                    });
+
+                    if (error) {
+                        errorEl.textContent = error.message;
+                        return;
+                    }
+
+                    localStorage.setItem("selectedLevel", "A1");
+                    window.location.href = "dashboard.html";
+                }
+            } catch (err) {
+                console.error("Auth hiba:", err);
+                errorEl.textContent = "Hiba történt az azonosítás során.";
+            }
+        });
+    }</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - getLoggedInUser -->
+        <div class="function-card" data-module="auth" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">getLoggedInUser()</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Auth & Supabase</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Extracts the username of the logged-in session directly from the greeting message header using a RegExp match. Returns "Vendég" (Guest) as backup.</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Return Value</h4>
+                        <table class="doc-table">
+                            <tr><th>Type</th><th>Description</th></tr>
+                            <tr><td class="param-type">String</td><td>The username string or "Vendég".</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 307 - 317)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function getLoggedInUser() {
+    const welcomeSpan = document.querySelector(".user-welcome");
+    if (welcomeSpan) {
+        const text = welcomeSpan.textContent;
+        const match = text.match(/Szia,?\s+(.+)!/);
+        if (match && match[1]) {
+            return match[1].trim();
+        }
+    }
+    return "Vendég";
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - handlePasswordChange -->
+        <div class="function-card" data-module="auth" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">handlePasswordChange()</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Auth & Supabase</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Saves a new user password. Validates input constraints (length, mixed case letters, digits, special symbols) and forces re-authentication using the current password (signInWithPassword) before executing the Supabase <code>updateUser</code> method.</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Restrictions</h4>
+                        <p>If the user is in Guest Mode, the action returns early with a 403 Forbidden error.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 2723 - 2791)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">async function handlePasswordChange() {
+    const errorMsg = document.getElementById("password-error-msg");
+    const successMsg = document.getElementById("password-success-msg");
+    errorMsg.textContent = "";
+    successMsg.textContent = "";
+
+    const currentPassword = document.getElementById("current-password").value;
+    const newPassword = document.getElementById("new-password").value;
+    const repeatPassword = document.getElementById("repeat-password").value;
+
+    if (newPassword !== repeatPassword) {
+        errorMsg.textContent = "A két új jelszó nem egyezik meg!";
+        return;
+    }
+
+    // Regex Check: 8-16 chars, Lowercase, Uppercase, Number, Symbol
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,16}$/;
+    if (!passwordRegex.test(newPassword)) {
+        errorMsg.textContent = "A jelszónak 8-16 karakter hosszúnak kell lennie, és tartalmaznia kell kisbetűt, nagybetűt, számot és speciális karaktert.";
+        return;
+    }
+
+    let isGuest = true;
+    if (supabaseClient) {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if (user) isGuest = false;
+    }
+
+    if (isGuest) {
+        errorMsg.textContent = "Hiba 403 (Forbidden): Vendég munkamenet nem módosíthat jelszót.";
+        console.error("403 Forbidden: Password update rejected for guest session.");
+        return;
+    }
+
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    const email = user.email;
+
+    // Verify current password by signing in again before changing it
+    const { error: signInError } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: currentPassword
+    });
+
+    if (signInError) {
+        errorMsg.textContent = "A jelenlegi jelszó helytelen.";
+        return;
+    }
+
+    // Now update password
+    const btn = document.getElementById("btn-change-password");
+    btn.disabled = true;
+    btn.textContent = "Kérjük várj...";
+
+    const { error: updateError } = await supabaseClient.auth.updateUser({
+        password: newPassword
+    });
+
+    btn.disabled = false;
+    btn.textContent = "Mentés";
+
+    if (updateError) {
+        errorMsg.textContent = "Hiba történt a jelszó módosításakor. Próbáld újra.";
+    } else {
+        successMsg.textContent = "Jelszó sikeresen frissítve!";
+        document.getElementById("password-change-form").reset();
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- MODULE 2: STATE & PROGRESS MANAGEMENT -->
+
+        <!-- dashboard.js - LocalSavingsService -->
+        <div class="function-card" data-module="progress" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">LocalSavingsService</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Haladás & Állapot</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>A helper utility containing methods to save, load, and clear offline progress variables (points, scores) directly in LocalStorage under the key <code>neolix_guest_progress</code>.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 27 - 39)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">const LocalSavingsService = {
+    getKey: () => `neolix_guest_progress`,
+    save: (data) => {
+        localStorage.setItem(LocalSavingsService.getKey(), JSON.stringify(data));
+    },
+    load: () => {
+        const saved = localStorage.getItem(LocalSavingsService.getKey());
+        return saved ? JSON.parse(saved) : null;
+    },
+    clear: () => {
+        localStorage.removeItem(LocalSavingsService.getKey());
+    }
+};</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - ProgressManager -->
+        <div class="function-card" data-module="progress" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">ProgressManager</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Haladás & Állapot</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Abstraction wrapper for progress handling. Exposes default state properties, gets local storage payloads, and deletes guest data records upon user request.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 42 - 61)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">const ProgressManager = {
+    isGuest: true,
+    data: {
+        username: "Vendég",
+        points: 0,
+        completed: {},
+        scores: {},
+        role: "user",
+        subscription_tier: "free"
+    },
+    getGuestPayload: function() {
+        return LocalSavingsService.load();
+    },
+    clearGuestData: function() {
+        if (this.isGuest) {
+            LocalSavingsService.clear();
+            window.location.reload();
+        }
+    }
+};</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - initUserProgress -->
+        <div class="function-card" data-module="progress" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">initUserProgress()</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Haladás & Állapot</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Initializes user states on dashboard load. If Supabase client credentials are valid and a user session is active, it fetches progress variables from the <code>user_progress</code> table and checks the role and tier in the <code>user_subscriptions</code> table. If no DB row exists, it inserts a new progress entry, migrating guest information if detected. If the session is unauthenticated, it falls back to the local guest cache.</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Logout Handling</h4>
+                        <p>Replaces all active log-out buttons with clones that call the Supabase signOut trigger, remove session tokens, set <code>guest_logged_out</code>, and redirect back to the index view.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 320 - 470)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">async function initUserProgress() {
+    let loggedInUser = "Vendég";
+    let userId = null;
+
+    // Hook sign out to ALL logout buttons unconditionally at the START
+    const logoutBtns = document.querySelectorAll(".btn-logout");
+    logoutBtns.forEach(logoutBtn => {
+        logoutBtn.textContent = "Kijelentkezés";
+        const newLogoutBtn = logoutBtn.cloneNode(true);
+        logoutBtn.parentNode.replaceChild(newLogoutBtn, logoutBtn);
+        newLogoutBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
+            if (supabaseClient) {
+                try {
+                    await supabaseClient.auth.signOut();
+                } catch (err) {
+                    console.warn("SignOut API failed, proceeding with local wipe:", err);
+                }
+            }
+            // Force hard wipe of leftover Supabase auth tokens in LocalStorage
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('sb-') && key.includes('auth-token')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            localStorage.setItem("guest_logged_out", "true");
+            window.location.href = "index.html";
+        });
+    });
+
+    if (supabaseClient) {
+        try {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            if (user) {
+                loggedInUser = user.user_metadata?.username || user.email.split('@')[0];
+                userId = user.id;
+
+                const welcomeSpan = document.querySelector(".user-welcome");
+                if (welcomeSpan) {
+                    welcomeSpan.textContent = `Szia, ${loggedInUser}!`;
+                }
+
+                let { data: progressRow, error } = await supabaseClient
+                    .from('user_progress')
+                    .select('*')
+                    .eq('id', userId)
+                    .maybeSingle();
+
+                let { data: subRow, error: subError } = await supabaseClient
+                    .from('user_subscriptions')
+                    .select('role, subscription_tier')
+                    .eq('id', userId)
+                    .maybeSingle();
+
+                if (subError) {
+                    console.error("Supabase user_subscriptions Fetch error:", subError);
+                }
+
+                if (error) {
+                    console.error("Hiba a Supabase betöltésekor:", error);
+                } else if (progressRow) {
+                    ProgressManager.isGuest = false;
+                    LocalSavingsService.clear(); // Wipe guest data on success login
+                    userProgress = {
+                        username: loggedInUser,
+                        points: progressRow.points || 0,
+                        completed: progressRow.completed || {},
+                        scores: progressRow.scores || {},
+                        role: subRow?.role || "user",
+                        subscription_tier: subRow?.subscription_tier || "free",
+                        id: userId
+                    };
+                    ProgressManager.data = userProgress;
+                    updateProgressUI();
+                    refreshProfileDOM();
+                    return;
+                } else {
+                    // Create default row in table
+                    const migrationData = user.user_metadata?.guest_migration || {};
+                    const ageRange = user.user_metadata?.age_range || "unknown";
+                    
+                    const newProgress = {
+                        id: userId,
+                        username: loggedInUser,
+                        age_range: ageRange,
+                        points: migrationData.points || 0,
+                        completed: migrationData.completed || {},
+                        scores: migrationData.scores || {}
+                    };
+                    const { error: insertError } = await supabaseClient
+                        .from('user_progress')
+                        .insert(newProgress);
+
+                    if (insertError) {
+                        console.error("Hiba a Supabase sor beszúrásakor:", insertError);
+                    } else {
+                        ProgressManager.isGuest = false;
+                        LocalSavingsService.clear(); // Wipe guest data
+                        userProgress = {
+                            username: loggedInUser,
+                            points: newProgress.points,
+                            completed: newProgress.completed,
+                            scores: newProgress.scores,
+                            role: subRow?.role || "user",
+                            subscription_tier: subRow?.subscription_tier || "free",
+                            id: userId
+                        };
+                        ProgressManager.data = userProgress;
+                        updateProgressUI();
+                        refreshProfileDOM();
+                        return;
+                    }
+                }
+            }
+        } catch (authErr) {
+            console.warn("Hiba a Supabase azonosítás során:", authErr);
+        }
+    }
+
+    // Fallback to ProgressManager for guest
+    ProgressManager.isGuest = true;
+    const localData = LocalSavingsService.load();
+    if (localData) {
+        userProgress = localData;
+        userProgress.username = "Vendég";
+        if (typeof userProgress.points === "undefined") userProgress.points = 0;
+        if (!userProgress.scores) userProgress.scores = {};
+    } else {
+        userProgress = {
+            username: "Vendég",
+            points: 0,
+            completed: {},
+            scores: {}
+        };
+    }
+    ProgressManager.data = userProgress;
+    updateProgressUI();
+    refreshProfileDOM();
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - saveUserProgress -->
+        <div class="function-card" data-module="progress" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">saveUserProgress()</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Haladás & Állapot</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Persists the progress object parameters (points, completed map, time trackers). Saves to LocalStorage if the user is a guest, or executes a Supabase database update targeting the <code>user_progress</code> table for registered accounts.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 505 - 532)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">async function saveUserProgress() {
+    if (ProgressManager.isGuest) {
+        LocalSavingsService.save(userProgress);
+    } else {
+        if (supabaseClient && userProgress.id) {
+            try {
+                const { error } = await supabaseClient
+                    .from('user_progress')
+                    .update({
+                        points: userProgress.points || 0,
+                        completed: userProgress.completed || {},
+                        scores: userProgress.scores || {}
+                    })
+                    .eq('id', userProgress.id);
+
+                if (error) {
+                    console.error("Sikertelen Supabase mentés:", error);
+                }
+            } catch (err) {
+                console.warn("Hiba a Supabase mentésekor:", err);
+            }
+        }
+    }
+    updateProgressUI();
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - saveExerciseAnswer -->
+        <div class="function-card" data-module="progress" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">saveExerciseAnswer(level, section, subsection, index, value)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Haladás & Állapot</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Saves input responses for a specific question index inside the progress structure. Ensures student responses persist when navigating away or switching tabs.</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Optimization (Debouncing)</h4>
+                        <p>Utilizes a 500ms debounce timeout to prevent continuous database updates while typing.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 536 - 547)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">let saveAnswerTimeout = null;
+function saveExerciseAnswer(level, section, subsection, index, value) {
+    const key = `${level}_${section}_${subsection}_answers`;
+    if (!userProgress.completed[key]) {
+        userProgress.completed[key] = {};
+    }
+    userProgress.completed[key][index] = value;
+    
+    if (saveAnswerTimeout) clearTimeout(saveAnswerTimeout);
+    saveAnswerTimeout = setTimeout(() => {
+        saveUserProgress();
+    }, 500);
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - isContentAccessible -->
+        <div class="function-card" data-module="progress" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">isContentAccessible(level, courseKey, subsectionType)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Haladás & Állapot</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Validates if a course section/exercise is accessible. Authorized user sessions (including administrators and lifetime tiers) bypass all restrictions. Guest sessions are limited to the first 20% of the course list, and exams/explanations are blocked.</p>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Algorithm Logic</h4>
+                        <p>Iterates over all defined courses, mapping keys like <code>A1_ToBe</code> to a curriculum index. Guest indices higher than the 20% ceiling return false. Access requests to blocked categories (e.g. <code>section_exam</code>, <code>explanation</code>) return false.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 100 - 151)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function isContentAccessible(level, courseKey, subsectionType = null) {
+    if (!ProgressManager.isGuest) {
+        // Admin or Lifetime bypasses everything
+        if (ProgressManager.data.role === "admin" || ProgressManager.data.subscription_tier === "lifetime") {
+            return true;
+        }
+
+        // BETA GIFT: Currently giving all registered users full access
+        return true; 
+    }
+
+    // Calculate total valid courses across all levels (excluding exams)
+    let totalCourses = 0;
+    const courseList = [];
+
+    const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+    
+    for (const lvl of levels) {
+        if (learningContent[lvl]) {
+            for (const key in learningContent[lvl]) {
+                if (key !== "level_exam" && key !== "final_exam") {
+                    totalCourses++;
+                    courseList.push(`${lvl}_${key}`);
+                }
+            }
+        }
+    }
+
+    const allowedCount = Math.ceil(totalCourses * 0.20);
+    const targetPath = `${level}_${courseKey}`;
+    const courseIndex = courseList.indexOf(targetPath);
+
+    // 1. Is the course outside the 20% cap or an explicitly blocked global exam?
+    if (courseIndex === -1 || courseIndex >= allowedCount || courseKey === "level_exam" || courseKey === "final_exam") {
+        return false;
+    }
+
+    // 2. Even within allowed courses, block premium features
+    if (subsectionType) {
+        if (subsectionType === "explanation" || subsectionType === "section_exam" || subsectionType === "sectionExam" || subsectionType === "final_exam" || subsectionType === "finalExam") {
+            return false;
+        }
+    }
+
+    return true;
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - isSectionExamLocked -->
+        <div class="function-card" data-module="progress" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">isSectionExamLocked(level, section)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Haladás & Állapot</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Checks if the section exam is locked. The exam is locked until the user completes all other exercises in that section (such as words, fill blanks, word ordering).</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 209 - 224)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function isSectionExamLocked(level, section) {
+    const moduleData = learningContent[level]?.[section];
+    if (!moduleData || !moduleData.subsections) return false;
+    
+    for (const subKey in moduleData.subsections) {
+        const subData = moduleData.subsections[subKey];
+        if (isExam(subData)) {
+            continue; // Skip the exam itself
+        }
+        const key = `${level}_${section}_${subKey}`;
+        if (!userProgress.completed[key]) {
+            return true; // Lock the exam because a preceding lesson is not completed
+        }
+    }
+    return false;
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - getNextUncompletedLesson -->
+        <div class="function-card" data-module="progress" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">getNextUncompletedLesson(level)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Haladás & Állapot</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Scans the level structure to identify the first uncompleted lesson or exercise accessible under the user's tier. Used to determine the target of the header resume CTA button.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 227 - 255)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function getNextUncompletedLesson(level) {
+    const sections = Object.keys(learningContent[level] || {});
+    for (const secKey of sections) {
+        const moduleData = learningContent[level][secKey];
+        if (!moduleData || !moduleData.subsections) continue;
+        
+        // If the entire section is deemed complete (registered users pass the exam)
+        if (userProgress.completed[`${level}_${secKey}_sectionExam`]) {
+            continue;
+        }
+        
+        for (const subKey in moduleData.subsections) {
+            const isAccessible = isContentAccessible(level, secKey, subKey);
+            if (!isAccessible) continue;
+
+            const key = `${level}_${secKey}_${subKey}`;
+            if (!userProgress.completed[key]) {
+                return {
+                    section: secKey,
+                    key: subKey,
+                    title: moduleData.subsections[subKey].title || subKey,
+                    isExam: isExam(moduleData.subsections[subKey])
+                };
+            }
+        }
+    }
+    return null;
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - completeSubsectionAction -->
+        <div class="function-card" data-module="progress" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">completeSubsectionAction(...)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Haladás & Állapot</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Triggers when the student clicks the "Complete" action button. Stops the stopwatch timer, awards +5 XP points, saves total elapsed seconds and exercise counters, triggers a point popup animation, changes button styles, and inserts a "Next Lesson" navigation redirect link.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 589 - 679)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function completeSubsectionAction(level, section, subsection, buttonEl) {
+    const key = `${level}_${section}_${subsection}`;
+    if (userProgress.completed[key]) return;
+    
+    stopStopwatch();
+
+    // Reward points
+    userProgress.points = (userProgress.points || 0) + 5;
+    
+    if (!userProgress.scores) userProgress.scores = {};
+    userProgress.scores.totalTimeSpent = (userProgress.scores.totalTimeSpent || 0) + stopwatchSeconds;
+    userProgress.scores.exercisesCompleted = (userProgress.scores.exercisesCompleted || 0) + 1;
+    
+    userProgress.completed[key] = true;
+    
+    // Trigger floating +5 points pop animation
+    const container = buttonEl.closest(".completion-button-container");
+    if (container) {
+        const pop = document.createElement("div");
+        pop.className = "floating-points-pop";
+        pop.textContent = "+5 Pont! 🎉";
+        container.appendChild(pop);
+        
+        setTimeout(() => { pop.remove(); }, 1200);
+    }
+    
+    buttonEl.className = "btn-complete-section completed-badge";
+    buttonEl.disabled = true;
+    buttonEl.innerHTML = "Teljesítve ✓";
+    
+    saveUserProgress();
+
+    // Render convenient "Next Lesson" button right next to it
+    if (container) {
+        const nextLessonInfo = findNextGuestAccessibleLesson(level, section);
+        if (nextLessonInfo) {
+            container.style.display = "flex";
+            container.style.gap = "1rem";
+            container.style.justifyContent = "center";
+            container.style.flexWrap = "wrap";
+            
+            const nextBtn = document.createElement("button");
+            nextBtn.className = "btn-complete-section";
+            nextBtn.style.background = "linear-gradient(135deg, var(--color-accent-in), var(--color-accent-on))";
+            nextBtn.style.color = "#000";
+            
+            if (nextLessonInfo.endOfGuestContent) {
+                nextBtn.innerHTML = `<span>Teljes Hozzáférés Feloldása</span>`;
+                nextBtn.onclick = () => { openPaywallModal(); };
+            } else {
+                nextBtn.innerHTML = `<span>Tovább: ${nextLessonInfo.title}</span> <span style="font-size: 1.2rem;">→</span>`;
+                nextBtn.onclick = () => {
+                    const targetLevel = nextLessonInfo.level;
+                    const targetSection = nextLessonInfo.section;
+                    const targetKey = nextLessonInfo.key;
+                    
+                    const accordion = document.querySelector(`.course-accordion[data-level="${targetLevel}"][data-section="${targetSection}"]`);
+                    if (accordion) accordion.open = true;
+
+                    const links = document.querySelectorAll(".subsection-link");
+                    links.forEach(l => l.classList.remove("active"));
+                    
+                    if (accordion) {
+                        const targetLink = accordion.querySelector(`.subsection-link[data-subsection="${targetKey}"]`);
+                        if (targetLink) targetLink.classList.add("active");
+                    }
+                    currentLevel = targetLevel;
+                    currentSection = targetSection;
+                    currentSubsection = targetKey;
+                    renderSubsection(targetLevel, targetSection, targetKey);
+                    updateProgressUI();
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+            }
+            container.appendChild(nextBtn);
+        }
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- MODULE 3: LESSON/QUIZ RENDERING ENGINE -->
+
+        <!-- dashboard.js - switchGlobalLevel -->
+        <div class="function-card" data-module="render" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">switchGlobalLevel(levelName, startEmpty)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Renderelő Motor</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Changes the active dashboard level (A1, A2, B1, B2). Re-renders the sidebar lesson lists, updates top navigation selection highlights, and automatically displays the first section (or an empty welcome view if the startEmpty parameter is set to true).</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 1053 - 1119)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function switchGlobalLevel(levelName, startEmpty = false) {
+    currentLevel = levelName;
+    localStorage.setItem("selectedLevel", levelName);
+
+    // Update Top Menu visual states
+    const tabs = document.querySelectorAll(".level-tab");
+    tabs.forEach(tab => {
+        if (tab.getAttribute("data-level") === levelName) {
+            tab.classList.add("active");
+        } else {
+            tab.classList.remove("active");
+        }
+    });
+
+    // Re-render sidebar structure
+    renderSidebar(levelName);
+
+    if (startEmpty) {
+        // Show landing welcome empty state in workspace
+        renderEmptyState("Üdvözlünk a Tanuló Felületen! 👋", "Válassz egy leckét a bal oldali sávból a kezdéshez, vagy kattints a fenti 'Folytatás' gombra.");
+        updateProgressUI();
+        return;
+    }
+
+    // Default: load first section of chosen level
+    const sections = Object.keys(learningContent[levelName] || {});
+    if (sections.length > 0) {
+        const firstSec = sections[0];
+        const subData = learningContent[levelName][firstSec].subsections;
+        const subKeys = Object.keys(subData || {});
+        if (subKeys.length > 0) {
+            const firstSub = subKeys[0];
+            
+            // Highlight sidebar link
+            const firstAccordion = document.querySelector(`.course-accordion[data-level="${levelName}"][data-section="${firstSec}"]`);
+            if (firstAccordion) firstAccordion.open = true;
+
+            const links = document.querySelectorAll(".subsection-link");
+            links.forEach(l => l.classList.remove("active"));
+            
+            if (firstAccordion) {
+                const targetLink = firstAccordion.querySelector(`.subsection-link[data-subsection="${firstSub}"]`);
+                if (targetLink) targetLink.classList.add("active");
+            }
+
+            currentSection = firstSec;
+            currentSubsection = firstSub;
+            renderSubsection(levelName, firstSec, firstSub);
+        }
+    }
+    updateProgressUI();
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - renderSidebar -->
+        <div class="function-card" data-module="render" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">renderSidebar(levelName)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Renderelő Motor</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Constructs the sidebar accordion elements dynamically from learning content lists in <code>data.js</code>. Integrates category names, sub-menus, icons, locks, and attaches click listeners to navigate and launch subsections.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 857 - 924)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function renderSidebar(levelName) {
+    const listContainer = document.getElementById("sidebar-course-list");
+    if (!listContainer) return;
+
+    listContainer.innerHTML = ""; // Clear
+    const levelData = learningContent[levelName] || {};
+
+    for (const sectionKey in levelData) {
+        const section = levelData[sectionKey];
+        const accordion = document.createElement("details");
+        accordion.className = "course-accordion";
+        accordion.setAttribute("data-level", levelName);
+        accordion.setAttribute("data-section", sectionKey);
+
+        const summary = document.createElement("summary");
+        summary.className = "course-accordion-header";
+        summary.innerHTML = `
+            <span class="accordion-title-text">${section.title || sectionKey}</span>
+            <span class="accordion-arrow">▼</span>
+        `;
+        accordion.appendChild(summary);
+
+        const innerList = document.createElement("ul");
+        innerList.className = "course-subsection-list";
+
+        for (const subKey in section.subsections) {
+            const sub = section.subsections[subKey];
+            const li = document.createElement("li");
+            
+            li.innerHTML = `
+                <a href="#" class="subsection-link" data-subsection="${subKey}">
+                    <span class="subsection-icon">${sub.icon || '📚'}</span>
+                    <span class="subsection-title">${sub.title || subKey}</span>
+                </a>
+            `;
+
+            // Click listener
+            const link = li.querySelector(".subsection-link");
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                
+                // If the link is locked, block access
+                if (link.classList.contains("guest-locked")) {
+                    openPaywallModal();
+                    return;
+                }
+                if (link.classList.contains("locked")) {
+                    openLockedModal();
+                    return;
+                }
+
+                // Normal navigation
+                const activeLinks = document.querySelectorAll(".subsection-link");
+                activeLinks.forEach(l => l.classList.remove("active"));
+                link.classList.add("active");
+
+                currentLevel = levelName;
+                currentSection = sectionKey;
+                currentSubsection = subKey;
+
+                renderSubsection(levelName, sectionKey, subKey);
+            });
+
+            innerList.appendChild(li);
+        }
+
+        accordion.appendChild(innerList);
+        listContainer.appendChild(accordion);
+    }
+    
+    // Bind simple details collapse logic
+    initAccordionListeners();
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - renderSubsection -->
+        <div class="function-card" data-module="render" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">renderSubsection(level, section, subsection)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Renderelő Motor</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Core routing function for templates. Identifies the subsection type (explanation, words, fill_blanks, word_order, true_false, section_exam) and triggers the appropriate rendering layout function, resetting stopwatch variables and attempts arrays.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 1121 - 1217)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function renderSubsection(level, section, subsection) {
+    const sectionData = learningContent[level]?.[section];
+    if (!sectionData) return;
+
+    const data = sectionData.subsections[subsection];
+    if (!data) return;
+
+    const workspace = document.querySelector(".workspace-content");
+    if (!workspace) return;
+
+    // Reset temporary states
+    exerciseAttempts = {};
+    updateSuccessRateDisplay(false); // Hide success rate until first interaction
+
+    // Start Timer
+    startStopwatch();
+
+    // Route to proper template based on types
+    switch (data.type) {
+        case "explanation":
+            renderExplanationTemplate(workspace, data, sectionData);
+            break;
+        case "words":
+            renderWordsTemplate(workspace, data, sectionData);
+            break;
+        case "fill_blanks":
+            renderFillBlanksTemplate(workspace, data);
+            break;
+        case "word_order":
+            renderWordOrderTemplate(workspace, data);
+            break;
+        case "true_false":
+            renderTrueFalseTemplate(workspace, data);
+            break;
+        case "section_exam":
+            renderSectionExamTemplate(workspace, data);
+            break;
+        default:
+            workspace.innerHTML = `<h3>Ismeretlen típus: ${data.type}</h3>`;
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - renderExplanationTemplate -->
+        <div class="function-card" data-module="render" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">renderExplanationTemplate(...)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Renderelő Motor</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Compiles explanation blocks containing rule lists and examples. Handles secondary tabs and runs listeners for horizontal layout menus.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 1219 - 1540)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function renderExplanationTemplate(workspace, data, moduleData) {
+    // Generates HTML layout for lessons descriptions
+    // Injects tabs, image lightboxes, examples lists
+    // ...
+    // Appends: getCompleteButtonHtml(currentLevel, currentSection, currentSubsection)
+    // Runs: initExplanationTabs()
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - renderWordsTemplate -->
+        <div class="function-card" data-module="render" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">renderWordsTemplate(...)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Renderelő Motor</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Compiles vocabulary list panels. Fetches content from external JSON sources asynchronously using the Fetch API and caches the results locally (vocabCache) to reduce database overhead. Configures card elements and audio triggers.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 1558 - 1628)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">async function renderWordsTemplate(workspace, data, moduleData) {
+    workspace.innerHTML = `<p class="loading-text">Szavak betöltése...</p>`;
+    let items = data.items || [];
+
+    if (data.dataSource) {
+        if (vocabCache[data.dataSource]) {
+            items = vocabCache[data.dataSource].items || [];
+        } else {
+            try {
+                const response = await fetch(data.dataSource + "?v=1.0.7");
+                if (response.ok) {
+                    const json = await response.json();
+                    vocabCache[data.dataSource] = json;
+                    items = json.items || [];
+                }
+            } catch (err) {
+                console.error("Szókincs betöltési hiba:", err);
+            }
+        }
+    }
+    // Renders visual word-cards Grid with audio icons
+    // ...
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - renderFillBlanksTemplate -->
+        <div class="function-card" data-module="render" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">renderFillBlanksTemplate(...)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Renderelő Motor</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Compiles fill-in-the-blanks style exercises. Reads remote question JSON resources, generates input DOM elements inline, restores previous student responses, and binds listeners for validation triggers.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 1630 - 1701)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">async function renderFillBlanksTemplate(workspace, data) {
+    // Fetches questions JSON, maps input tags inside texts
+    // Restores past answers from userProgress.completed[key][index]
+    // Binds checkFillBlank(index) triggers on input / focus changes
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - renderWordOrderTemplate -->
+        <div class="function-card" data-module="render" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">renderWordOrderTemplate(...)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Renderelő Motor</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Loads word-ordering templates. Shuffles word chips to create the pool area, sets target selection containers, and parses saved answers from the userProgress object.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 1703 - 1807)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">async function renderWordOrderTemplate(workspace, data) {
+    // Dynamic rendering of shuffled word items and validation target fields
+    // Restores states using saveWordOrderState
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- MODULE 4: INTERACTIVE MECHANICS & QUIZ VERIFICATION -->
+
+        <!-- dashboard.js - checkFillBlank -->
+        <div class="function-card" data-module="interactive" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">checkFillBlank(index)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Interaktív Mechanikák</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Evaluates a fill-in-the-blanks answer. Compares lowercase student inputs (with whitespace trimmed) against defined variations, setting error/success styles and checklist badges, saving responses to storage, and unlocking complete actions dynamically.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 2069 - 2104)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function checkFillBlank(index) {
+    const input = document.getElementById(`blank-${index}`);
+    const feedback = document.getElementById(`feedback-${index}`);
+    if (!input) return;
+
+    const val = input.value.trim().toLowerCase();
+    const correctAnswers = input.getAttribute("data-correct").split("|").map(a => a.trim().toLowerCase());
+    
+    const isCorrect = correctAnswers.includes(val);
+    
+    // Track attempt globally for accuracy stats
+    exerciseAttempts[index] = isCorrect;
+    updateSuccessRateDisplay(true);
+
+    if (isCorrect) {
+        input.classList.remove("error");
+        input.classList.add("success");
+        if (feedback) {
+            feedback.innerHTML = "✅";
+            feedback.style.color = "var(--color-success)";
+        }
+    } else {
+        input.classList.remove("success");
+        if (val !== "") {
+            input.classList.add("error");
+            if (feedback) {
+                feedback.innerHTML = "❌";
+                feedback.style.color = "var(--color-error)";
+            }
+        } else {
+            input.classList.remove("error");
+            if (feedback) feedback.innerHTML = "";
+        }
+    }
+
+    // Persist answer state
+    saveExerciseAnswer(currentLevel, currentSection, currentSubsection, index, input.value);
+
+    // Dynamic button unlock if all questions are checked correct
+    const totalQuestions = document.querySelectorAll(".fill-blank-input").length;
+    let correctCount = 0;
+    for (let key in exerciseAttempts) {
+        if (exerciseAttempts[key]) correctCount++;
+    }
+    const btn = document.querySelector(".btn-complete-section");
+    if (btn) {
+        btn.disabled = (correctCount !== totalQuestions);
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - selectWordChip -->
+        <div class="function-card" data-module="interactive" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">selectWordChip(chipEl, questionIndex, isExam)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Interaktív Mechanikák</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Triggers when clicking word elements. Moves the selected chip from the pool to the target bar (or vice versa), and handles grading verification checks in exam views.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 2146 - 2176)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function selectWordChip(chipEl, questionIndex, isExam = false) {
+    const parent = chipEl.parentNode;
+    const pool = document.getElementById(`pool-${questionIndex}`);
+    const target = document.getElementById(`target-${questionIndex}`);
+    
+    if (parent.id.startsWith("pool-")) {
+        // Move to target area
+        target.appendChild(chipEl);
+    } else {
+        // Move back to pool
+        pool.appendChild(chipEl);
+    }
+    
+    if (isExam) {
+        // Save state for exam
+        saveWordOrderState(questionIndex);
+    } else {
+        // Check and validate instantly in normal exercises
+        checkWordOrder(questionIndex);
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - checkWordOrder -->
+        <div class="function-card" data-module="interactive" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">checkWordOrder(index)</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Interaktív Mechanikák</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Converts currently ordered chip content into a concatenated sentence, comparing results against valid sequences to set success/error statuses on target areas.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 2187 - 2219)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function checkWordOrder(index) {
+    const target = document.getElementById(`target-${index}`);
+    const feedback = document.getElementById(`feedback-${index}`);
+    if (!target) return;
+
+    const chips = target.querySelectorAll(".word-chip");
+    const words = Array.from(chips).map(c => c.textContent.trim());
+    const val = words.join(" ");
+
+    const correctAnswers = target.getAttribute("data-correct").split("|").map(a => a.trim());
+    const isCorrect = correctAnswers.includes(val);
+
+    // Track statistics attempts map
+    exerciseAttempts[index] = isCorrect;
+    updateSuccessRateDisplay(true);
+
+    if (isCorrect) {
+        target.classList.remove("error");
+        target.classList.add("success");
+        if (feedback) {
+            feedback.innerHTML = "✅";
+            feedback.style.color = "var(--color-success)";
+        }
+    } else {
+        target.classList.remove("success");
+        if (words.length > 0) {
+            target.classList.add("error");
+            if (feedback) {
+                feedback.innerHTML = "❌";
+                feedback.style.color = "var(--color-error)";
+            }
+        } else {
+            target.classList.remove("error");
+            if (feedback) feedback.innerHTML = "";
+        }
+    }
+
+    // Persist to userProgress
+    saveExerciseAnswer(currentLevel, currentSection, currentSubsection, index, val);
+
+    // Verify complete button unlock criteria
+    const totalQuestions = document.querySelectorAll(".word-order-target").length;
+    let correctCount = 0;
+    for (let key in exerciseAttempts) {
+        if (exerciseAttempts[key]) correctCount++;
+    }
+    const btn = document.querySelector(".btn-complete-section");
+    if (btn) {
+        btn.disabled = (correctCount !== totalQuestions);
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - gradeExam -->
+        <div class="function-card" data-module="interactive" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">gradeExam()</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">Interaktív Mechanikák</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Grades the section exam. Collects inputs for all TF and Word Ordering items, compares responses with solution keys to calculate percentage scores, locks/unlocks next steps, awards +10 XP per correct response, renders the final summary panel, and saves progress to Supabase.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 2260 - 2389)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function gradeExam() {
+    stopStopwatch();
+    const examQuestions = document.querySelectorAll(".exam-question-item");
+    let score = 0;
+    const total = examQuestions.length;
+    
+    // Evaluate TF and Word Order questions
+    examQuestions.forEach((qEl, idx) => {
+        const type = qEl.getAttribute("data-type");
+        const correct = qEl.getAttribute("data-correct").trim();
+        let isCorrect = false;
+
+        if (type === "true_false") {
+            const studentAns = userProgress.completed[`${currentLevel}_${currentSection}_sectionExam_answers`]?.[idx];
+            isCorrect = (studentAns === correct);
+        } else if (type === "word_order") {
+            const studentAns = userProgress.completed[`${currentLevel}_${currentSection}_sectionExam_answers`]?.[idx] || "";
+            const correctList = correct.split("|").map(c => c.trim());
+            isCorrect = correctList.includes(studentAns);
+        }
+
+        const badge = document.getElementById(`exam-badge-${idx}`);
+        if (isCorrect) {
+            score++;
+            if (badge) { badge.innerHTML = "Helyes ✅"; badge.style.color = "var(--color-success)"; }
+        } else {
+            if (badge) { badge.innerHTML = "Helytelen ❌"; badge.style.color = "var(--color-error)"; }
+        }
+    });
+
+    const percent = Math.round((score / total) * 100);
+    
+    // Save to completed tracking
+    const key = `${currentLevel}_${currentSection}_sectionExam`;
+    userProgress.completed[key] = true;
+    userProgress.scores[key] = percent;
+
+    // XP calculation: 10 points per correct answer
+    const earnedPoints = score * 10;
+    userProgress.points = (userProgress.points || 0) + earnedPoints;
+
+    // Render result card in UI
+    const resultsContainer = document.getElementById("exam-results-container");
+    if (resultsContainer) {
+        resultsContainer.innerHTML = `
+            <div class="exam-result-card">
+                <h3>Vizsga kiértékelve!</h3>
+                <p>Pontosság: <strong>${percent}%</strong> (${score}/${total} helyes válasz)</p>
+                <p>Kapott pontok: <strong style="color: var(--color-success);">+${earnedPoints} XP!</strong></p>
+                <button class="btn-complete-section" onclick="retakeExam()" style="margin-top: 1rem;">Ujrapróbálkozás</button>
+            </div>
+        `;
+        resultsContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    saveUserProgress();
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- MODULE 5: DOM HELPERS & UTILITIES -->
+
+        <!-- nav.js - Mobile Navigation Handler -->
+        <div class="function-card" data-module="dom" data-file="nav.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">Mobile Navigation Handler</span>
+                    <span class="badge-file">nav.js</span>
+                    <span class="badge-module">DOM Segédek & UI</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Sets up listeners for the mobile navbar drawer. Keeps track of hamburger states, handles window resize triggers, resets styles, closes drawer layouts on backdrop clicks or Escape key pushes, and shifts focus elements.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>nav.js (Lines: 1 - 60)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.getElementById("mobile-menu-toggle");
+    const navDrawer = document.getElementById("nav-drawer");
+    
+    if (!menuToggle || !navDrawer) return;
+
+    const toggleMenu = () => {
+        const isActive = navDrawer.classList.contains("is-active");
+        if (isActive) { closeMenu(); } else { openMenu(); }
+    };
+
+    const openMenu = () => {
+        menuToggle.classList.add("is-active");
+        navDrawer.classList.add("is-active");
+        menuToggle.setAttribute("aria-expanded", "true");
+    };
+
+    const closeMenu = () => {
+        menuToggle.classList.remove("is-active");
+        navDrawer.classList.remove("is-active");
+        menuToggle.setAttribute("aria-expanded", "false");
+    };
+
+    menuToggle.addEventListener("click", toggleMenu);
+
+    const navLinks = navDrawer.querySelectorAll(".nav-link");
+    navLinks.forEach(link => {
+        link.addEventListener("click", closeMenu);
+    });
+
+    // Close on Escape key press for accessibility
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && navDrawer.classList.contains("is-active")) {
+            closeMenu();
+            menuToggle.focus();
+        }
+    });
+
+    // Close when clicking outside of it
+    document.addEventListener("click", (e) => {
+        if (navDrawer.classList.contains("is-active") && !navDrawer.contains(e.target) && !menuToggle.contains(e.target)) {
+            closeMenu();
+        }
+    });
+});</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - stopwatch functions -->
+        <div class="function-card" data-module="dom" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">Stopwatch Timer System</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">DOM Segédek & UI</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Controls activity timers. Starts intervals when a task loads, formats outputs to the DOM clock element (MM:SS), and terminates processes when completed.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 154 - 180)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">function startStopwatch() {
+    stopStopwatch();
+    stopwatchSeconds = 0;
+    updateStopwatchDisplay();
+    
+    stopwatchInterval = setInterval(() => {
+        stopwatchSeconds++;
+        updateStopwatchDisplay();
+    }, 1000);
+}
+
+function stopStopwatch() {
+    if (stopwatchInterval) {
+        clearInterval(stopwatchInterval);
+        stopwatchInterval = null;
+    }
+}
+
+function updateStopwatchDisplay() {
+    const timerDisplay = document.getElementById("timer-display");
+    if (timerDisplay) {
+        const minutes = Math.floor(stopwatchSeconds / 60);
+        const seconds = stopwatchSeconds % 60;
+        const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        timerDisplay.textContent = formatted;
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- dashboard.js - updateProgressUI -->
+        <div class="function-card" data-module="dom" data-file="dashboard.js">
+            <div class="function-header">
+                <div class="function-title-area">
+                    <span class="function-name">updateProgressUI()</span>
+                    <span class="badge-file">dashboard.js</span>
+                    <span class="badge-module">DOM Segédek & UI</span>
+                </div>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="function-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <h4>Description</h4>
+                        <p>Updates sidebar items, appends visual completion checkmark badges, updates progress percentages, adjusts width bars, and dynamically updates header resume CTA templates.</p>
+                    </div>
+                </div>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>dashboard.js (Lines: 682 - 855)</span>
+                        <button class="btn-copy">Copy Code</button>
+                    </div>
+                    <pre><code class="language-javascript">async function updateProgressUI() {
+    const links = document.querySelectorAll(".subsection-link");
+    let totalItems = 0;
+    let completedItems = 0;
+
+    links.forEach(link => {
+        const accordion = link.closest(".course-accordion");
+        if (!accordion) return;
+
+        const level = accordion.getAttribute("data-level");
+        const section = accordion.getAttribute("data-section");
+        const subsection = link.getAttribute("data-subsection");
+        const key = `${level}_${section}_${subsection}`;
+        const subData = learningContent[level]?.[section]?.subsections?.[subsection];
+
+        // 1. Guest/Subscription Restrictions
+        const isContentRestricted = !isContentAccessible(level, section, subsection);
+        const iconSpan = link.querySelector(".subsection-icon");
+        
+        if (isContentRestricted) {
+            link.classList.add("guest-locked");
+            link.classList.remove("locked");
+            if (iconSpan) iconSpan.textContent = "🔒";
+        } else {
+            link.classList.remove("guest-locked");
+            if (isExam(subData)) {
+                const isProgressionLocked = isSectionExamLocked(level, section);
+                if (isProgressionLocked) {
+                    link.classList.add("locked");
+                    if (iconSpan) iconSpan.textContent = "🔒";
+                } else {
+                    link.classList.remove("locked");
+                    if (iconSpan) iconSpan.textContent = subData.icon || "🏆";
+                }
+            } else {
+                link.classList.remove("locked");
+                if (iconSpan) iconSpan.textContent = subData.icon || "📚";
+            }
+        }
+
+        if (level === currentLevel && !isExam(subData)) {
+            totalItems++;
+            if (userProgress.completed[key]) {
+                completedItems++;
+            }
+        }
+
+        // Add checkmarks to sidebar
+        let badge = link.querySelector(".progress-badge-sidebar");
+        if (userProgress.completed[key]) {
+            if (!badge) {
+                badge = document.createElement("span");
+                badge.className = "progress-badge-sidebar done";
+                badge.innerHTML = " ✓";
+                badge.style.color = "var(--color-success)";
+                badge.style.fontWeight = "bold";
+                badge.style.marginLeft = "auto";
+                link.appendChild(badge);
+            }
+        } else {
+            if (badge) badge.remove();
+        }
+    });
+
+    const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+    const progressBar = document.querySelector(".progress-bar-fill");
+    const progressPercentageText = document.querySelector(".progress-percentage");
+
+    if (progressBar) progressBar.style.width = `${percentage}%`;
+    if (progressPercentageText) progressPercentageText.textContent = `${percentage}% Kész`;
+
+    // Update global points
+    const pointsEl = document.getElementById("points-counter");
+    if (pointsEl) pointsEl.textContent = userProgress.points || 0;
+
+    // UPDATE HERO CTA CARD
+    const nextLesson = getNextUncompletedLesson(currentLevel);
+    const ctaCard = document.querySelector(".resume-cta-card");
+    const ctaHeader = document.querySelector(".resume-cta-header");
+    const ctaTitle = document.querySelector(".resume-cta-title");
+    const ctaBtn = document.getElementById("btn-resume-lesson");
+    
+    if (ctaCard && ctaHeader && ctaTitle && ctaBtn) {
+        if (!nextLesson) {
+            ctaHeader.textContent = "Gratulálunk! 🎉";
+            ctaTitle.textContent = "A szint összes leckéjét elvégezted!";
+            ctaBtn.innerHTML = `<span>Teljesítmények Megtekintése</span>`;
+            ctaBtn.style.background = "linear-gradient(135deg, var(--color-accent-at), var(--color-success))";
+        } else {
+            ctaHeader.textContent = "Folytasd a tanulást";
+            ctaTitle.textContent = nextLesson.title;
+            ctaBtn.innerHTML = nextLesson.isExam ? `<span>Kezdem a Vizsgát 🏆</span>` : `<span>Kezdem a Feladatot →</span>`;
+            ctaBtn.style.background = "linear-gradient(135deg, var(--color-accent-in), var(--color-accent-on))";
+        }
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Prism JS libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+
+<script>
+    // Search and Filter Logic
+    document.addEventListener("DOMContentLoaded", () => {
+        const searchBox = document.getElementById("search-box");
+        const moduleFilters = document.getElementById("module-filters");
+        const fileFilters = document.getElementById("file-filters");
+        const cards = document.querySelectorAll(".function-card");
+        const emptyState = document.getElementById("empty-state");
+        const statsText = document.getElementById("stats-text");
+
+        let activeModule = "all";
+        let activeFile = "all";
+
+        // Bind Accordion Click Toggles
+        cards.forEach(card => {
+            const header = card.querySelector(".function-header");
+            header.addEventListener("click", () => {
+                const isOpen = card.classList.contains("open");
+                card.classList.toggle("open", !isOpen);
+            });
+
+            // Bind Copy Code Button
+            const copyBtn = card.querySelector(".btn-copy");
+            const codeEl = card.querySelector("code");
+            copyBtn.addEventListener("click", (e) => {
+                e.stopPropagation(); // Avoid closing the accordion
+                navigator.clipboard.writeText(codeEl.textContent).then(() => {
+                    copyBtn.textContent = "Copied! ✓";
+                    copyBtn.style.borderColor = "var(--color-success)";
+                    copyBtn.style.color = "var(--color-success)";
+                    setTimeout(() => {
+                        copyBtn.textContent = "Copy Code";
+                        copyBtn.style.borderColor = "";
+                        copyBtn.style.color = "";
+                    }, 2000);
+                }).catch(err => {
+                    console.error("Clipboard copy error:", err);
+                    copyBtn.textContent = "Error!";
+                });
+            });
+        });
+
+        // Search box input listener
+        searchBox.addEventListener("input", filterFunctions);
+
+        // Module chips filters listener
+        moduleFilters.addEventListener("click", (e) => {
+            const chip = e.target.closest(".chip");
+            if (!chip) return;
+            moduleFilters.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            activeModule = chip.getAttribute("data-filter");
+            filterFunctions();
+        });
+
+        // File chips filters listener
+        fileFilters.addEventListener("click", (e) => {
+            const chip = e.target.closest(".chip");
+            if (!chip) return;
+            fileFilters.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            activeFile = chip.getAttribute("data-filter");
+            filterFunctions();
+        });
+
+        function filterFunctions() {
+            const searchVal = searchBox.value.trim().toLowerCase();
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const name = card.querySelector(".function-name").textContent.toLowerCase();
+                const file = card.getAttribute("data-file");
+                const module = card.getAttribute("data-module");
+                
+                // Read description & explanation inside body for deep search
+                const bodyText = card.querySelector(".function-body").textContent.toLowerCase();
+
+                const matchesSearch = name.includes(searchVal) || bodyText.includes(searchVal);
+                const matchesFile = (activeFile === "all" || file === activeFile);
+                const matchesModule = (activeModule === "all" || module === activeModule);
+
+                if (matchesSearch && matchesFile && matchesModule) {
+                    card.style.display = "block";
+                    visibleCount++;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            // Handle empty state display
+            if (visibleCount === 0) {
+                emptyState.style.display = "block";
+            } else {
+                emptyState.style.display = "none";
+            }
+
+            statsText.textContent = `Total: ${cards.length} functions | Filtered: ${visibleCount}`;
+        }
+
+        // Global functions to expand / collapse
+        window.toggleAllAccordions = function(open) {
+            cards.forEach(card => {
+                // Only act on currently visible items to avoid confusing transitions
+                if (card.style.display !== "none") {
+                    card.classList.toggle("open", open);
+                }
+            });
+        };
+
+        // Initialize statistics display
+        statsText.textContent = `Total: ${cards.length} functions | Filtered: ${cards.length}`;
+    });
+</script>
+
+</body>
+</html>
