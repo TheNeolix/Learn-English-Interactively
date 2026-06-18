@@ -1,0 +1,525 @@
+{
+  "description": "Rakd a szavakat helyes sorrendbe, hogy nyelvtanilag helyes mondatot vagy kérdést kapj.",
+  "items": [
+    {
+      "scrambled": [
+        "This",
+        "is",
+        "my",
+        "phone"
+      ],
+      "correct": "This is my phone.",
+      "hu": "Ez az én telefonom."
+    },
+    {
+      "scrambled": [
+        "That",
+        "is",
+        "a",
+        "big",
+        "house"
+      ],
+      "correct": "That is a big house.",
+      "hu": "Az ott egy nagy ház."
+    },
+    {
+      "scrambled": [
+        "These",
+        "are",
+        "my",
+        "keys"
+      ],
+      "correct": "These are my keys.",
+      "hu": "Ezek az én kulcsaim."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "those",
+        "dogs",
+        "nice"
+      ],
+      "correct": "Are those dogs nice?",
+      "hu": "Azok a kutyák kedvesek?"
+    },
+    {
+      "scrambled": [
+        "That",
+        "laptop",
+        "is",
+        "old"
+      ],
+      "correct": "That laptop is old.",
+      "hu": "Az a laptop régi."
+    },
+    {
+      "scrambled": [
+        "These",
+        "eyes",
+        "are",
+        "beautiful"
+      ],
+      "correct": "These eyes are beautiful.",
+      "hu": "Ezek a szemek szépek."
+    },
+    {
+      "scrambled": [
+        "Who",
+        "are",
+        "those",
+        "people"
+      ],
+      "correct": "Who are those people?",
+      "hu": "Kik azok az emberek?"
+    },
+    {
+      "scrambled": [
+        "This",
+        "car",
+        "is",
+        "nice"
+      ],
+      "correct": "This car is nice.",
+      "hu": "Ez az autó szép."
+    },
+    {
+      "scrambled": [
+        "That",
+        "computer",
+        "doesn't",
+        "work"
+      ],
+      "correct": "That computer doesn't work.",
+      "hu": "Az a számítógép nem működik."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "these",
+        "tables",
+        "clean"
+      ],
+      "correct": "Are these tables clean?",
+      "hu": "Ezek az asztalok tiszták?"
+    },
+    {
+      "scrambled": [
+        "This",
+        "book",
+        "is",
+        "mine"
+      ],
+      "correct": "This book is mine.",
+      "hu": "Ez a könyv az enyém."
+    },
+    {
+      "scrambled": [
+        "Those",
+        "rooms",
+        "are",
+        "our",
+        "rooms"
+      ],
+      "correct": "Those rooms are our rooms.",
+      "hu": "Azok a szobák a mi szobáink."
+    },
+    {
+      "scrambled": [
+        "That",
+        "is",
+        "our",
+        "new",
+        "manager"
+      ],
+      "correct": "That is our new manager.",
+      "hu": "Ő az új menedzserünk."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "these",
+        "pens",
+        "broken"
+      ],
+      "correct": "Are these pens broken?",
+      "hu": "Ezek a tollak töröttek?"
+    },
+    {
+      "scrambled": [
+        "Is",
+        "that",
+        "cup",
+        "clean"
+      ],
+      "correct": "Is that cup clean?",
+      "hu": "Az a csésze tiszta?"
+    },
+    {
+      "scrambled": [
+        "This",
+        "office",
+        "has",
+        "a",
+        "desk"
+      ],
+      "correct": "This office has a desk.",
+      "hu": "Ebben az irodában van egy íróasztal."
+    },
+    {
+      "scrambled": [
+        "Those",
+        "birds",
+        "are",
+        "blue"
+      ],
+      "correct": "Those birds are blue.",
+      "hu": "Azok a madarak kékek."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "that",
+        "window",
+        "open"
+      ],
+      "correct": "Is that window open?",
+      "hu": "Az az ablak nyitva van?"
+    },
+    {
+      "scrambled": [
+        "These",
+        "flowers",
+        "are",
+        "beautiful"
+      ],
+      "correct": "These flowers are beautiful.",
+      "hu": "Ezek a virágok szépek."
+    },
+    {
+      "scrambled": [
+        "That",
+        "bag",
+        "is",
+        "under",
+        "the",
+        "table"
+      ],
+      "correct": "That bag is under the table.",
+      "hu": "Az a táska az asztal alatt van."
+    },
+    {
+      "scrambled": [
+        "This",
+        "meeting",
+        "is",
+        "very",
+        "important"
+      ],
+      "correct": "This meeting is very important.",
+      "hu": "Ez a megbeszélés nagyon fontos."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "those",
+        "boxes",
+        "empty"
+      ],
+      "correct": "Are those boxes empty?",
+      "hu": "Azok a dobozok üresek?"
+    },
+    {
+      "scrambled": [
+        "That",
+        "star",
+        "is",
+        "bright"
+      ],
+      "correct": "That star is bright.",
+      "hu": "Az a csillag fényes."
+    },
+    {
+      "scrambled": [
+        "This",
+        "screen",
+        "is",
+        "new"
+      ],
+      "correct": "This screen is new.",
+      "hu": "Ez a képernyő új."
+    },
+    {
+      "scrambled": [
+        "These",
+        "children",
+        "are",
+        "happy"
+      ],
+      "correct": "These children are happy.",
+      "hu": "Ezek a gyerekek boldogok."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "that",
+        "your",
+        "code"
+      ],
+      "correct": "Is that your code?",
+      "hu": "Az a te kódod?"
+    },
+    {
+      "scrambled": [
+        "This",
+        "computer",
+        "runs",
+        "fast"
+      ],
+      "correct": "This computer runs fast.",
+      "hu": "Ez a számítógép gyorsan fut."
+    },
+    {
+      "scrambled": [
+        "Those",
+        "apartments",
+        "are",
+        "expensive"
+      ],
+      "correct": "Those apartments are expensive.",
+      "hu": "Azok a lakások drágák."
+    },
+    {
+      "scrambled": [
+        "This",
+        "is",
+        "a",
+        "small",
+        "problem"
+      ],
+      "correct": "This is a small problem.",
+      "hu": "Ez egy kis probléma."
+    },
+    {
+      "scrambled": [
+        "These",
+        "dogs",
+        "are",
+        "black"
+      ],
+      "correct": "These dogs are black.",
+      "hu": "Ezek a kutyák feketék."
+    },
+    {
+      "scrambled": [
+        "That",
+        "key",
+        "doesn't",
+        "open",
+        "the",
+        "door"
+      ],
+      "correct": "That key doesn't open the door.",
+      "hu": "Az a kulcs nem nyitja az ajtót."
+    },
+    {
+      "scrambled": [
+        "This",
+        "is",
+        "a",
+        "nice",
+        "phone"
+      ],
+      "correct": "This is a nice phone.",
+      "hu": "Ez egy szép telefon."
+    },
+    {
+      "scrambled": [
+        "Those",
+        "keys",
+        "are",
+        "on",
+        "the",
+        "floor"
+      ],
+      "correct": "Those keys are on the floor.",
+      "hu": "Azok a kulcsok a padlón vannak."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "this",
+        "test",
+        "easy"
+      ],
+      "correct": "Is this test easy?",
+      "hu": "Ez a teszt könnyű?"
+    },
+    {
+      "scrambled": [
+        "These",
+        "papers",
+        "are",
+        "for",
+        "the",
+        "boss"
+      ],
+      "correct": "These papers are for the boss.",
+      "hu": "Ezek a papírok a főnöknek vannak."
+    },
+    {
+      "scrambled": [
+        "That",
+        "tree",
+        "is",
+        "high"
+      ],
+      "correct": "That tree is high.",
+      "hu": "Az a fa magas."
+    },
+    {
+      "scrambled": [
+        "These",
+        "are",
+        "my",
+        "friends"
+      ],
+      "correct": "These are my friends.",
+      "hu": "Ők az én barátaim."
+    },
+    {
+      "scrambled": [
+        "That",
+        "is",
+        "an",
+        "old",
+        "building"
+      ],
+      "correct": "That is an old building.",
+      "hu": "Az egy régi épület."
+    },
+    {
+      "scrambled": [
+        "Do",
+        "these",
+        "people",
+        "work",
+        "here"
+      ],
+      "correct": "Do these people work here?",
+      "hu": "Ezek az emberek itt dolgoznak?"
+    },
+    {
+      "scrambled": [
+        "This",
+        "laptop",
+        "has",
+        "a",
+        "good",
+        "battery"
+      ],
+      "correct": "This laptop has a good battery.",
+      "hu": "Ennek a laptopnak jó akkumulátora van."
+    },
+    {
+      "scrambled": [
+        "Those",
+        "cars",
+        "are",
+        "clean"
+      ],
+      "correct": "Those cars are clean.",
+      "hu": "Azok az autók tiszták."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "this",
+        "answer",
+        "right"
+      ],
+      "correct": "Is this answer right?",
+      "hu": "Ez a válasz helyes?"
+    },
+    {
+      "scrambled": [
+        "These",
+        "shoes",
+        "are",
+        "dirty"
+      ],
+      "correct": "These shoes are dirty.",
+      "hu": "Ezek a cipők piszkosak."
+    },
+    {
+      "scrambled": [
+        "That",
+        "mountain",
+        "has",
+        "snow"
+      ],
+      "correct": "That mountain has snow.",
+      "hu": "Azon a hegyen hó van."
+    },
+    {
+      "scrambled": [
+        "Those",
+        "documents",
+        "are",
+        "important"
+      ],
+      "correct": "Those documents are important.",
+      "hu": "Azok a dokumentumok fontosak."
+    },
+    {
+      "scrambled": [
+        "This",
+        "coffee",
+        "is",
+        "hot"
+      ],
+      "correct": "This coffee is hot.",
+      "hu": "Ez a kávé forró."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "those",
+        "bags",
+        "heavy"
+      ],
+      "correct": "Are those bags heavy?",
+      "hu": "Azok a táskák nehezek?"
+    },
+    {
+      "scrambled": [
+        "That",
+        "girl",
+        "is",
+        "my",
+        "sister"
+      ],
+      "correct": "That girl is my sister.",
+      "hu": "Az a lány a nővérem/húgom."
+    },
+    {
+      "scrambled": [
+        "These",
+        "rooms",
+        "are",
+        "clean"
+      ],
+      "correct": "These rooms are clean.",
+      "hu": "Ezek a szobák tiszták."
+    },
+    {
+      "scrambled": [
+        "That",
+        "clock",
+        "doesn't",
+        "work"
+      ],
+      "correct": "That clock doesn't work.",
+      "hu": "Az az óra nem működik."
+    }
+  ]
+}

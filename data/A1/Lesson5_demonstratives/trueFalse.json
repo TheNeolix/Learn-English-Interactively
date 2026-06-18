@@ -1,0 +1,255 @@
+{
+  "description": "Olvasd el a mondatokat. Jelöld igaznak, ha a mondat nyelvtanilag helyes, és hamisnak, ha hibát tartalmaz.",
+  "items": [
+    {
+      "question": "This books here are very good.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: These books here are very good."
+    },
+    {
+      "question": "That is a big house over there.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "These is my phone.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: This is my phone."
+    },
+    {
+      "question": "Those people work in an office.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "This car next to me is nice.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Those are my keys in my hand.",
+      "answer": false,
+      "explanation": "Helytelen. Ha a kulcsok a kezemben vannak: These are my keys in my hand."
+    },
+    {
+      "question": "That laptop over there doesn't have a good battery.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "These eyes are blue.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Is those your dogs over there?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Are those your dogs over there?"
+    },
+    {
+      "question": "This meeting today is very important.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "These computer in front of me is new.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: This computer in front of me is new."
+    },
+    {
+      "question": "Those are beautiful birds up in the tree.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "That keys on the table are mine.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Those keys on the table are mine."
+    },
+    {
+      "question": "This house across the street is very old.",
+      "answer": false,
+      "explanation": "Helytelen. Across the street távolságot jelez, ezért természetesebb: That house across the street is very old."
+    },
+    {
+      "question": "Are these pens in your hand black?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "That stars in the sky are bright tonight.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Those stars in the sky are bright tonight."
+    },
+    {
+      "question": "This sandwich on my plate tastes great.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Those man over there is our new manager.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: That man over there is our new manager."
+    },
+    {
+      "question": "These windows in this room are open.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Is that phone next to your hand yours?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "This boxes on the floor are heavy.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: These boxes on the floor are heavy."
+    },
+    {
+      "question": "That cloud up in the sky looks like a car.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "These problem is very hard to fix.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: This problem is very hard to fix."
+    },
+    {
+      "question": "Those dogs across the road are barking.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "This eyes are beautiful.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: These eyes are beautiful."
+    },
+    {
+      "question": "That is an old laptop on the desk over there.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Are those people across the street your friends?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "These room here is very clean and big.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: This room here is very clean and big."
+    },
+    {
+      "question": "Those files on the top shelf are important.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Is this star in the sky a planet?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "That shoes on my feet are dirty.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: These shoes on my feet are dirty."
+    },
+    {
+      "question": "This office next to mine is empty.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "These children over there are playing football.",
+      "answer": false,
+      "explanation": "Helytelen. Over there távolságot jelez, ezért természetesebb: Those children over there are playing football."
+    },
+    {
+      "question": "That laptop here in my hands is broken.",
+      "answer": false,
+      "explanation": "Helytelen. Here/in my hands közelséget jelez, ezért: This laptop here in my hands is broken."
+    },
+    {
+      "question": "Those houses on the mountain are beautiful.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Are this keys on the desk yours?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Are these keys on the desk yours?"
+    },
+    {
+      "question": "That tree far away is very old.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "These cups on our table are clean.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Those is a big screen over there.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: That is a big screen over there."
+    },
+    {
+      "question": "This code in front of me has an error.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "That birds flying high are very fast.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Those birds flying high are very fast."
+    },
+    {
+      "question": "These sandwich is very hot.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: This sandwich is very hot."
+    },
+    {
+      "question": "Are those cars in the garden new?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "This letters on my desk are for the manager.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: These letters on my desk are for the manager."
+    },
+    {
+      "question": "That man over there works in a bank.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "These dogs here next to me are friendly.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Those book on that shelf is interesting.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: That book on that shelf is interesting."
+    },
+    {
+      "question": "Is this answer correct?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "These papers on the table are wet.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "That stars are very small from here.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Those stars are very small from here."
+    }
+  ]
+}

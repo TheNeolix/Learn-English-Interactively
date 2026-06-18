@@ -1,0 +1,255 @@
+{
+  "description": "Egészítsd ki a mondatokat a megfelelő mutató névmással: this, that, these vagy those.",
+  "items": [
+    {
+      "sentence": "______ is my phone here in my hand.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Look at ______ big house over there!",
+      "answer": "that",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ keys on my table are mine.",
+      "answer": "These",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ dogs in the park over there are very nice.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "I like ______ book here. It is very good.",
+      "answer": "this",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ laptop on that desk over there is old.",
+      "answer": "That",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Who are ______ people across the street?",
+      "answer": "those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ office here is very nice and big.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Look at ______ blue birds up in the tree!",
+      "answer": "those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Can you see ______ star in the sky?",
+      "answer": "that",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ apple here in my basket is sweet.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ children playing over there are happy.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Is ______ your pen next to your computer?",
+      "answer": "this",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ windows across the room are open.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "I want to buy ______ black car next to me.",
+      "answer": "this",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Do you see ______ high mountain over there?",
+      "answer": "that",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ shoes on my feet are very comfortable.",
+      "answer": "These",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ man sitting at the desk over there is our boss.",
+      "answer": "That",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ cups here on our table are dirty.",
+      "answer": "These",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ clouds up in the sky look like a big dog.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ problem we are fixing right now is very simple.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Look at ______ white boat out on the river!",
+      "answer": "that",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ keys here in my pocket are for the office.",
+      "answer": "These",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ flowers in the garden across the street are beautiful.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ screen here in front of me is very clean.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ people standing at the bus stop over there are late.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Is ______ coffee here on my desk yours?",
+      "answer": "this",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ stars in the sky tonight are very bright.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ room here is our main office.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ bags on the floor over there belong to the students.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ cat sleeping next to my chair is very small.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Who lives in ______ house across the road?",
+      "answer": "that",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ pencils here in my hand are black.",
+      "answer": "These",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ birds flying high up in the sky are fast.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ lesson today is very important for you.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Look at ______ large tree at the end of the street!",
+      "answer": "that",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ photos here in my phone are beautiful.",
+      "answer": "These",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ employees working in that office over there are busy.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ sandwich here on my plate looks great.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ mountains far away have snow on them.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ telephone next to your hand is ringing.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ boxes on the top shelf over there are empty.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ glass of water here is cold and nice.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Who is ______ girl standing near the door over there?",
+      "answer": "that",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ letters here on my desk are for the manager.",
+      "answer": "These",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "Look at ______ airplanes up in the sky!",
+      "answer": "those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ chair here next to me is broken.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ lights across the river look beautiful at night.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ computer in front of me is working fast.",
+      "answer": "This",
+      "hint": "(this / that / these / those)"
+    },
+    {
+      "sentence": "______ apartments across the street are very expensive.",
+      "answer": "Those",
+      "hint": "(this / that / these / those)"
+    }
+  ]
+}
