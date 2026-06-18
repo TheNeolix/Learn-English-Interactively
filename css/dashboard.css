@@ -28,42 +28,6 @@
     overflow-y: visible;
 }
 
-/* Sidebar Completion Meter Card */
-.sidebar-progress-card {
-    background: var(--color-bg-surface);
-    border: var(--glass-border);
-    box-shadow: var(--glass-shadow);
-    border-radius: 12px;
-    padding: 1rem;
-}
-
-.progress-label {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    margin-bottom: 0.5rem;
-}
-
-.progress-bar-container {
-    background: oklch(0.1 0.01 260);
-    width: 100%;
-    height: 8px;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 0.4rem;
-}
-
-.progress-bar-fill {
-    background: linear-gradient(90deg, var(--color-accent-in), var(--color-accent-at));
-    height: 100%;
-    border-radius: 4px;
-    transition: width 0.5s ease-in-out;
-}
-
-.progress-percentage {
-    font-family: var(--font-heading);
-    font-size: 0.9rem;
-    font-weight: 600;
-}
 
 /* Navigation Group Clusters (Mobile Horizontal Carousel) */
 .sidebar-nav {
@@ -315,6 +279,13 @@
 .dashboard-content {
     padding: 2.5rem;
     overflow-y: auto;
+}
+
+@keyframes livingRoadmapBg {
+    0% { background-position: 0% 0%; }
+    33% { background-position: 100% 50%; }
+    66% { background-position: 0% 100%; }
+    100% { background-position: 0% 0%; }
 }
 
 /* Module Breadcrumbs Header */
@@ -1896,7 +1867,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    z-index: 1000;
+    z-index: 2000;
 }
 
 .bottom-nav-item {
@@ -1987,12 +1958,166 @@
 }
 
 /* ==========================================================================
+   MINI ROADMAP (LEFT SIDEBAR)
+   ========================================================================== */
+.sidebar-roadmap-group {
+    display: none; /* Hidden on mobile/tablets */
+}
+
+@media (min-width: 992px) {
+    .sidebar-roadmap-group {
+        display: block;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid oklch(1 0 0 / 0.1);
+    }
+    
+    .sidebar-roadmap-container {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        background: oklch(0.15 0.01 260 / 0.5);
+        border: var(--glass-border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-top: 1rem;
+    }
+    
+    .sidebar-roadmap-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: scale(0.55);
+        transform-origin: top center;
+    }
+
+    .sidebar-node {
+        position: absolute;
+        cursor: pointer;
+        transform: translate(-50%, -50%) scale(0.65);
+        transition: transform 0.3s;
+        z-index: 2;
+    }
+    
+    .sidebar-node:hover:not(.locked) {
+        transform: translate(-50%, -50%) scale(0.75);
+    }
+
+    .sb-node-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: oklch(0.2 0.02 260);
+        border: 3px solid oklch(1 0 0 / 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.8rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        transition: all 0.3s;
+    }
+    
+    .sidebar-node.active .sb-node-circle {
+        border-color: var(--color-accent-in);
+        background: oklch(0.75 0.15 250 / 0.1);
+        box-shadow: 0 0 20px var(--color-accent-in);
+    }
+    
+    .sidebar-node.completed .sb-node-circle {
+        border-color: var(--color-success);
+        background: oklch(0.75 0.2 150 / 0.1);
+        color: var(--color-success);
+    }
+    
+    .sidebar-node.locked .sb-node-circle {
+        opacity: 0.5;
+        border-color: oklch(1 0 0 / 0.1);
+        filter: grayscale(1);
+    }
+    
+    .sb-lock-overlay {
+        position: absolute;
+        bottom: -5px;
+        right: -5px;
+        background: oklch(0.1 0.01 260);
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+        border: 1px solid oklch(1 0 0 / 0.2);
+    }
+    
+    .sidebar-node.locked .sb-lock-overlay {
+        display: flex;
+    }
+
+    #sb-node-explanation { top: 22px; left: 50%; }
+    #sb-node-words { top: 88px; left: 23%; }
+    #sb-node-quiz { top: 154px; left: 76%; }
+    #sb-node-exam { top: 214px; left: 50%; }
+}
+
+/* ==========================================================================
+   5. STATS & CONTROL PANEL (RIGHT SIDEBAR)
+   ========================================================================== */
+.dashboard-right-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden by default on mobile/tablet */
+    width: 100%;
+    height: 100vh;
+    background: oklch(0.18 0.01 260 / 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 2000;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 2rem 1.5rem;
+    overflow-y: auto;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-right-sidebar.is-active {
+    right: 0;
+}
+
+.mobile-close-stats-btn {
+    display: block;
+    background: oklch(1 0 0 / 0.08);
+    color: var(--color-text-main);
+    border: 1px solid oklch(1 0 0 / 0.15);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    text-align: left;
+    transition: background 0.2s;
+}
+
+.mobile-close-stats-btn:hover {
+    background: oklch(1 0 0 / 0.15);
+}
+
+.stats-widget {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
    DESKTOP MEDIA QUERY (>= 768px)
    ========================================================================== */
 @media (min-width: 768px) {
     .dashboard-container {
         display: grid;
-        grid-template-columns: 300px 1fr;
+        grid-template-columns: 1fr;
         gap: 0;
         padding-bottom: 0;
     }
@@ -2038,4 +2163,832 @@
         align-self: center;
         margin-bottom: 0;
     }
+}
+
+/* ==========================================================================
+   LARGE DESKTOP MEDIA QUERY (>= 1200px)
+   ========================================================================== */
+@media (min-width: 1200px) {
+    .dashboard-container {
+        grid-template-columns: 1fr 350px;
+    }
+    
+    .dashboard-right-sidebar {
+        position: relative;
+        right: auto;
+        width: 100%;
+        background: oklch(0.18 0.01 260 / 0.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-left: var(--glass-border);
+        box-shadow: none;
+        padding: 2rem 1.5rem;
+        transition: none;
+        height: 100%;
+        z-index: 900;
+        overflow-y: visible;
+    }
+    
+    .mobile-close-stats-btn {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   UNIFIED QUIZ CARDS
+   ========================================================================== */
+.quiz-card-wrapper {
+    background: oklch(0.15 0.01 260 / 0.5);
+    border: var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.quiz-question-box {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.quiz-answers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.quiz-opt-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: oklch(0.2 0.02 260);
+    border: 1px solid oklch(1 0 0 / 0.1);
+    border-radius: 12px;
+    color: var(--color-text-main);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quiz-opt-btn:hover:not(:disabled) {
+    background: oklch(0.25 0.02 260);
+    border-color: oklch(1 0 0 / 0.3);
+    transform: translateX(4px);
+}
+
+.quiz-opt-btn:disabled {
+    cursor: default;
+    opacity: 0.6;
+}
+
+.quiz-opt-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    background: oklch(0.3 0.02 260);
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--color-accent-in);
+}
+
+.quiz-opt-btn.correct {
+    background: oklch(0.6 0.15 150 / 0.1) !important;
+    border-color: var(--color-success) !important;
+    opacity: 1 !important;
+}
+
+.quiz-opt-btn.correct .quiz-opt-badge {
+    background: var(--color-success);
+    color: #fff;
+}
+
+.quiz-opt-btn.incorrect {
+    background: oklch(0.6 0.15 20 / 0.1) !important;
+    border-color: oklch(0.6 0.15 20) !important;
+}
+
+.quiz-opt-btn.incorrect .quiz-opt-badge {
+    background: oklch(0.6 0.15 20);
+    color: #fff;
+}
+
+/* ==========================================================================
+   PHASE 7: VISUAL POLISH & GRADIENT MESH
+   ========================================================================== */
+
+body::before, body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background-size: 200% 200%;
+    animation: gradientMove 15s ease infinite alternate;
+    opacity: 0.6;
+}
+
+body::before {
+    background-image: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                      radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%);
+}
+
+body::after {
+    background-image: radial-gradient(circle at 80% 10%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 20% 90%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+    animation-direction: alternate-reverse;
+    animation-duration: 20s;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 100%; }
+}
+
+.proto-card {
+    background: oklch(0.15 0.01 260 / 0.5);
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+}
+
+.roadmap-hero-header {
+    background: linear-gradient(135deg, oklch(0.2 0.05 250 / 0.8), oklch(0.15 0.05 260 / 0.8));
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: var(--glass-border);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: var(--glass-shadow);
+}
+
+.roadmap-hero-header::after {
+    content: '';
+    position: absolute;
+    right: -10%;
+    top: -50%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--color-accent-in) 0%, transparent 70%);
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.hero-icon {
+    font-size: 3rem;
+    filter: drop-shadow(0 0 10px var(--color-accent-in));
+}
+
+.hero-text h1 {
+    font-size: 1.8rem;
+    color: var(--color-accent-in);
+    margin-bottom: 0.5rem;
+}
+
+.hero-text p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    max-width: 600px;
+}
+
+
+
+/* ==========================================================================
+   PHASE 8: CODDY-STYLE ROADMAP SLIDER
+   ========================================================================== */
+
+.main-slider-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    min-height: calc(100vh - 100px);
+}
+
+.roadmap-view-panel {
+    width: 100%;
+    flex-shrink: 0;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s, height 0s linear 0.5s;
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 5;
+    background: transparent;
+    height: auto;
+    overflow: visible;
+}
+
+.workspace-view-panel {
+    width: 100%;
+    flex-shrink: 0;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s, height 0s linear 0s;
+    transform: translateX(0);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 4;
+    margin-left: 0;
+    background: transparent;
+    height: 0;
+    overflow: hidden;
+}
+
+/* Active State (Lesson open) */
+.main-slider-wrapper.step-active .roadmap-view-panel {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s, height 0s linear 0.5s;
+}
+
+.main-slider-wrapper.step-active .workspace-view-panel {
+    transform: translateX(-100%);
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 5;
+    height: auto;
+    overflow: visible;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s, height 0s linear 0s;
+}
+
+.main-roadmap-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    padding-bottom: 5rem;
+}
+
+.lesson-section-box {
+    width: 100%;
+    max-width: 600px;
+    border: var(--glass-border);
+    background: radial-gradient(circle at center, rgba(192, 132, 252, 0.15) 0%, transparent 70%),
+                radial-gradient(circle at 10% 20%, rgba(96, 165, 250, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(244, 114, 182, 0.15) 0%, transparent 50%),
+                oklch(0.18 0.01 260 / 0.4);
+    background-size: 300% 300%;
+    animation: livingRoadmapBg 8s ease-in-out infinite;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: var(--glass-shadow);
+    position: relative;
+}
+
+.lesson-section-title {
+    font-size: 1.5rem;
+    color: var(--color-accent-in);
+    margin-bottom: 0.5rem;
+}
+
+.lesson-section-subtitle {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.lesson-nodes-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Fixed height for the winding SVG path */
+    margin: 0 auto;
+}
+
+.lesson-svg-path {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    }
+
+.lesson-node {
+    position: absolute;
+    z-index: 3;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.lesson-node:hover:not(.locked) {
+    transform: translate(-50%, -50%) scale(1.15);
+    filter: drop-shadow(0 0 10px var(--color-accent-in));
+}
+
+.lesson-node-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: oklch(0.22 0.03 260);
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s ease;
+    box-shadow: var(--glass-shadow);
+    font-size: 1.5rem;
+}
+
+.lesson-node.completed .lesson-node-circle {
+    border-color: var(--color-success);
+    background-color: oklch(0.3 0.1 150 / 0.5);
+    box-shadow: 0 0 15px oklch(0.75 0.2 150 / 0.4);
+}
+
+.lesson-node.active .lesson-node-circle {
+    border-color: var(--color-accent-in);
+    background-color: oklch(0.3 0.1 260 / 0.5);
+    box-shadow: 0 0 20px oklch(0.75 0.15 250 / 0.5);
+    animation: pulse-node 2s infinite alternate;
+}
+
+.lesson-node.locked {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.lesson-node.locked .lesson-node-circle {
+    filter: grayscale(100%) brightness(50%);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.node-label {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--color-text-main);
+    white-space: nowrap;
+    background: rgba(0,0,0,0.4);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.lesson-node:hover .node-label {
+    opacity: 1;
+}
+
+.btn-back-to-map {
+    background: oklch(0.25 0.05 250 / 0.5);
+    border: 1px solid var(--color-accent-in);
+    color: var(--color-accent-in);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.btn-back-to-map:hover {
+    background: var(--color-accent-in);
+    color: white;
+}
+
+
+/* ==========================================================================
+   UI / TOGGLE SWITCHES & OVERLAYS
+   ========================================================================== */
+
+/* Toggle Switch (Csökkentett mozgás) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: oklch(0.2 0.05 250);
+  transition: .4s;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--color-success);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--color-success);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Fullscreen Overlay for Shop Modal & Quiz */
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ==========================================================================
+   GENERIC BUTTON STYLES (Added for Shop and UI Controls)
+   ========================================================================== */
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--color-accent-in);
+    color: var(--color-accent-in);
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--color-accent-in);
+    color: #000;
+}
+
+.btn-primary {
+    background: var(--color-accent-in);
+    border: 1px solid var(--color-accent-in);
+    color: #000;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--color-accent-on);
+    border-color: var(--color-accent-on);
+    box-shadow: 0 0 10px var(--color-accent-in);
+}
+
+
+/* ==========================================================================
+   MOBILE SPACING FIXES
+   ========================================================================== */
+@media (max-width: 1199px) {
+    .dashboard-content {
+        padding-bottom: 90px !important;
+    }
+    .main-roadmap-container {
+        padding-bottom: 90px !important;
+    }
+    .dashboard-right-sidebar {
+        padding-bottom: 100px !important;
+    }
+}
+
+/* ==========================================================================
+   SWIPE DECK (FLASHCARDS)
+   ========================================================================== */
+
+.vocab-mode-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.vocab-mode-btn {
+    background: oklch(0.2 0.02 260);
+    border: 1px solid oklch(1 0 0 / 0.1);
+    color: var(--color-text-main);
+    padding: 0.6rem 1.5rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.vocab-mode-btn.active {
+    background: var(--color-accent-in);
+    color: #000;
+    border-color: var(--color-accent-in);
+    box-shadow: 0 0 15px oklch(0.75 0.18 310 / 0.4);
+}
+
+.swipe-deck-wrapper {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+.swipe-deck-wrapper.active {
+    display: flex;
+}
+
+.words-table-wrapper.hidden {
+    display: none;
+}
+
+.swipe-deck-container {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    height: 450px;
+    perspective: 1000px;
+    margin: 0 auto;
+}
+
+.swipe-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    transform-style: preserve-3d;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: center center;
+    cursor: grab;
+    z-index: 1;
+    display: none; /* Only top few cards will be shown */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.swipe-card:active {
+    cursor: grabbing;
+}
+
+.swipe-card.is-top {
+    z-index: 10;
+    display: block;
+}
+
+.swipe-card.is-behind-1 {
+    z-index: 9;
+    display: block;
+    transform: scale(0.95) translateY(15px);
+    opacity: 0.8;
+}
+
+.swipe-card.is-behind-2 {
+    z-index: 8;
+    display: block;
+    transform: scale(0.9) translateY(30px);
+    opacity: 0.5;
+}
+
+.swipe-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.swipe-card.flipped .swipe-card-inner {
+    transform: rotateY(180deg);
+}
+
+.swipe-card-front, .swipe-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: oklch(0.18 0.02 260);
+    border: var(--glass-border);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+}
+
+.swipe-card-front {
+    background: linear-gradient(145deg, oklch(0.2 0.02 260), oklch(0.15 0.02 260));
+}
+
+.swipe-card-back {
+    background: linear-gradient(145deg, oklch(0.25 0.05 280), oklch(0.18 0.02 260));
+    transform: rotateY(180deg);
+}
+
+.swipe-card-word {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-accent-in);
+    margin-bottom: 1rem;
+}
+
+.swipe-card-hu {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 1.5rem;
+}
+
+.swipe-card-example {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.swipe-overlay {
+    position: absolute;
+    top: 20px;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    opacity: 0;
+    z-index: 20;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.swipe-overlay-know {
+    left: 20px;
+    color: var(--color-success);
+    border: 3px solid var(--color-success);
+    transform: rotate(-15deg);
+}
+
+.swipe-overlay-practice {
+    right: 20px;
+    color: oklch(0.6 0.15 20);
+    border: 3px solid oklch(0.6 0.15 20);
+    transform: rotate(15deg);
+}
+
+.swipe-card.dragging {
+    transition: none; /* remove transition during drag for immediate follow */
+}
+
+/* Controls */
+.swipe-controls {
+    display: none; /* Hidden on mobile */
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+    .swipe-controls {
+        display: flex;
+    }
+}
+
+.swipe-control-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+    border: 2px solid;
+    background: oklch(0.15 0.01 260 / 0.8);
+    transition: all 0.2s;
+    backdrop-filter: blur(5px);
+    color: white;
+}
+
+.btn-swipe-left {
+    border-color: oklch(0.6 0.15 20);
+    color: oklch(0.6 0.15 20);
+}
+
+.btn-swipe-left:hover {
+    background: oklch(0.6 0.15 20 / 0.2);
+    transform: scale(1.1);
+}
+
+.btn-swipe-right {
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.btn-swipe-right:hover {
+    background: oklch(0.7 0.2 150 / 0.2);
+    transform: scale(1.1);
+}
+
+.swipe-end-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: oklch(0.15 0.01 260 / 0.8);
+    border-radius: 20px;
+    border: var(--glass-border);
+    padding: 2rem;
+    z-index: 0;
+}
+
+.swipe-end-screen.active {
+    display: flex;
+}
+
+.swipe-end-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.tap-hint {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
 }

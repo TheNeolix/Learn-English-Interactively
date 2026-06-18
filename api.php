@@ -135,8 +135,10 @@ function handleSignup($pdo, $data) {
         $completed = isset($guestMigration['completed']) ? json_encode($guestMigration['completed']) : json_encode(new stdClass());
         $scores = isset($guestMigration['scores']) ? json_encode($guestMigration['scores']) : json_encode(new stdClass());
 
-        // Create user_progress
-        $stmtProgress = $pdo->prepare("INSERT INTO user_progress (user_id, points, completed, scores) VALUES (?, ?, ?, ?)");
+        // Create user_progress (with default gamification values)
+        $stmtProgress = $pdo->prepare("INSERT INTO user_progress 
+            (user_id, points, completed, scores, level, streak_count, streak_shields, active_theme) 
+            VALUES (?, ?, ?, ?, 1, 0, 2, 'default')");
         $stmtProgress->execute([$userId, $points, $completed, $scores]);
 
         // Create default free subscription
@@ -247,7 +249,7 @@ function handleGetSession($pdo) {
         }
 
         // Load progress details
-        $stmtProgress = $pdo->prepare("SELECT points, completed, scores FROM user_progress WHERE user_id = ?");
+        $stmtProgress = $pdo->prepare("SELECT points, completed, scores, level, streak_count, streak_shields, last_active_date, unlocked_items, active_theme, earned_xp_per_node, daily_quests_date, active_quests, quest_progress, completed_quests_today FROM user_progress WHERE user_id = ?");
         $stmtProgress->execute([$userId]);
         $progress = $stmtProgress->fetch();
 
@@ -269,7 +271,18 @@ function handleGetSession($pdo) {
                 'progress' => [
                     'points' => $progress ? intval($progress['points']) : 0,
                     'completed' => ($progress && !empty($progress['completed'])) ? json_decode($progress['completed']) : new stdClass(),
-                    'scores' => ($progress && !empty($progress['scores'])) ? json_decode($progress['scores']) : new stdClass()
+                    'scores' => ($progress && !empty($progress['scores'])) ? json_decode($progress['scores']) : new stdClass(),
+                    'level' => $progress ? intval($progress['level']) : 1,
+                    'streak_count' => $progress ? intval($progress['streak_count']) : 0,
+                    'streak_shields' => $progress ? intval($progress['streak_shields']) : 2,
+                    'last_active_date' => $progress ? $progress['last_active_date'] : null,
+                    'unlocked_items' => ($progress && !empty($progress['unlocked_items'])) ? json_decode($progress['unlocked_items']) : [],
+                    'active_theme' => $progress ? $progress['active_theme'] : 'default',
+                    'earned_xp_per_node' => ($progress && !empty($progress['earned_xp_per_node'])) ? json_decode($progress['earned_xp_per_node']) : new stdClass(),
+                    'daily_quests_date' => $progress ? $progress['daily_quests_date'] : null,
+                    'active_quests' => ($progress && !empty($progress['active_quests'])) ? json_decode($progress['active_quests']) : [],
+                    'quest_progress' => ($progress && !empty($progress['quest_progress'])) ? json_decode($progress['quest_progress']) : new stdClass(),
+                    'completed_quests_today' => ($progress && !empty($progress['completed_quests_today'])) ? json_decode($progress['completed_quests_today']) : []
                 ],
                 'subscription' => [
                     'role' => $sub ? $sub['role'] : 'user',
@@ -295,11 +308,47 @@ function handleSaveProgress($pdo, $data) {
     $points = isset($data['points']) ? intval($data['points']) : 0;
     $completed = isset($data['completed']) ? json_encode($data['completed']) : json_encode(new stdClass());
     $scores = isset($data['scores']) ? json_encode($data['scores']) : json_encode(new stdClass());
+    
+    // Gamification
+    $level = isset($data['level']) ? intval($data['level']) : 1;
+    $streakCount = isset($data['streak_count']) ? intval($data['streak_count']) : 0;
+    $streakShields = isset($data['streak_shields']) ? intval($data['streak_shields']) : 2;
+    $lastActiveDate = !empty($data['last_active_date']) ? $data['last_active_date'] : null;
+    $unlockedItems = isset($data['unlocked_items']) ? json_encode($data['unlocked_items']) : json_encode([]);
+    $activeTheme = !empty($data['active_theme']) ? $data['active_theme'] : 'default';
+    $earnedXpPerNode = isset($data['earned_xp_per_node']) ? json_encode($data['earned_xp_per_node']) : json_encode(new stdClass());
+    
+    // Daily Quests
+    $dailyQuestsDate = !empty($data['daily_quests_date']) ? $data['daily_quests_date'] : null;
+    $activeQuests = isset($data['active_quests']) ? json_encode($data['active_quests']) : json_encode([]);
+    $questProgress = isset($data['quest_progress']) ? json_encode($data['quest_progress']) : json_encode(new stdClass());
+    $completedQuestsToday = isset($data['completed_quests_today']) ? json_encode($data['completed_quests_today']) : json_encode([]);
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO user_progress (user_id, points, completed, scores) VALUES (?, ?, ?, ?) 
-            ON DUPLICATE KEY UPDATE points = VALUES(points), completed = VALUES(completed), scores = VALUES(scores)");
-        $stmt->execute([$userId, $points, $completed, $scores]);
+        $stmt = $pdo->prepare("INSERT INTO user_progress 
+            (user_id, points, completed, scores, level, streak_count, streak_shields, last_active_date, unlocked_items, active_theme, earned_xp_per_node, daily_quests_date, active_quests, quest_progress, completed_quests_today) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+            ON DUPLICATE KEY UPDATE 
+            points = VALUES(points), 
+            completed = VALUES(completed), 
+            scores = VALUES(scores),
+            level = VALUES(level),
+            streak_count = VALUES(streak_count),
+            streak_shields = VALUES(streak_shields),
+            last_active_date = VALUES(last_active_date),
+            unlocked_items = VALUES(unlocked_items),
+            active_theme = VALUES(active_theme),
+            earned_xp_per_node = VALUES(earned_xp_per_node),
+            daily_quests_date = VALUES(daily_quests_date),
+            active_quests = VALUES(active_quests),
+            quest_progress = VALUES(quest_progress),
+            completed_quests_today = VALUES(completed_quests_today)");
+            
+        $stmt->execute([
+            $userId, $points, $completed, $scores, 
+            $level, $streakCount, $streakShields, $lastActiveDate, $unlockedItems, $activeTheme, $earnedXpPerNode,
+            $dailyQuestsDate, $activeQuests, $questProgress, $completedQuestsToday
+        ]);
 
         echo json_encode(['success' => true]);
     } catch (Exception $e) {

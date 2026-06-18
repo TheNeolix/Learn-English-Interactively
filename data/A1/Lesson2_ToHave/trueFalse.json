@@ -1,0 +1,255 @@
+{
+  "description": "Olvasd el a mondatot, és döntsd el, hogy nyelvtanilag helyes-e (True) vagy helytelen (False)!",
+  "items": [
+    {
+      "question": "She has a big house.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "He doesn't has a car.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"He doesn't have a car.\""
+    },
+    {
+      "question": "Do you have a pen?",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "They don't have a problem.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "Does she has a sister?",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"Does she have a sister?\""
+    },
+    {
+      "question": "I have a meeting today.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "It doesn't have a good battery.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "We has a nice dog.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"We have a nice dog.\""
+    },
+    {
+      "question": "Does they have money?",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"Do they have money?\""
+    },
+    {
+      "question": "He doesn't have a job.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "We have a new computer in the office.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "He don't have a phone.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"He doesn't have a phone.\""
+    },
+    {
+      "question": "Does he have a key?",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "They has blue eyes.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"They have blue eyes.\""
+    },
+    {
+      "question": "This laptop doesn't has a screen.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"This laptop doesn't have a screen.\""
+    },
+    {
+      "question": "I don't have a problem with the code.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "Do she have a brother?",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"Does she have a brother?\""
+    },
+    {
+      "question": "The house has many rooms.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "We doesn't have a meeting tomorrow.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"We don't have a meeting tomorrow.\""
+    },
+    {
+      "question": "Does you have time for a coffee?",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "Peter has a big house.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "They don't have any money.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "She haves a beautiful car.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"She has a beautiful car.\""
+    },
+    {
+      "question": "It doesn't have a name.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "Do they have a dog?",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "I has a question for you.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"I have a question for you.\""
+    },
+    {
+      "question": "He doesn't have a sister.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "This car has a good battery.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "Does the office has a big screen?",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"Does the office have a big screen?\""
+    },
+    {
+      "question": "We have a lot of time today.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "They don't has a nice manager.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"They don't have a nice manager.\""
+    },
+    {
+      "question": "Do you have a job?",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "She doesn't have a telephone.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "He have a big problem.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"He has a big problem.\""
+    },
+    {
+      "question": "The children has many books.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"The children have many books.\""
+    },
+    {
+      "question": "Does she have blue eyes?",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "I don't have a car, I walk.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "We has a meeting at 9 o'clock.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"We have a meeting at 9 o'clock.\""
+    },
+    {
+      "question": "Does they have a big office?",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"Do they have a big office?\""
+    },
+    {
+      "question": "It has a very nice screen.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "You don't have a pen on your table.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "He doesn't have any keys.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "She don't have a big family.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"She doesn't have a big family.\""
+    },
+    {
+      "question": "Do we have a test today?",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "The dog has a big ball.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "I have not a computer.",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"I don't have a computer.\""
+    },
+    {
+      "question": "They have a beautiful house in Hungary.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "Does he has a question?",
+      "answer": false,
+      "explanation": "Helytelen! A helyes mondat: \"Does he have a question?\""
+    },
+    {
+      "question": "We don't have a black car.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    },
+    {
+      "question": "She has a happy dog.",
+      "answer": true,
+      "explanation": "Ez a mondat nyelvtanilag helyes."
+    }
+  ]
+}

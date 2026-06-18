@@ -1,0 +1,332 @@
+[
+    {
+        "en": "have / has",
+        "hu": "birtokolni / van (valakinek valamije)",
+        "example": "I have a big dog."
+    },
+    {
+        "en": "dog",
+        "hu": "kutya",
+        "example": "He has a big dog."
+    },
+    {
+        "en": "eye",
+        "hu": "szem",
+        "example": "She has blue eyes."
+    },
+    {
+        "en": "meeting",
+        "hu": "megbeszélés",
+        "example": "We have a meeting today."
+    },
+    {
+        "en": "time",
+        "hu": "idő",
+        "example": "They have a lot of time."
+    },
+    {
+        "en": "phone / telephone",
+        "hu": "telefon",
+        "example": "You have a nice phone."
+    },
+    {
+        "en": "laptop",
+        "hu": "laptop",
+        "example": "The laptop has a screen."
+    },
+    {
+        "en": "battery",
+        "hu": "akkumulátor",
+        "example": "It doesn't have a good battery."
+    },
+    {
+        "en": "job",
+        "hu": "munka / állás",
+        "example": "Peter has a job."
+    },
+    {
+        "en": "money",
+        "hu": "pénz",
+        "example": "I don't have money."
+    },
+    {
+        "en": "office",
+        "hu": "iroda",
+        "example": "This office has a big screen."
+    },
+    {
+        "en": "screen",
+        "hu": "képernyő",
+        "example": "This office has a screen."
+    },
+    {
+        "en": "coffee",
+        "hu": "kávé",
+        "example": "Do you have time for a coffee?"
+    },
+    {
+        "en": "problem",
+        "hu": "probléma",
+        "example": "We have a problem with the computer."
+    },
+    {
+        "en": "computer",
+        "hu": "számítógép",
+        "example": "The computer has a problem."
+    },
+    {
+        "en": "pen",
+        "hu": "toll",
+        "example": "He has a pen."
+    },
+    {
+        "en": "key",
+        "hu": "kulcs",
+        "example": "I don't have a key."
+    },
+    {
+        "en": "manager",
+        "hu": "menedzser / vezető",
+        "example": "She has a very nice manager."
+    },
+    {
+        "en": "food",
+        "hu": "étel",
+        "example": "We don't have food."
+    },
+    {
+        "en": "question",
+        "hu": "kérdés",
+        "example": "I have a question about the project."
+    },
+    {
+        "en": "project",
+        "hu": "projekt",
+        "example": "I have a question about the project."
+    },
+    {
+        "en": "garden",
+        "hu": "kert",
+        "example": "They have a big dog in their garden."
+    },
+    {
+        "en": "smile",
+        "hu": "mosoly",
+        "example": "You have a beautiful smile."
+    },
+    {
+        "en": "petrol",
+        "hu": "benzin",
+        "example": "It doesn't have petrol."
+    },
+    {
+        "en": "holiday",
+        "hu": "nyaralás / szabadság",
+        "example": "We have a holiday in July."
+    },
+    {
+        "en": "brother",
+        "hu": "fiútestvér",
+        "example": "He has a brother and a sister."
+    },
+    {
+        "en": "test",
+        "hu": "teszt / dolgozat",
+        "example": "The students have a test today."
+    },
+    {
+        "en": "door",
+        "hu": "ajtó",
+        "example": "She has a key to the front door."
+    },
+    {
+        "en": "answer",
+        "hu": "válasz",
+        "example": "Does he have the answer?"
+    },
+    {
+        "en": "book",
+        "hu": "könyv",
+        "example": "This book has many pages."
+    },
+    {
+        "en": "page",
+        "hu": "oldal (könyvben)",
+        "example": "This book has many interesting pages."
+    },
+    {
+        "en": "bank",
+        "hu": "bank",
+        "example": "He has a job in a bank."
+    },
+    {
+        "en": "apartment",
+        "hu": "lakás",
+        "example": "This apartment has a big kitchen."
+    },
+    {
+        "en": "bag",
+        "hu": "táska",
+        "example": "She has a black pen in her bag."
+    },
+    {
+        "en": "boss",
+        "hu": "főnök",
+        "example": "You have a meeting with the boss today."
+    },
+    {
+        "en": "pocket",
+        "hu": "zseb",
+        "example": "He doesn't have any money in his pocket."
+    },
+    {
+        "en": "family",
+        "hu": "család",
+        "example": "They have a big family."
+    },
+    {
+        "en": "life",
+        "hu": "élet",
+        "example": "She has a happy life."
+    },
+    {
+        "en": "card",
+        "hu": "kártya",
+        "example": "We use a card."
+    },
+    {
+        "en": "blue",
+        "hu": "kék",
+        "example": "She has blue eyes."
+    },
+    {
+        "en": "nice",
+        "hu": "szép / kedves",
+        "example": "You have a nice car."
+    },
+    {
+        "en": "old",
+        "hu": "régi / öreg",
+        "example": "The laptop is old."
+    },
+    {
+        "en": "good",
+        "hu": "jó",
+        "example": "My phone has a good battery."
+    },
+    {
+        "en": "poor",
+        "hu": "szegény",
+        "example": "I am poor."
+    },
+    {
+        "en": "busy",
+        "hu": "elfoglalt",
+        "example": "You look busy."
+    },
+    {
+        "en": "rich",
+        "hu": "gazdag",
+        "example": "They are rich."
+    },
+    {
+        "en": "dead",
+        "hu": "halott / lemerült",
+        "example": "My phone is dead."
+    },
+    {
+        "en": "new",
+        "hu": "új",
+        "example": "We have a new laptop."
+    },
+    {
+        "en": "lonely",
+        "hu": "magányos",
+        "example": "Mary is lonely."
+    },
+    {
+        "en": "empty",
+        "hu": "üres",
+        "example": "The car is empty."
+    },
+    {
+        "en": "interesting",
+        "hu": "érdekes",
+        "example": "This book has many interesting pages."
+    },
+    {
+        "en": "clean",
+        "hu": "tiszta",
+        "example": "We have a clean office."
+    },
+    {
+        "en": "black",
+        "hu": "fekete",
+        "example": "She has a black pen."
+    },
+    {
+        "en": "walk",
+        "hu": "sétálni / gyalogolni",
+        "example": "He walks to work."
+    },
+    {
+        "en": "work",
+        "hu": "dolgozni",
+        "example": "He has a new laptop for work."
+    },
+    {
+        "en": "look",
+        "hu": "kinézni (valahogy)",
+        "example": "You look busy."
+    },
+    {
+        "en": "give",
+        "hu": "adni",
+        "example": "Can you give him one?"
+    },
+    {
+        "en": "open",
+        "hu": "kinyitni",
+        "example": "Can you open it?"
+    },
+    {
+        "en": "use",
+        "hu": "használni",
+        "example": "I only use a telephone."
+    },
+    {
+        "en": "help",
+        "hu": "segíteni",
+        "example": "I can help you."
+    },
+    {
+        "en": "talk",
+        "hu": "beszélni",
+        "example": "The manager doesn't have time to talk."
+    },
+    {
+        "en": "a lot of",
+        "hu": "sok",
+        "example": "They have a lot of time."
+    },
+    {
+        "en": "many",
+        "hu": "sok (megszámlálható)",
+        "example": "The house has many rooms."
+    },
+    {
+        "en": "here",
+        "hu": "itt",
+        "example": "She doesn't have any friends here."
+    },
+    {
+        "en": "sorry",
+        "hu": "sajnálom",
+        "example": "I am sorry."
+    },
+    {
+        "en": "now",
+        "hu": "most",
+        "example": "Mark and David have a meeting now."
+    }
+]

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tanuló Felület - Online Angol Iskola</title>
-    <link rel="stylesheet" href="css/main.css?v=1.0.7">
-    <link rel="stylesheet" href="css/dashboard.css?v=1.0.7">
+    <link rel="stylesheet" href="css/main.css?v=1.0.9">
+    <link rel="stylesheet" href="css/dashboard.css?v=1.0.9">
 </head>
 <body>
 
@@ -45,41 +45,33 @@
     <!-- 2. MAIN LAYOUT GRID FRAMEWORK -->
     <div class="dashboard-container">
         
-        <!-- A. SIDE PANEL COLUMN -->
-        <aside class="dashboard-sidebar" aria-label="Tananyag menü">
+        
+        <!-- MAIN DISPLAY VIEWPORT & SLIDER -->
+        <div class="main-slider-wrapper" id="main-slider">
             
-            <!-- Live Progress Widget Container -->
-            <div class="sidebar-progress-card">
-                <p class="progress-label">A szint teljesítettsége:</p>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: 0%;"></div>
+            <!-- VIEW 1: ROADMAP MAP -->
+            <div class="roadmap-view-panel" id="roadmap-panel">
+                <div class="roadmap-hero-header" style="margin: 1.5rem 1.5rem 0 1.5rem;">
+                    <div class="hero-icon">🚀</div>
+                    <div class="hero-text">
+                        <h1>Tanulási Útvonal</h1>
+                        <p>Haladj végig a leckéken, gyűjts XP-t és nyisd meg az új kihívásokat!</p>
+                    </div>
                 </div>
-                <span class="progress-percentage">0% Kész</span>
+                <!-- Dynamic roadmap container where JS will inject SVG path and nodes -->
+                <div id="main-roadmap-container" class="main-roadmap-container" style="padding: 1.5rem;">
+                    <!-- Loaded via JS -->
+                </div>
             </div>
 
-            <!-- Navigation Links Wrapper -->
-            <nav class="sidebar-nav">
-                <!-- Group 1: Course Accordion -->
-                <div class="nav-group">
-                    <h3 class="group-title">Tananyag (Lessons)</h3>
-                    
-                    <!-- Dynamic lessons will be injected here by renderSidebar() -->
-                    <div id="sidebar-lessons-container"></div>
-                </div>
+            
+            <!-- VIEW 2: WORKSPACE (Exercises) -->
+            <div class="workspace-view-panel" id="workspace-panel">
+                <button class="btn btn-secondary" onclick="closeWorkspace()" style="margin: 1.5rem 1.5rem 0 1.5rem; padding: 0.8rem 1.5rem; border-radius: 12px; font-weight: bold; font-size: 1rem; border: 1px solid var(--color-accent-in);">
+                    ← Vissza a térképhez
+                </button>
 
-                <!-- Group 2: Final Evaluations -->
-                <div class="nav-group exam-group">
-                    <h3 class="group-title">Vizsgák</h3>
-                    <ul>
-                        <li>
-                            <a href="#" class="sidebar-link final-exam-link">
-                                <span class="status-icon">🏆</span> SZINTZÁRÓ VIZSGA
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </aside>
+
 
         <!-- B. MAIN DISPLAY VIEWPORT -->
         <main class="dashboard-content">
@@ -110,10 +102,7 @@
 
             <!-- Metrics Counter Strip -->
             <section class="metrics-grid" aria-label="Statisztikák">
-                <div class="metric-card">
-                    <span class="metric-value" id="points-counter">0</span>
-                    <span class="metric-title">Pontszám</span>
-                </div>
+                
                 <div class="metric-card">
                     <span class="metric-value" id="timer-display">00:00</span>
                     <span class="metric-title">Ezzel töltött idő</span>
@@ -129,20 +118,131 @@
                 <!-- Javascript will wipe this completely out and load content dynamically -->
             </section>
 
-        </main>
+        
+                </main>
+            </div>
+        </div>
+
+    
+        <!-- C. STATS & CONTROL PANEL RIGHT SIDEBAR -->
+        <aside class="dashboard-right-sidebar" aria-label="Statisztikák és Beállítások panel">
+            <div class="proto-card" style="padding: 1.5rem; height: 100%; overflow-y: auto;">
+                <button class="mobile-close-stats-btn" onclick="toggleMobileStatsDrawer(false)">✕ Bezárás</button>
+                <!-- XP és Szint progresszió -->
+                <div class="stats-widget">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <span style="font-size: 0.9rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Személyes Szint:</span>
+                        <span id="level-display" style="font-size: 1.5rem; font-weight: bold; color: var(--color-accent-in);">Level 1</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-muted);">
+                        <span>XP: <strong id="xp-display" style="color: var(--color-text-main);">0</strong> / <span id="xp-max">100</span></span>
+                        <span id="xp-tier-label">Kezdő nyelvtanuló</span>
+                    </div>
+                    <div class="xp-level-bar" style="width: 100%; height: 10px; border-radius: 5px; background: rgba(255,255,255,0.08); position: relative; overflow: hidden; margin-top: 0.5rem;">
+                        <div class="xp-level-fill" id="xp-fill-bar" style="height: 100%; width: 0%; background: linear-gradient(90deg, var(--color-accent-in), var(--color-accent-on)); transition: width 0.5s ease;"></div>
+                    </div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.2rem 0;">
+
+                <!-- Active Streak fire widget -->
+                <div class="stats-widget">
+                    <h3 style="font-size: 0.9rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">Napi Széria</h3>
+                    <div class="streak-fire-widget" style="display: flex; align-items: center; gap: 0.75rem; background: oklch(0.65 0.2 25 / 0.1); border: 1px solid oklch(0.65 0.2 25 / 0.2); border-radius: 12px; padding: 0.6rem 1rem; margin-bottom: 0.5rem;">
+                        <svg class="streak-fire" width="28" height="28" fill="none" stroke="oklch(0.65 0.2 25)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+                        <div>
+                            <div style="font-weight: bold; font-size: 1.2rem;"><span id="streak-counter">0</span> Nap</div>
+                            <div style="font-size: 0.75rem; color: var(--color-text-muted);">Aktivitási napok száma</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                        <span style="font-size: 0.85rem; color: var(--color-text-muted);">Streak pajzsok:</span>
+                        <div class="shields-list" style="display: flex; gap: 0.3rem;">
+                            <span id="shield-1" class="shield-icon" style="font-size: 1.1rem; color: var(--color-text-muted); opacity: 0.4; transition: all 0.3s;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>
+                            <span id="shield-2" class="shield-icon" style="font-size: 1.1rem; color: var(--color-text-muted); opacity: 0.4; transition: all 0.3s;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>
+                            <span id="shield-3" class="shield-icon" style="font-size: 1.1rem; color: var(--color-text-muted); opacity: 0.4; transition: all 0.3s;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.2rem 0;">
+
+                <!-- Unlocks és Shop -->
+                <div class="stats-widget">
+                    <h3 style="font-size: 0.9rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.8rem;">Jutalom Bolt</h3>
+                    <div class="shop-grid" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        
+                        <!-- Top 2 Items only, rest in Modal -->
+                        <!-- Cyberpunk Theme -->
+                        <div class="shop-item" style="display: flex; align-items: center; justify-content: space-between; padding: 0.6rem; border-radius: 8px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04);">
+                            <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                <span style="font-size: 1.2rem;">🎛️</span>
+                                <div>
+                                    <div style="font-size: 0.85rem; font-weight: 600;">Cyberpunk Neon</div>
+                                    <span style="font-size: 0.75rem; color: var(--color-accent-in); font-weight: bold;">0 XP (Test)</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" onclick="unlockShopItem('cyberpunk', 0, this)">Feloldás</button>
+                        </div>
+                        
+                        <!-- Streak Shield purchase -->
+                        <div class="shop-item" style="display: flex; align-items: center; justify-content: space-between; padding: 0.6rem; border-radius: 8px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04);">
+                            <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                <span style="font-size: 1.2rem;">🛡️</span>
+                                <div>
+                                    <div style="font-size: 0.85rem; font-weight: 600;">Streak Pajzs</div>
+                                    <span style="font-size: 0.75rem; color: var(--color-accent-in); font-weight: bold;">0 XP (Test)</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" onclick="buyStreakShield(0, this)">Vásárlás</button>
+                        </div>
+                        
+                        <!-- Open Shop Modal Button -->
+                        <button class="btn btn-secondary" onclick="openShopModal()" style="width: 100%; justify-content: center; font-size: 0.85rem;">Továbbiak megtekintése</button>
+                    </div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.2rem 0;">
+
+                <!-- Settings / Accessibility -->
+                <div class="stats-widget">
+                    <h3 style="font-size: 0.9rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.8rem;">Beállítások</h3>
+                    
+                    <div style="display: flex; flex-direction: column; margin-bottom: 0.8rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                            <span style="font-size: 0.85rem; font-weight: 500;">Hangeffektek Hangerő</span>
+                            <span id="sound-val-display" style="font-size: 0.75rem; color: var(--color-accent-in); font-weight: bold;">50%</span>
+                        </div>
+                        <input type="range" id="sound-slider" min="0" max="1" step="0.1" value="0.5" oninput="updateVolume(this.value)" style="width: 100%; accent-color: var(--color-accent-in);">
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 0.85rem;">Csökkentett mozgás</span>
+                        <label class="switch">
+                            <input type="checkbox" id="reduced-motion-toggle" onchange="toggleReducedMotion(this.checked)">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    
+                    <button class="btn btn-secondary" onclick="activateTheme('default')" style="width: 100%; justify-content: center; font-size: 0.85rem; margin-top: 1rem;">Alapértelmezett Téma Visszaállítása</button>
+                </div>
+            </div>
+        </aside>
+
     </div>
 
     <!-- MOBILE BOTTOM NAVIGATION BAR -->
     <nav class="mobile-bottom-bar" aria-label="Mobil navigáció">
-        <a href="#workspace" class="bottom-nav-item active" id="mobile-nav-home">
+        <a href="#" class="bottom-nav-item active" id="mobile-nav-home" onclick="closeWorkspace(); toggleMobileStatsDrawer(false); return false;">
             <span class="bottom-nav-icon">🏠</span>
             <span>Tananyag</span>
         </a>
-        <a href="#" class="bottom-nav-item" id="mobile-nav-vocabulary" onclick="alert('Később a Supabase bekötésével aktiválódik!'); return false;">
-            <span class="bottom-nav-icon">📖</span>
-            <span>Szótár</span>
+        <a href="#" class="bottom-nav-item" id="mobile-nav-quests" onclick="openQuestsModal(); return false;">
+            <span class="bottom-nav-icon">🎯</span>
+            <span>Küldetések</span>
         </a>
-        <a href="#points-counter" class="bottom-nav-item" id="mobile-nav-stats">
+        <a href="#" class="bottom-nav-item" id="mobile-nav-stats" onclick="toggleMobileStatsDrawer(); return false;">
             <span class="bottom-nav-icon">📊</span>
             <span>Statisztika</span>
         </a>
@@ -228,7 +328,7 @@
 
                     <div id="guest-registration-prompt" style="display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid oklch(1 0 0 / 0.1);">
                         <h3 style="color: var(--color-accent-in);">Mentenéd a haladásod?</h3>
-                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1rem;">Hozz létre egy ingyenes fiókot, és az eddig elért pontjaidat automatikusan áthelyezzük az új fiókodba!</p>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1rem;">Hozz létre egy ingyenes fiókot, és az eddig elért XP-t automatikusan áthelyezzük az új fiókodba!</p>
                         <button type="button" id="btn-guest-register" style="width: 100%; margin-bottom: 1.5rem; padding: 0.75rem; border-radius: 8px; font-weight: 600; cursor: pointer; border: 1px solid var(--color-accent-in); background: transparent; color: var(--color-accent-in); transition: all 0.2s;">Regisztráció a haladás mentéséhez</button>
                     </div>
 
@@ -256,7 +356,7 @@
                     </div>
 
                     <div class="stat-card">
-                        <h4>Összesített pontszám</h4>
+                        <h4>Összesített XP</h4>
                         <div id="profile-total-points" class="stat-large-value">0</div>
                     </div>
                 </div>
@@ -273,9 +373,9 @@
     </div>
 
     <!-- Script assets -->
-    <script src="js/config.js?v=1.0.8"></script>
-    <script src="js/data.js?v=1.0.8"></script>
-    <script src="js/nav.js?v=1.0.8"></script>
-    <script src="js/dashboard.js?v=1.0.8"></script>
+    <script src="js/config.js?v=1.0.9"></script>
+    <script src="js/data.js?v=1.0.9"></script>
+    <script src="js/nav.js?v=1.0.9"></script>
+    <script src="js/dashboard.js?v=1.0.9"></script>
 </body>
 </html>

@@ -11,6 +11,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Initialize progression tracking for the logged-in user
     await initUserProgress();
     
+    // Check user daily streak count on load
+    if (typeof checkStreakOnLoad === "function") checkStreakOnLoad();
+    initDailyQuests();
+    
+    // Initialize accessibility settings (volume, reduced motion)
+    if (typeof initSettingsUI === "function") initSettingsUI();
+    
+    // Apply user's active custom visual theme if saved
+    if (userProgress.scores && userProgress.scores.active_theme && userProgress.scores.active_theme !== 'default') {
+        document.body.classList.add(`theme-${userProgress.scores.active_theme}`);
+    }
+    
     // Read what level was clicked on index.html (fallback to A1 if empty)
     const levelToLoad = localStorage.getItem("selectedLevel") || "A1";
     
@@ -47,7 +59,11 @@ const ProgressManager = {
         completed: {},
         scores: {},
         role: "user",
-        subscription_tier: "free"
+        subscription_tier: "free",
+        daily_quests_date: null,
+        active_quests: [],
+        quest_progress: {},
+        completed_quests_today: []
     },
     getGuestPayload: function() {
         return LocalSavingsService.load();
@@ -75,6 +91,502 @@ let stopwatchSeconds = 0;
 
 // Tracking correctness attempts map for the current active exercise view (maps question index -> boolean correctness)
 let exerciseAttempts = {};
+
+// ===========================================================================
+//   GAMIFICATION & ACCESSABILITY FRAMEWORK (ADHD SOUND, XP, SHOP, STREAKS)
+// ===========================================================================
+
+// 1. Audio tone synthesizer for ADHD reward and warning chiming
+const AudioSynth = {
+    ctx: null,
+    volume: 0.5,
+    reducedMotion: false,
+    
+    init() {
+        if (!this.ctx) {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+    },
+    
+    playTone(freq, type = 'sine', duration = 0.1) {
+        if (this.reducedMotion) return; // csökkentett mozgás bypass
+        try {
+            this.init();
+            if (this.ctx.state === 'suspended') {
+                this.ctx.resume();
+            }
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+            
+            gain.gain.setValueAtTime(this.volume * 0.15, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+            
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            
+            osc.start();
+            osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {
+            console.warn("AudioContext blocked or failed:", e);
+        }
+    },
+    
+    playCorrect() {
+        this.playTone(523.25, 'sine', 0.15); // C5
+        setTimeout(() => this.playTone(659.25, 'sine', 0.2), 100); // E5
+    },
+    
+    playIncorrect() {
+        this.playTone(220, 'triangle', 0.3); // A3
+    },
+    
+    playComplete() {
+        this.playTone(523.25, 'sine', 0.1);
+        setTimeout(() => this.playTone(659.25, 'sine', 0.1), 80);
+        setTimeout(() => this.playTone(783.99, 'sine', 0.1), 160);
+        setTimeout(() => this.playTone(1046.50, 'sine', 0.3), 240); // C6 arpeggio
+    }
+};
+
+// 2. Point Economy Capping & XP Capping System
+const maxXpPerNode = {
+    explanation: 10,
+    words: 30,
+    fillBlanks: 20,
+    wordOrder: 20,
+    trueFalse: 20,
+    quiz: 25,
+    mini_quiz: 15,
+    exam: 50
+};
+
+// XP floating indicator popup
+function triggerFloatPop(amount, element, label = null) {
+    if (!element) return;
+    const pop = document.createElement("div");
+    pop.className = "floating-points-pop";
+    pop.textContent = label || (amount >= 0 ? `+${amount} XP! 🎉` : `${amount} XP 💸`);
+    pop.style.position = "absolute";
+    pop.style.left = "50%";
+    pop.style.top = "10px";
+    pop.style.transform = "translateX(-50%)";
+    pop.style.background = amount >= 0 ? "oklch(0.75 0.2 150)" : "oklch(0.6 0.15 20)";
+    pop.style.color = "#000";
+    pop.style.padding = "0.3rem 0.8rem";
+    pop.style.borderRadius = "20px";
+    pop.style.fontSize = "0.85rem";
+    pop.style.fontWeight = "bold";
+    pop.style.zIndex = "100";
+    pop.style.boxShadow = "0 4px 15px rgba(0,0,0,0.3)";
+    pop.style.animation = "floatUp 1.2s ease-out forwards";
+    
+    element.style.position = "relative";
+    element.appendChild(pop);
+    
+    setTimeout(() => {
+        pop.remove();
+    }, 1200);
+}
+
+// Centralized XP rewarding mechanism with double-claim exploit guards
+function addXP(amount, elementForFloatPop = null, stepName = null) {
+    if (!userProgress.scores) userProgress.scores = {};
+    if (!userProgress.scores.earned_xp_per_node) {
+        userProgress.scores.earned_xp_per_node = {};
+    }
+    
+    let actualAdd = amount;
+    
+    if (stepName && amount > 0) {
+        const nodeKey = `${currentLevel}_${currentSection}_${stepName}`;
+        const currentEarned = userProgress.scores.earned_xp_per_node[nodeKey] || 0;
+        const maxAllowed = maxXpPerNode[stepName] || 0;
+        
+        if (currentEarned >= maxAllowed) {
+            if (elementForFloatPop) triggerFloatPop(0, elementForFloatPop, "Max XP elérve!");
+            return 0;
+        }
+        
+        actualAdd = Math.min(amount, maxAllowed - currentEarned);
+        if (actualAdd <= 0) return 0;
+        
+        userProgress.scores.earned_xp_per_node[nodeKey] = currentEarned + actualAdd;
+    }
+    
+    userProgress.points = (userProgress.points || 0) + actualAdd;
+    if (userProgress.points < 0) userProgress.points = 0;
+    
+    if (typeof updateQuestProgress === 'function' && actualAdd > 0) {
+        updateQuestProgress('earn_xp', actualAdd);
+    }
+    
+    if (elementForFloatPop && actualAdd !== 0) {
+        triggerFloatPop(actualAdd, elementForFloatPop);
+    }
+    
+    updateProgressUI();
+    saveUserProgress();
+    
+    return actualAdd;
+}
+
+// Helper to compute maximum possible XP for a given level
+function computeLevelMaxXP(level) {
+    if (!learningContent[level]) return 0;
+    
+    let totalMaxXP = 0;
+    for (const secKey in learningContent[level]) {
+        if (secKey === 'level_exam' || secKey === 'final_exam') continue;
+        
+        const section = learningContent[level][secKey];
+        if (!section.subsections) continue;
+        
+        for (const subKey in section.subsections) {
+            const subData = section.subsections[subKey];
+            if (subData.type === 'explanation') totalMaxXP += maxXpPerNode.explanation || 0;
+            if (subData.type === 'words') totalMaxXP += maxXpPerNode.words || 0;
+            if (subData.type === 'fill_blanks') totalMaxXP += maxXpPerNode.fillBlanks || 0;
+            if (subData.type === 'word_order') totalMaxXP += maxXpPerNode.wordOrder || 0;
+            if (subData.type === 'true_false') totalMaxXP += maxXpPerNode.trueFalse || 0;
+            if (subData.type === 'section_exam') totalMaxXP += maxXpPerNode.exam || 0;
+        }
+    }
+    return totalMaxXP;
+}
+
+// Helper to calculate XP earned specifically in this level
+function getEarnedXPForLevel(level) {
+    if (!userProgress.scores || !userProgress.scores.earned_xp_per_node) return 0;
+    
+    let earnedXP = 0;
+    const prefix = `${level}_`;
+    for (const key in userProgress.scores.earned_xp_per_node) {
+        if (key.startsWith(prefix)) {
+            earnedXP += userProgress.scores.earned_xp_per_node[key];
+        }
+    }
+    return earnedXP;
+}
+
+// Level Exam gating logic based on 80% threshold
+function isLevelExamUnlocked(level) {
+    const maxXP = computeLevelMaxXP(level);
+    if (maxXP === 0) return false;
+    
+    const earnedXP = getEarnedXPForLevel(level);
+    const percentage = earnedXP / maxXP;
+    
+    return percentage >= 0.8;
+}
+
+// 3. User Level & XP bar progression calculations
+function updateUserLevelState() {
+    if (!userProgress.scores) userProgress.scores = {};
+    const totalXP = userProgress.points || 0;
+    
+    const newLevel = Math.floor(totalXP / 100) + 1;
+    const oldLevel = userProgress.scores.level || 1;
+    
+    userProgress.scores.level = newLevel;
+    
+    if (newLevel > oldLevel) {
+        AudioSynth.playTone(880, 'sine', 0.2);
+        setTimeout(() => AudioSynth.playTone(1320, 'sine', 0.4), 150);
+        alert(`🎉 Szintet léptél! Új szinted: Level ${newLevel}! Gratulálunk!`);
+    }
+    
+    const levelDisplay = document.getElementById("level-display");
+    if (levelDisplay) levelDisplay.textContent = `Level ${newLevel}`;
+    
+    const xpDisplay = document.getElementById("xp-display");
+    if (xpDisplay) xpDisplay.textContent = totalXP % 100;
+    
+    const xpFillBar = document.getElementById("xp-fill-bar");
+    if (xpFillBar) xpFillBar.style.width = `${totalXP % 100}%`;
+    
+    const xpTierLabel = document.getElementById("xp-tier-label");
+    if (xpTierLabel) {
+        if (newLevel >= 5) xpTierLabel.textContent = "Angol Professzor";
+        else if (newLevel >= 4) xpTierLabel.textContent = "Haladó Angolos";
+        else if (newLevel >= 3) xpTierLabel.textContent = "Gyakorlott Beszélő";
+        else if (newLevel >= 2) xpTierLabel.textContent = "Szorgalmas Tanuló";
+        else xpTierLabel.textContent = "Kezdő nyelvtanuló";
+    }
+}
+
+// 4. Streak protections and checking on load
+function checkStreakOnLoad() {
+    if (!userProgress.scores) userProgress.scores = {};
+    const lastActive = userProgress.scores.last_active_date;
+    const today = new Date().toISOString().split('T')[0];
+    
+    if (!userProgress.scores.streak_count) userProgress.scores.streak_count = 0;
+    if (typeof userProgress.scores.streak_shields === 'undefined') userProgress.scores.streak_shields = 2;
+    
+    if (lastActive) {
+        if (lastActive === today) {
+            // Already active today
+        } else {
+            const lastActiveDate = new Date(lastActive);
+            const todayDate = new Date(today);
+            const diffTime = Math.abs(todayDate - lastActiveDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) {
+                userProgress.scores.streak_count++;
+            } else if (diffDays > 1) {
+                const shields = userProgress.scores.streak_shields || 0;
+                if (shields > 0) {
+                    userProgress.scores.streak_shields = shields - 1;
+                    setTimeout(() => {
+                        const alertEl = document.getElementById('streak-alert');
+                        if (alertEl) {
+                            alertEl.style.display = 'block';
+                            alertEl.textContent = `Pajzs elhasználva! Napi szériád megvédve. Maradt: ${userProgress.scores.streak_shields} db.`;
+                            AudioSynth.playTone(330, 'sine', 0.25);
+                            setTimeout(() => { alertEl.style.display = 'none'; }, 5000);
+                        }
+                    }, 1000);
+                } else {
+                    userProgress.scores.streak_count = 1;
+                }
+            }
+        }
+    } else {
+        userProgress.scores.streak_count = 1;
+    }
+    
+    userProgress.scores.last_active_date = today;
+    updateStreakUI();
+}
+
+function updateStreakUI() {
+    if (!userProgress.scores) return;
+    const streakCounter = document.getElementById("streak-counter");
+    if (streakCounter) streakCounter.textContent = userProgress.scores.streak_count || 0;
+    
+    const shieldsCount = userProgress.scores.streak_shields || 0;
+    for (let i = 1; i <= 3; i++) {
+        const shield = document.getElementById(`shield-${i}`);
+        if (shield) {
+            if (i <= shieldsCount) {
+                shield.style.color = "var(--color-accent-in)";
+                shield.style.opacity = "1";
+                shield.style.filter = "drop-shadow(0 0 3px var(--color-accent-in))";
+            } else {
+                shield.style.color = "var(--color-text-muted)";
+                shield.style.opacity = "0.4";
+                shield.style.filter = "none";
+            }
+        }
+    }
+}
+
+window.simulateMissedDay = function() {
+    if (!userProgress.scores) userProgress.scores = {};
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+    userProgress.scores.last_active_date = threeDaysAgo.toISOString().split('T')[0];
+    checkStreakOnLoad();
+    saveUserProgress();
+};
+
+// 5. Jutalom Bolt cosmetic shop handlers
+
+
+window.activateTheme = function(theme, btnEl) {
+    document.body.className = '';
+    if (theme !== 'default') {
+        document.body.classList.add(`theme-${theme}`);
+    }
+    
+    if (!userProgress.scores) userProgress.scores = {};
+    userProgress.scores.active_theme = theme;
+    saveUserProgress();
+    
+    syncShopButtonsUI();
+};
+
+function syncShopButtonsUI() {
+    const unlocked = userProgress.unlocked_items || [];
+    const activeTheme = userProgress.active_theme || 'default';
+    
+    // Update active theme CSS
+    if (activeTheme !== 'default') {
+        document.documentElement.setAttribute('data-theme', activeTheme);
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+    }
+    
+    // Update shop buttons globally (both in sidebar and modal)
+    document.querySelectorAll('.shop-item button').forEach(btn => {
+        const onclick = btn.getAttribute('onclick') || '';
+        
+        if (onclick.includes("unlockShopItem('cyberpunk'")) {
+            if (activeTheme === 'cyberpunk') {
+                btn.textContent = 'Aktiválva';
+                btn.disabled = true;
+            } else if (unlocked.includes('cyberpunk')) {
+                btn.textContent = 'Aktivál';
+                btn.disabled = false;
+            } else {
+                btn.textContent = 'Feloldás';
+                btn.disabled = false;
+            }
+        }
+        else if (onclick.includes("unlockShopItem('nature'")) {
+            if (activeTheme === 'nature') {
+                btn.textContent = 'Aktiválva';
+                btn.disabled = true;
+            } else if (unlocked.includes('nature')) {
+                btn.textContent = 'Aktivál';
+                btn.disabled = false;
+            } else {
+                btn.textContent = 'Feloldás';
+                btn.disabled = false;
+            }
+        }
+    });
+}
+    
+    
+    const btnEmerald = document.getElementById("btn-unlock-emerald");
+    if (btnEmerald) {
+        if (unlocked.includes("emerald")) {
+            if (activeTheme === "emerald") {
+                btnEmerald.textContent = "Aktív ✓";
+                btnEmerald.style.borderColor = "var(--color-accent-in)";
+                btnEmerald.style.color = "var(--color-accent-in)";
+                btnEmerald.onclick = null;
+            } else {
+                btnEmerald.textContent = "Aktivál";
+                btnEmerald.style.borderColor = "var(--color-success)";
+                btnEmerald.style.color = "var(--color-success)";
+                btnEmerald.onclick = () => activateTheme("emerald", btnEmerald);
+            }
+        }
+    }
+
+
+// 6. Accessibility Settings sliders/toggles
+window.updateVolume = function(val) {
+    const volume = parseFloat(val);
+    if(typeof AudioSynth !== 'undefined') {
+        AudioSynth.volume = volume;
+    }
+    localStorage.setItem("adhd_volume", volume);
+    document.cookie = `adhd_volume=${volume}; path=/; max-age=31536000`;
+    
+    // Update display if it exists
+    const display = document.getElementById('sound-val-display');
+    if (display) {
+        display.textContent = Math.round(volume * 100) + "%";
+    }
+    
+    // Play a small click to test the volume
+    if(typeof AudioSynth !== 'undefined' && typeof AudioSynth.playTone === 'function') {
+        AudioSynth.playTone(440, 'sine', 0.1);
+    }
+};
+
+window.toggleReducedMotion = function(checked) {
+    AudioSynth.reducedMotion = checked;
+    localStorage.setItem("adhd_reduced_motion", checked ? "true" : "false");
+    document.cookie = `adhd_reduced_motion=${checked ? 'true' : 'false'}; path=/; max-age=31536000`;
+    
+    if (checked) {
+        document.body.classList.add("reduced-motion");
+    } else {
+        document.body.classList.remove("reduced-motion");
+    }
+};
+
+function initSettingsUI() {
+    const savedVolume = localStorage.getItem("adhd_volume");
+    // ID is 'sound-slider' in our new HTML
+    const volumeSlider = document.getElementById("sound-slider");
+    const display = document.getElementById("sound-val-display");
+    
+    let vol = 0.5;
+    if (savedVolume !== null) {
+        vol = parseFloat(savedVolume);
+    }
+    
+    if(typeof AudioSynth !== 'undefined') AudioSynth.volume = vol;
+    if (volumeSlider) volumeSlider.value = vol;
+    if (display) display.textContent = Math.round(vol * 100) + "%";
+    
+    const savedMotion = localStorage.getItem("adhd_reduced_motion");
+    const motionToggle = document.getElementById("reduced-motion-toggle");
+    if (savedMotion !== null) {
+        const check = savedMotion === "true";
+        AudioSynth.reducedMotion = check;
+        if (motionToggle) motionToggle.checked = check;
+        if (check) document.body.classList.add("reduced-motion");
+    } else {
+        AudioSynth.reducedMotion = false;
+        if (motionToggle) motionToggle.checked = false;
+    }
+}
+
+// 7. Mobile Drawer toggler
+window.toggleMobileStatsDrawer = function(open) {
+    const sidebar = document.querySelector(".dashboard-right-sidebar");
+    if (!sidebar) return;
+    if (typeof open === 'undefined') {
+        sidebar.classList.toggle("is-active");
+    } else if (open) {
+        sidebar.classList.add("is-active");
+    } else {
+        sidebar.classList.remove("is-active");
+    }
+};
+
+// 8. Desktop layout and Sidebar Roadmap Navigation handlers
+function isDesktopLayout() {
+    return window.innerWidth >= 992;
+}
+
+window.clickSidebarRoadmapNode = function(type) {
+    if (!isDesktopLayout()) return;
+    
+    const nodeEl = document.getElementById(`sb-node-${type}`);
+    if (!nodeEl || nodeEl.classList.contains("locked")) return;
+    
+    let subKey = type;
+    if (type === 'quiz') {
+        const keyFB = `${currentLevel}_${currentSection}_fillBlanks`;
+        const keyWO = `${currentLevel}_${currentSection}_wordOrder`;
+        
+        if (!userProgress.completed[keyFB]) {
+            subKey = 'fillBlanks';
+        } else if (!userProgress.completed[keyWO]) {
+            subKey = 'wordOrder';
+        } else {
+            subKey = 'trueFalse';
+        }
+    } else if (type === 'exam') {
+        subKey = 'sectionExam';
+    }
+    
+    currentSubsection = subKey;
+    renderSubsection(currentLevel, currentSection, subKey);
+    
+    const links = document.querySelectorAll(".subsection-link");
+    links.forEach(l => l.classList.remove("active"));
+    const accordion = document.querySelector(`.course-accordion[data-level="${currentLevel}"][data-section="${currentSection}"]`);
+    if (accordion) {
+        const targetLink = accordion.querySelector(`.subsection-link[data-subsection="${subKey}"]`);
+        if (targetLink) targetLink.classList.add("active");
+    }
+    
+    syncSidebarRoadmapNodes();
+};
+
+function syncSidebarRoadmapNodes() { /* Deprecated */ }
 
 // Global classification helpers to distinguish types cleanly
 function isExplanation(subsectionData) {
@@ -137,9 +649,9 @@ function isContentAccessible(level, courseKey, subsectionType = null) {
         return false;
     }
 
-    // 2. Even within allowed courses, block premium features
+    // 2. Even within allowed courses, block premium features like exams and explanations
     if (subsectionType) {
-        if (subsectionType === "explanation" || subsectionType === "section_exam" || subsectionType === "sectionExam" || subsectionType === "final_exam" || subsectionType === "finalExam") {
+        if (subsectionType === "section_exam" || subsectionType === "sectionExam" || subsectionType === "final_exam" || subsectionType === "finalExam" || subsectionType === "explanation") {
             return false;
         }
     }
@@ -382,7 +894,18 @@ async function initUserProgress() {
                     scores: scoresObj,
                     role: subscription?.role || "user",
                     subscription_tier: subscription?.subscription_tier || "free",
-                    id: userId
+                    id: userId,
+                    level: progress.level || 1,
+                    streak_count: progress.streak_count || 0,
+                    streak_shields: progress.streak_shields !== undefined ? progress.streak_shields : 2,
+                    last_active_date: progress.last_active_date || null,
+                    unlocked_items: Array.isArray(progress.unlocked_items) ? progress.unlocked_items : [],
+                    active_theme: progress.active_theme || 'default',
+                    earned_xp_per_node: progress.earned_xp_per_node || {},
+                    daily_quests_date: progress.daily_quests_date || null,
+                    active_quests: Array.isArray(progress.active_quests) ? progress.active_quests : [],
+                    quest_progress: progress.quest_progress || {},
+                    completed_quests_today: Array.isArray(progress.completed_quests_today) ? progress.completed_quests_today : []
                 };
                 ProgressManager.data = userProgress;
 
@@ -477,7 +1000,18 @@ async function saveUserProgress() {
                     body: JSON.stringify({
                         points: userProgress.points || 0,
                         completed: userProgress.completed || {},
-                        scores: userProgress.scores || {}
+                        scores: userProgress.scores || {},
+                        level: userProgress.level || 1,
+                        streak_count: userProgress.streak_count || 0,
+                        streak_shields: userProgress.streak_shields !== undefined ? userProgress.streak_shields : 2,
+                        last_active_date: userProgress.last_active_date || null,
+                        unlocked_items: userProgress.unlocked_items || [],
+                        active_theme: userProgress.active_theme || 'default',
+                        earned_xp_per_node: userProgress.earned_xp_per_node || {},
+                        daily_quests_date: userProgress.daily_quests_date || null,
+                        active_quests: userProgress.active_quests || [],
+                        quest_progress: userProgress.quest_progress || {},
+                        completed_quests_today: userProgress.completed_quests_today || []
                     })
                 });
                 if (!res.ok) {
@@ -551,6 +1085,135 @@ function getCompleteButtonHtml(level, section, subsection, requiresAttempt = fal
     }
 }
 
+// ==========================================================================
+// MINI-QUIZ POPUP & CONFETTI (Phase 6)
+// ==========================================================================
+function runConfetti(amount) {
+    for(let i=0; i<amount; i++) {
+        const conf = document.createElement('div');
+        conf.style.position = 'fixed';
+        conf.style.width = '8px';
+        conf.style.height = '8px';
+        conf.style.backgroundColor = ['var(--color-accent-in)', 'var(--color-success)', 'var(--color-accent-at)'][Math.floor(Math.random() * 3)];
+        conf.style.left = Math.random() * 100 + 'vw';
+        conf.style.top = '-10px';
+        conf.style.zIndex = 9999;
+        conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        conf.style.pointerEvents = 'none';
+        document.body.appendChild(conf);
+
+        const dur = Math.random() * 2 + 1;
+        conf.animate([
+            { transform: 'translateY(0) rotate(0)' },
+            { transform: `translateY(100vh) rotate(${Math.random() * 720}deg)` }
+        ], { duration: dur * 1000, easing: 'linear' });
+
+        setTimeout(() => conf.remove(), dur * 1000);
+    }
+}
+
+function canTriggerMiniQuiz() {
+    return Math.random() < 0.25; // 25% chance
+}
+
+let activeMiniQuizQuestion = null;
+
+function triggerMiniQuiz(level, section, subsection) {
+    // Gather all learned words from the current session's vocabCache
+    let allWords = [];
+    Object.values(vocabCache).forEach(fileItems => {
+        if (Array.isArray(fileItems)) {
+            fileItems.forEach(item => {
+                if (item.en && item.hu && !item.sentence) { // Ensure it's a vocabulary word
+                    allWords.push(item);
+                }
+            });
+        }
+    });
+    
+    // Fallback if no words loaded
+    if (allWords.length < 4) {
+        allWords = [
+            { en: "teacher", hu: "tanár" },
+            { en: "student", hu: "diák" },
+            { en: "doctor", hu: "orvos" },
+            { en: "driver", hu: "sofőr" }
+        ];
+    }
+    
+    // Pick a random correct word
+    const correctWord = allWords[Math.floor(Math.random() * allWords.length)];
+    
+    // Pick 3 random wrong answers
+    let wrongOptions = allWords.filter(w => w.hu !== correctWord.hu).map(w => w.hu);
+    wrongOptions = wrongOptions.sort(() => 0.5 - Math.random()).slice(0, 3);
+    
+    // If not enough wrong options in cache, fallback
+    while (wrongOptions.length < 3) {
+        wrongOptions.push("rossz opció " + Math.random().toString().substring(2,4));
+    }
+    
+    let opts = [...wrongOptions, correctWord.hu];
+    opts = opts.sort(() => 0.5 - Math.random());
+    const answerIdx = opts.indexOf(correctWord.hu);
+
+    activeMiniQuizQuestion = {
+        q: `Mit jelent a(z) "${correctWord.en}" szó?`,
+        opts: opts,
+        answer: answerIdx
+    };
+    
+    const qEl = document.getElementById("mini-quiz-question");
+    const oEl = document.getElementById("mini-quiz-options");
+    const fEl = document.getElementById("mini-quiz-feedback");
+    const bEl = document.getElementById("mini-quiz-continue-btn");
+    
+    if(!qEl || !oEl) return;
+    
+    qEl.innerHTML = activeMiniQuizQuestion.q;
+    
+    const optsHtml = activeMiniQuizQuestion.opts.map((opt, i) => `
+        <button class="quiz-opt-btn" onclick="submitMiniQuizAnswer(this, ${i})" style="justify-content: center; font-weight: bold;">
+            ${opt}
+        </button>
+    `).join('');
+    
+    oEl.innerHTML = optsHtml;
+    fEl.style.display = "none";
+    bEl.style.display = "none";
+    
+    const modal = document.getElementById("mini-quiz-overlay");
+    modal.style.display = "flex";
+}
+
+window.submitMiniQuizAnswer = function(btnEl, chosenIdx) {
+    const buttons = document.querySelectorAll('#mini-quiz-options button');
+    buttons.forEach(btn => btn.disabled = true);
+    
+    const isCorrect = chosenIdx === activeMiniQuizQuestion.answer;
+    const feedback = document.getElementById("mini-quiz-feedback");
+    
+    if (isCorrect) {
+        btnEl.classList.add('correct');
+        AudioSynth.playCorrect();
+        runConfetti(50);
+        addXP(5, document.querySelector("#mini-quiz-overlay .modal-content"));
+        
+        feedback.style.color = "var(--color-success)";
+        feedback.textContent = "Helyes! +5 XP bónusz!";
+    } else {
+        btnEl.classList.add('incorrect');
+        buttons[activeMiniQuizQuestion.answer].classList.add('correct');
+        AudioSynth.playIncorrect();
+        
+        feedback.style.color = "var(--color-error)";
+        feedback.textContent = "Sajnos nem! A helyes válasz a zölddel jelölt opció.";
+    }
+    
+    feedback.style.display = "block";
+    document.getElementById("mini-quiz-continue-btn").style.display = "block";
+};
+
 // Action handler for manual section completion
 function completeSubsectionAction(level, section, subsection, buttonEl) {
     const key = `${level}_${section}_${subsection}`;
@@ -577,7 +1240,7 @@ function completeSubsectionAction(level, section, subsection, buttonEl) {
     if (container) {
         const pop = document.createElement("div");
         pop.className = "floating-points-pop";
-        pop.textContent = "+5 Pont! 🎉";
+        pop.textContent = "+5 XP! 🎉";
         container.appendChild(pop);
         
         // Remove pop element after animation completes
@@ -593,6 +1256,18 @@ function completeSubsectionAction(level, section, subsection, buttonEl) {
     
     // Save state and update UI
     saveUserProgress();
+    
+    // Update daily quests for completing a lesson
+    if (typeof updateQuestProgress === 'function') {
+        updateQuestProgress('complete_lesson', 1);
+    }
+    
+    // Potentially trigger a miniquiz on completion
+    if (canTriggerMiniQuiz()) {
+        setTimeout(() => {
+            triggerMiniQuiz(level, section, subsection);
+        }, 500);
+    }
 
     // Render convenient "Next Lesson" button right next to it so user doesn't have to scroll up
     if (container) {
@@ -713,22 +1388,18 @@ async function updateProgressUI() {
         }
     });
 
-    const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
-    const progressBar = document.querySelector(".progress-bar-fill");
-    const progressPercentageText = document.querySelector(".progress-percentage");
 
-    if (progressBar) {
-        progressBar.style.width = `${percentage}%`;
-    }
-    if (progressPercentageText) {
-        progressPercentageText.textContent = `${percentage}% Kész`;
-    }
 
     // Update global points counter
     const pointsEl = document.getElementById("points-counter");
     if (pointsEl) {
         pointsEl.textContent = userProgress.points || 0;
     }
+
+    // Update gamification sidebar elements
+    if (typeof updateUserLevelState === "function") updateUserLevelState();
+    if (typeof updateStreakUI === "function") updateStreakUI();
+    if (typeof syncShopButtonsUI === "function") syncShopButtonsUI();
 
     // UPDATE HERO CTA CARD DYNAMICALLY
     const nextLesson = getNextUncompletedLesson(currentLevel);
@@ -820,8 +1491,17 @@ async function updateProgressUI() {
 // ==========================================================================
 // DYNAMIC SIDEBAR RENDERER
 // ==========================================================================
+
+// ==========================================================================
+// PHASE 8: CODDY-STYLE VERTICAL ROADMAP RENDERING
+// ==========================================================================
 function renderSidebar(levelName) {
-    const container = document.getElementById("sidebar-lessons-container");
+    // We hijacked the old renderSidebar name so we don't break init() calls.
+    renderRoadmap(levelName);
+}
+
+function renderRoadmap(levelName) {
+    const container = document.getElementById("main-roadmap-container");
     if (!container) return;
     
     container.innerHTML = "";
@@ -829,64 +1509,187 @@ function renderSidebar(levelName) {
     const levelData = learningContent[levelName];
     if (!levelData) return;
     
-    Object.keys(levelData).forEach(sectionKey => {
+    // Generate the path dynamically
+    Object.keys(levelData).forEach((sectionKey, sectionIndex) => {
         const sectionData = levelData[sectionKey];
         const title = sectionData.title_hu || sectionData.title || `Lecke: ${sectionKey}`;
         
-        let subsectionsHtml = "";
+        let nodesHtml = "";
         
+        let subKeys = [];
         if (sectionData.subsections) {
-            Object.keys(sectionData.subsections).forEach(subKey => {
-                const subData = sectionData.subsections[subKey];
-                const isAccessible = isContentAccessible(levelName, sectionKey, subKey);
-                
-                let linkClass = "subsection-link";
-                let iconHtml = subData.icon || "•";
-                
-                if (!isAccessible) {
-                    if (isExam(subData)) {
-                        linkClass += " locked";
-                        iconHtml = "🔒";
-                    } else if (ProgressManager.isGuest) {
-                        linkClass += " guest-locked";
-                        iconHtml = "🔒";
-                    }
-                }
-                
-                if (isExam(subData)) {
-                    linkClass += " subsection-exam";
-                }
-                
-                subsectionsHtml += `
-                            <li>
-                                <a href="#" class="${linkClass}" data-subsection="${subKey}">
-                                    <span class="subsection-icon">${iconHtml}</span> ${subData.title}
-                                </a>
-                            </li>
-                `;
-            });
+            subKeys = Object.keys(sectionData.subsections);
         }
         
-        const isOpen = sectionKey === currentSection ? "open" : "";
+        const numNodes = subKeys.length || 1;
         
-        const detailsHtml = `
-                    <details class="course-accordion" data-level="${levelName}" data-section="${sectionKey}" ${isOpen}>
-                        <summary class="course-accordion-header">
-                            <span class="accordion-icon">📘</span>
-                            <span class="accordion-title">${title}</span>
-                            <span class="accordion-chevron"></span>
-                        </summary>
-                        <ul class="subsection-list">
-${subsectionsHtml}
-                        </ul>
-                    </details>
+        // Dynamically calculate height to prevent clamping on mobile
+        // Give 120px minimum vertical space per node
+        const dynamicHeight = Math.max(400, numNodes * 120);
+        
+        // Mathematically scale the Y coordinates to match the dynamic height perfectly
+        // This prevents the SVG preserveAspectRatio stretching from warping the arc lengths
+        const scaleY = dynamicHeight / 400;
+        const y1 = 60 * scaleY;
+        const y2 = 100 * scaleY;
+        const y3 = 180 * scaleY;
+        const y4 = 260 * scaleY;
+        const y5 = 300 * scaleY;
+        const y6 = 350 * scaleY;
+        const y7 = 370 * scaleY;
+        
+        const pathData = `M 300,${y1} C 380,${y2} 400,${y3} 300,${y4} C 220,${y5} 200,${y6} 300,${y7}`;
+        
+        // Create an invisible SVG path to calculate exact arc lengths natively
+        const tempSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        const tempPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        tempPath.setAttribute("d", pathData);
+        tempSvg.appendChild(tempPath);
+        // Temporarily append to DOM to ensure calculations work in all browsers
+        tempSvg.style.position = "absolute";
+        tempSvg.style.visibility = "hidden";
+        document.body.appendChild(tempSvg); 
+        
+        const totalLength = tempPath.getTotalLength();
+
+        subKeys.forEach((subKey, idx) => {
+            const subData = sectionData.subsections[subKey];
+            const isAccessible = isContentAccessible(levelName, sectionKey, subKey);
+            
+            // Calculate exact position based on TRUE arc length
+            const lengthAtIdx = numNodes > 1 ? (idx / (numNodes - 1)) * totalLength : 0;
+            const pt = tempPath.getPointAtLength(lengthAtIdx);
+            
+            // Map directly to percentages based on the dynamic height viewBox
+            const pos = { x: (pt.x / 600) * 100, y: (pt.y / dynamicHeight) * 100 };
+            
+            let statusClass = "locked";
+            let lockHtml = '<div class="lock-overlay" style="position: absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index:4;">🔒</div>';
+            
+            if (isAccessible) {
+                // Check if completed
+                const progressKey = `${levelName}_${sectionKey}_${subKey}`;
+                if (userProgress.completed[progressKey]) {
+                    statusClass = "completed";
+                    lockHtml = "";
+                } else {
+                    statusClass = "active";
+                    lockHtml = "";
+                }
+            }
+            
+            let iconHtml = subData.icon || "📝";
+            if (isExam(subData)) iconHtml = "🏆";
+            
+            nodesHtml += `
+                <div class="lesson-node ${statusClass}" style="left: ${pos.x}%; top: ${pos.y}%;" onclick="openRoadmapNode('${levelName}', '${sectionKey}', '${subKey}', ${isAccessible})">
+                    <div class="lesson-node-circle">${iconHtml}</div>
+                    ${lockHtml}
+                </div>
+            `;
+        });
+        
+        document.body.removeChild(tempSvg); // Clean up invisible SVG
+        
+        const sectionHtml = `
+            <div class="lesson-section-box">
+                <h2 class="lesson-section-title">${title}</h2>
+                <p class="lesson-section-subtitle">${sectionData.description || 'Teljesítsd az összes modult!'}</p>
+                <div class="lesson-nodes-container" style="height: ${dynamicHeight}px;">
+                    <svg class="lesson-svg-path" viewBox="0 0 600 ${dynamicHeight}" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="glow-${sectionIndex}" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="var(--color-success)" />
+                                <stop offset="100%" stop-color="var(--color-accent-in)" />
+                            </linearGradient>
+                        </defs>
+                        <path d="${pathData}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12" stroke-linecap="round" />
+                        <!-- We can optionally add a glowing progress path here -->
+                    </svg>
+                    ${nodesHtml}
+                </div>
+            </div>
         `;
         
-        container.insertAdjacentHTML("beforeend", detailsHtml);
+        container.insertAdjacentHTML("beforeend", sectionHtml);
     });
-    
-    initAccordionListeners();
 }
+
+window.openRoadmapNode = function(level, section, subsection, isAccessible) {
+    if (!isAccessible) {
+        if (ProgressManager.isGuest && !isContentAccessible(level, section, subsection)) {
+            openPaywallModal();
+        } else {
+            openLockedModal();
+        }
+        return;
+    }
+    
+    // Fetch data for modal
+    const sectionData = learningContent[level][section];
+    const subData = sectionData.subsections[subsection];
+    const title = subData.title || "Lecke";
+    let iconHtml = subData.icon || "📝";
+    if (isExam(subData)) iconHtml = "🏆";
+    let desc = "Kattints az indításra a lecke megkezdéséhez!";
+    if (subData.type === 'words') desc = "Tanuld meg a legújabb szavakat és kifejezéseket.";
+    if (subData.type === 'fill_blanks' || subData.type === 'word_order' || subData.type === 'true_false') desc = "Tedd próbára a tudásod egy rövid gyakorló kvízzel!";
+    if (isExam(subData)) desc = "Vizsgázz le a fejezetből, hogy feloldd a következő szintet!";
+    if (subData.type === 'explanation') desc = "Olvasd el a nyelvvtani magyarázatot a fejezethez.";
+
+    let overlay = document.getElementById("pre-lesson-modal");
+    if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.className = "auth-modal-overlay";
+        overlay.id = "pre-lesson-modal";
+        overlay.style.display = "flex";
+        if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
+        overlay.style.zIndex = "10000";
+        document.body.appendChild(overlay);
+    } else {
+        overlay.style.display = "flex";
+        if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
+    }
+    
+    overlay.innerHTML = `
+        <div class="auth-modal-card proto-card" style="text-align: center; max-width: 400px; width: 90%; animation: popIn 0.3s ease-out;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">${iconHtml}</div>
+            <h2 style="color: var(--color-accent-in); margin-bottom: 0.5rem; font-size: 1.8rem;">${title}</h2>
+            <p style="margin-bottom: 2rem; color: var(--color-text-muted); font-size: 1.1rem;">${desc}</p>
+            
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 1.2rem; padding: 1rem;" onclick="startLessonDirectly('${level}', '${section}', '${subsection}')">Indítás</button>
+            <button class="btn btn-secondary" style="width: 100%; justify-content: center; margin-top: 1rem; border: none; background: transparent; color: var(--color-text-muted);" onclick="this.closest('.auth-modal-overlay').style.display='none'">Mégse</button>
+        </div>
+    `;
+};
+
+window.startLessonDirectly = function(level, section, subsection) {
+    const modal = document.getElementById("pre-lesson-modal");
+    if (modal) modal.style.display = "none";
+    
+    // Set globals
+    currentLevel = level;
+    currentSection = section;
+    currentSubsection = subsection;
+    
+    // Add sliding active class
+    const slider = document.getElementById("main-slider");
+    if (slider) slider.classList.add("step-active");
+    
+    // Render the workspace content
+    renderSubsection(level, section, subsection);
+    
+    // Scroll to top
+    window.scrollTo(0,0);
+};
+
+window.closeWorkspace = function() {
+    const slider = document.getElementById("main-slider");
+    if (slider) slider.classList.remove("step-active");
+    
+    // Reload roadmap to refresh completed colors
+    renderRoadmap(currentLevel);
+};
 
 // 1. LISTEN TO SIDEBAR ACCORDION SUBSECTION LINKS
 function initAccordionListeners() {
@@ -924,12 +1727,25 @@ function initAccordionListeners() {
             currentSubsection = subsectionKey;
             renderSubsection(currentLevel, currentSection, currentSubsection);
 
-            // Close the parent accordion after clicking to keep UI clean
-            if (accordion) {
+            // Close the parent accordion after clicking to keep UI clean on mobile
+            if (accordion && !isDesktopLayout()) {
                 accordion.open = false;
             }
         });
     });
+
+    // Guard final exam link
+    const finalExamLink = document.querySelector(".final-exam-link");
+    if (finalExamLink) {
+        finalExamLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (!isLevelExamUnlocked(currentLevel)) {
+                openLockedModal("A szintzáró vizsga megkezdéséhez el kell érned a szinten elérhető maximális XP legalább 80%-át!");
+                return;
+            }
+            alert("Szintzáró vizsga megnyitása... (Fejlesztés alatt)");
+        });
+    }
 }
 
 // 1.5. LISTEN TO HERO RESUME CTA BUTTON
@@ -1017,6 +1833,7 @@ function initTopNavbarListeners() {
 
 // 3. SEAMLESSLY SWITCH LEVEL DOMAIN WINDOW
 function switchGlobalLevel(levelName, startEmpty = false) {
+    if(typeof window.closeWorkspace === "function") window.closeWorkspace();
     currentLevel = levelName;
     
     // SMART RESUME LOGIC
@@ -1097,7 +1914,7 @@ function renderSubsection(level, section, subsection) {
         const levelLabel = level === "A1" ? "A1 Kezdő" : level === "A2" ? "A2 Alapfok" : level;
         breadcrumbs.innerHTML = `
             <li>${levelLabel}</li>
-            <li>A "Lenni" Ige</li>
+            <li>${moduleData?.title || 'Lecke'}</li>
             <li aria-current="page">${subsectionTitle}</li>
         `;
     }
@@ -1161,13 +1978,9 @@ function renderSubsection(level, section, subsection) {
             renderWordsTemplate(workspace, subsectionData, moduleData);
             break;
         case "fill_blanks":
-            renderFillBlanksTemplate(workspace, subsectionData);
-            break;
         case "word_order":
-            renderWordOrderTemplate(workspace, subsectionData);
-            break;
         case "true_false":
-            renderTrueFalseTemplate(workspace, subsectionData);
+            renderQuizCardTemplate(workspace, subsectionData);
             break;
         case "section_exam":
             renderSectionExamTemplate(workspace, subsectionData);
@@ -1487,6 +2300,311 @@ function renderExplanationTemplate(workspace, data, moduleData) {
             </div>
         `;
         initExplanationTabs();
+    } else if (currentSection === "ToHave") {
+        workspace.innerHTML = `
+            <div class="lesson-view">
+                <!-- INTRO SECTION -->
+                <article class="explanation-intro">
+                    <h2>📚 A Másik "VAN": A birtoklás (The Verb To Have)</h2>
+                    <p>A “TO HAVE” igét úgy kell megjegyezni, hogy azonnal lásd a kontrasztot a To Be-vel. A magyar nyelv itt egy óriási csapdát állít, mert nekünk nincs külön "birtokolni" igénk (nem mondjuk, hogy „Én birtoklok egy autót”), hanem azt mondjuk: „Van egy autóm”.</p>
+
+                    <p>Múltkor megtanultuk a <strong>TO BE</strong> igét, ami azt jelenti, hogy valaki/valami LÉTEZIK (milyen vagy hol van).<br>
+                    Most jön a <strong>TO HAVE</strong>, ami szintén „VAN”-nak fordítható magyarra, de ez <strong>BIRTOKLÁST</strong> jelent. Azt fejezi ki, hogy <strong>MI VAN NEKED</strong>.</p>
+                    
+                    <div class="golden-rule">
+                        <span class="golden-rule-icon">⚡</span>
+                        <div>
+                            <p><strong>Így válaszd szét a fejedben:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li><strong>To Be (am/is/are):</strong> Én magam vagyok valamilyen. <br><em>I am hot. (Melegem van)</em></li>
+                                <li style="margin-top: 0.5rem;"><strong>To Have (have/has):</strong> Van valamim, ami az enyém, amit meg tudok fogni. <br><em>I have a car. (Van egy autóm)</em></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p>A TO HAVE is egy alakváltó, de neki csak 2 formája van: <strong>HAVE</strong> és <strong>HAS</strong>.</p>
+
+                    <div class="three-brothers">
+                        <div class="brothers-title">A két forma</div>
+                        <div class="brothers-chips">
+                            <span class="brother-chip brother-am" style="background:var(--color-accent-in);">HAVE</span>
+                            <span class="brother-chip brother-is" style="background:var(--color-accent-out);">HAS</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STEP TABS -->
+                <div class="step-tabs">
+                    <button class="step-tab active" data-step="1">
+                        <span class="step-tab-number">1</span> Kijelentés
+                    </button>
+                    <button class="step-tab" data-step="2">
+                        <span class="step-tab-number">2</span> Tagadás
+                    </button>
+                    <button class="step-tab" data-step="3">
+                        <span class="step-tab-number">3</span> Kérdés
+                    </button>
+                </div>
+
+                <!-- STEP PANELS -->
+                <div class="step-panels">
+
+                    <!-- STEP 1: Kijelentés -->
+                    <div class="step-panel active" id="step-1">
+                        <h3>✅ 1. LÉPÉS: A Birtoklás (Kijelentés / Affirmative)</h3>
+                        <p>Itt szinte mindenki a <strong>HAVE</strong> alakot kapja, egyetlen egy kivétellel: a "Királyi Háromság" (He, She, It) most is különcködik, ők a <strong>HAS</strong> alakot kapják.</p>
+                        <p class="flip-hint"><span>👆 Kattints a kártyákra a magyar jelentés megjelenítéséhez!</span></p>
+
+                        <div class="flip-cards-grid">
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">I have</div>
+                                        <div class="example-sentence">I have a dog.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Nekem van</div>
+                                        <div class="hu-example">Van egy kutyám.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">You have</div>
+                                        <div class="example-sentence">You have a nice phone.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Neked van</div>
+                                        <div class="hu-example">Van egy jó telefonod.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">He has</div>
+                                        <div class="example-sentence">He has a big house.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Neki van (fiú)</div>
+                                        <div class="hu-example">Van egy nagy háza.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">She has</div>
+                                        <div class="example-sentence">She has blue eyes.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Neki van (lány)</div>
+                                        <div class="hu-example">Kék szemei vannak.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">It has</div>
+                                        <div class="example-sentence">The laptop has a good battery.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Ennek/Annak van</div>
+                                        <div class="hu-example">A laptopnak jó akkumulátora van.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">We have</div>
+                                        <div class="example-sentence">We have a meeting.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Nekünk van</div>
+                                        <div class="hu-example">Van egy találkozónk.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">They have</div>
+                                        <div class="example-sentence">They have a lot of time.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Nekik van</div>
+                                        <div class="hu-example">Sok idejük van.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Tagadás -->
+                    <div class="step-panel" id="step-2">
+                        <h3>❌ 2. LÉPÉS: Amikor "NINCS" (Tagadás / Negative)</h3>
+                        <p>A To Be-nél csak mögé raktuk a not-ot (is not). A To Have viszont egy "lusta" ige, egyedül nem tud tagadni. Kell mellé egy segédmunkás (segédige), aki elvégzi a piszkos munkát. Ez a segédmunkás a <span class="not-highlight">DON'T</span> vagy a <span class="not-highlight">DOESN'T</span>.</p>
+                        
+                        <div class="tip-callout">
+                            <span class="tip-callout-icon">💡</span>
+                            <p><strong>Aranyszabály:</strong> Ha a segédmunkás megérkezik, a HAS visszaalakul az eredeti HAVE formájára! Tagadásban már csak HAVE-et hallunk. <em>(Figyelj: doesn't HAS nem létezik!)</em></p>
+                        </div>
+
+                        <p class="flip-hint"><span>👆 Kattints a kártyákra a magyar jelentés megjelenítéséhez!</span></p>
+
+                        <div class="flip-cards-grid">
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">I don't have</div>
+                                        <div class="example-sentence">I don't have a car.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Nekem nincs</div>
+                                        <div class="hu-example">Nincs autóm.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">You don't have</div>
+                                        <div class="example-sentence">You don't have time.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Neked nincs</div>
+                                        <div class="hu-example">Nincs időd.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">He doesn't have</div>
+                                        <div class="example-sentence">He doesn't have a job.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Neki nincs (fiú)</div>
+                                        <div class="hu-example">Nincs munkája.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">She doesn't have</div>
+                                        <div class="example-sentence">She doesn't have a sister.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Neki nincs (lány)</div>
+                                        <div class="hu-example">Nincs lánytestvére.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">It doesn't have</div>
+                                        <div class="example-sentence">It doesn't have a screen.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Ennek/Annak nincs</div>
+                                        <div class="hu-example">Nincs képernyője.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">We don't have</div>
+                                        <div class="example-sentence">We don't have a problem.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Nekünk nincs</div>
+                                        <div class="hu-example">Nincs problémánk.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <div class="pronoun-verb">They don't have</div>
+                                        <div class="example-sentence">They don't have money.</div>
+                                    </div>
+                                    <div class="flip-card-back">
+                                        <div class="hu-meaning">Nekik nincs</div>
+                                        <div class="hu-example">Nincs pénzük.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Kérdés -->
+                    <div class="step-panel" id="step-3">
+                        <h3>❓ 3. LÉPÉS: A Kérdés (Question) – A Segédmunkás előreugrik</h3>
+                        <p>Mivel a To Have lusta, a kérdésnél sem tud helyet cserélni, mint a To Be. Ide is be kell hívni a segédmunkást (<strong>DO</strong> vagy <strong>DOES</strong>), aki beáll a mondat legelejére, mint egy testőr. 🛡️</p>
+                        
+                        <div class="tip-callout">
+                            <span class="tip-callout-icon">💡</span>
+                            <p><strong>A szabály itt is él:</strong> Ha a DOES ott van a mondatban, az összeszippantja a különlegességet, így a He/She/It után is <strong>HAVE</strong> áll a kérdésben!</p>
+                        </div>
+
+                        <div class="question-comparison">
+                            <div class="comparison-row" style="animation-delay: 0s">
+                                <div class="comparison-card">
+                                    <div class="comparison-label">Kijelentés</div>
+                                    <div class="comparison-en"><strong>You have</strong> a pen.</div>
+                                    <div class="comparison-hu">Van tollad.</div>
+                                </div>
+                                <span class="comparison-arrow">→</span>
+                                <div class="comparison-card question-card">
+                                    <div class="comparison-label">Kérdés</div>
+                                    <div class="comparison-en"><strong>Do you have</strong> a pen?</div>
+                                    <div class="comparison-hu">Van tollad?</div>
+                                </div>
+                            </div>
+                            <div class="comparison-row" style="animation-delay: 0.1s">
+                                <div class="comparison-card">
+                                    <div class="comparison-label">Kijelentés</div>
+                                    <div class="comparison-en"><strong>She has</strong> a key.</div>
+                                    <div class="comparison-hu">Van kulcsa.</div>
+                                </div>
+                                <span class="comparison-arrow">→</span>
+                                <div class="comparison-card question-card">
+                                    <div class="comparison-label">Kérdés</div>
+                                    <div class="comparison-en"><strong>Does she have</strong> a key?</div>
+                                    <div class="comparison-hu">Van kulcsa? <br><small>(NEM Does she has!)</small></div>
+                                </div>
+                            </div>
+                            <div class="comparison-row" style="animation-delay: 0.2s">
+                                <div class="comparison-card">
+                                    <div class="comparison-label">Kijelentés</div>
+                                    <div class="comparison-en"><strong>They have</strong> a meeting.</div>
+                                    <div class="comparison-hu">Van megbeszélésük.</div>
+                                </div>
+                                <span class="comparison-arrow">→</span>
+                                <div class="comparison-card question-card">
+                                    <div class="comparison-label">Kérdés</div>
+                                    <div class="comparison-en"><strong>Do they have</strong> a meeting?</div>
+                                    <div class="comparison-hu">Van megbeszélésük?</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Hint -->
+                <div class="explanation-next-hint">
+                    <p>Ha megértetted a magyarázatot, lépj tovább a <strong>Szavak</strong> szekcióra! →</p>
+                </div>
+                ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, false)}
+            </div>
+        `;
+        initExplanationTabs();
     } else {
         workspace.innerHTML = `
             <div class="lesson-view">
@@ -1574,7 +2692,13 @@ async function renderWordsTemplate(workspace, data, moduleData) {
         <div class="lesson-view">
             <section class="practice-box words-section">
                 <h2>📖 Szókincs – Tanuld meg ezeket a szavakat!</h2>
-                <div class="words-table-wrapper">
+                
+                <div class="vocab-mode-toggle">
+                    <button id="mode-list" class="vocab-mode-btn active">Lista</button>
+                    <button id="mode-swipe" class="vocab-mode-btn">Tanulókártyák</button>
+                </div>
+
+                <div class="words-table-wrapper" id="words-table-view">
                     <table class="words-table">
                         <thead>
                             <tr>
@@ -1586,272 +2710,504 @@ async function renderWordsTemplate(workspace, data, moduleData) {
                         <tbody>${rowsHtml}</tbody>
                     </table>
                 </div>
+
+                <div class="swipe-deck-wrapper" id="words-swipe-view">
+                    <div class="swipe-deck-container" id="swipe-deck">
+                        <!-- Cards injected by JS -->
+                    </div>
+                    <div class="swipe-controls">
+                        <div class="swipe-control-btn btn-swipe-left" id="btn-swipe-left">❌</div>
+                        <div class="swipe-control-btn btn-swipe-right" id="btn-swipe-right">✅</div>
+                    </div>
+                </div>
+
             </section>
             ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, false)}
         </div>
     `;
+
+    // Initialize toggle behavior
+    const modeListBtn = document.getElementById('mode-list');
+    const modeSwipeBtn = document.getElementById('mode-swipe');
+    const tableView = document.getElementById('words-table-view');
+    const swipeView = document.getElementById('words-swipe-view');
+
+    modeListBtn.addEventListener('click', () => {
+        modeListBtn.classList.add('active');
+        modeSwipeBtn.classList.remove('active');
+        tableView.style.display = 'block';
+        swipeView.classList.remove('active');
+    });
+
+    modeSwipeBtn.addEventListener('click', () => {
+        modeSwipeBtn.classList.add('active');
+        modeListBtn.classList.remove('active');
+        tableView.style.display = 'none';
+        swipeView.classList.add('active');
+        // Initialize swipe deck if not yet initialized
+        if (!swipeView.dataset.initialized) {
+            initSwipeDeck(items, 'swipe-deck');
+            swipeView.dataset.initialized = "true";
+        }
+    });
 }
 
-// LYUKAS MONDATOK (Fill in the blanks) — Input fields
-async function renderFillBlanksTemplate(workspace, data) {
-    const source = data.dataSource;
-    if (source && !data.items) {
-        if (vocabCache[source]) {
-            const cached = vocabCache[source];
-            data.items = cached.items || [];
-            if (cached.description) data.description = cached.description;
-        } else {
-            workspace.innerHTML = `
-                <div class="empty-state-section" style="min-height: 200px;">
-                    <div class="empty-state">
-                        <div class="empty-state-icon">⏳</div>
-                        <h2>Feladatok betöltése...</h2>
-                        <div class="empty-state-pulse"></div>
+// ==========================================================================
+// SWIPE DECK FLASHCARDS LOGIC
+// ==========================================================================
+function initSwipeDeck(items, containerId) {
+    const container = document.getElementById(containerId);
+    let remainingDeck = [...items];
+    let retryPile = [];
+    
+    function renderDeck() {
+        container.innerHTML = '';
+        
+        if (remainingDeck.length === 0) {
+            if (retryPile.length > 0) {
+                remainingDeck = [...retryPile];
+                retryPile = [];
+                renderDeck();
+                return;
+            } else {
+                container.innerHTML = `
+                    <div class="swipe-end-screen active">
+                        <div class="swipe-end-icon">🎉</div>
+                        <h2>Minden szót átnéztél!</h2>
+                        <p style="color: var(--color-text-muted); margin-top: 10px;">Visszamehetsz a Listanézetbe, vagy lépj a következő leckére.</p>
                     </div>
-                </div>
-            `;
-            try {
-                const response = await fetch(source + "?v=1.0.6");
-                if (!response.ok) throw new Error("HTTP error " + response.status);
-                const fetched = await response.json();
-                vocabCache[source] = fetched;
-                data.items = fetched.items || [];
-                if (fetched.description) data.description = fetched.description;
-            } catch (error) {
-                console.error("Hiba a feladatok betöltésekor:", error);
-                workspace.innerHTML = renderEmptyState("Lyukas mondatok", "Nem sikerült betölteni a feladatokat a szerverről. Kérjük, próbáld újra később!");
+                `;
+                document.getElementById('btn-swipe-left').style.display = 'none';
+                document.getElementById('btn-swipe-right').style.display = 'none';
                 return;
             }
         }
-    }
 
-    if (!data.items || data.items.length === 0) {
-        workspace.innerHTML = renderEmptyState("Lyukas mondatok", "Ehhez a leckéhez hamarosan feltöltjük a feladatokat.");
-        return;
-    }
-
-    const answersKey = `${currentLevel}_${currentSection}_${currentSubsection}_answers`;
-    const savedAnswers = userProgress.completed[answersKey] || {};
-
-    let questionsHtml = "";
-    data.items.forEach((item, i) => {
-        const savedAnswer = savedAnswers[i] || "";
-        const escapedAnswer = savedAnswer.replace(/"/g, '&quot;');
+        // Render top 3 cards max
+        const cardsToRender = remainingDeck.slice(0, 3).reverse();
         
-        questionsHtml += `
-            <div class="fill-blank-item" data-index="${i}" style="animation-delay: ${i * 0.06}s">
-                <p class="fill-blank-sentence">
-                    <span class="question-number">${i + 1}.</span>
-                    ${item.sentence.replace(/_{3,}/, `<input type="text" class="fill-blank-input" id="fill-input-${i}" placeholder="..." autocomplete="off" value="${escapedAnswer}" oninput="saveExerciseAnswer('${currentLevel}', '${currentSection}', '${currentSubsection}', ${i}, this.value)">`) }
-                    <span class="fill-hint">${item.hint}</span>
-                </p>
-                <div class="fill-blank-actions">
-                    <button class="btn btn-check" onclick="checkFillBlank(${i})">Ellenőrzés</button>
-                </div>
-                <div class="quiz-feedback" id="fill-feedback-${i}"></div>
-            </div>
-        `;
-    });
+        cardsToRender.forEach((item, index) => {
+            // The top card is the last one in the reversed array
+            const isTop = index === cardsToRender.length - 1;
+            const cardEl = document.createElement('div');
+            cardEl.className = 'swipe-card';
+            if (isTop) cardEl.classList.add('is-top');
+            else if (index === cardsToRender.length - 2) cardEl.classList.add('is-behind-1');
+            else if (index === cardsToRender.length - 3) cardEl.classList.add('is-behind-2');
 
-    workspace.innerHTML = `
-        <div class="lesson-view">
-            <section class="practice-box">
-                <h2>✏️ Lyukas mondatok – Töltsd ki a hiányzó szót!</h2>
-                <p class="section-instruction">${data.description || 'Írd be a megfelelő alakját a "to be" igének (am, is, are) a hiányzó helyre.'}</p>
-                <div class="fill-blanks-list">${questionsHtml}</div>
-            </section>
-            ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, true)}
-        </div>
-    `;
-}
-
-// SZÓRENDEZÉS (Word Ordering) — Draggable word chips
-async function renderWordOrderTemplate(workspace, data) {
-    const source = data.dataSource;
-    if (source && !data.items) {
-        if (vocabCache[source]) {
-            const cached = vocabCache[source];
-            data.items = cached.items || [];
-            if (cached.description) data.description = cached.description;
-        } else {
-            workspace.innerHTML = `
-                <div class="empty-state-section" style="min-height: 200px;">
-                    <div class="empty-state">
-                        <div class="empty-state-icon">⏳</div>
-                        <h2>Feladatok betöltése...</h2>
-                        <div class="empty-state-pulse"></div>
+            cardEl.innerHTML = `
+                <div class="swipe-overlay swipe-overlay-know">TUDOM</div>
+                <div class="swipe-overlay swipe-overlay-practice">MÉG GYAKORLOM</div>
+                <div class="swipe-card-inner">
+                    <div class="swipe-card-front">
+                        <div class="swipe-card-word">${item.en}</div>
+                        <div class="tap-hint">👆 Kattints a fordításért</div>
+                    </div>
+                    <div class="swipe-card-back">
+                        <div class="swipe-card-word">${item.en}</div>
+                        <div class="swipe-card-hu">${item.hu}</div>
+                        <div class="swipe-card-example">"${item.example}"</div>
                     </div>
                 </div>
             `;
-            try {
-                const response = await fetch(source + "?v=1.0.6");
-                if (!response.ok) throw new Error("HTTP error " + response.status);
-                const fetched = await response.json();
-                vocabCache[source] = fetched;
-                data.items = fetched.items || [];
-                if (fetched.description) data.description = fetched.description;
-            } catch (error) {
-                console.error("Hiba a feladatok betöltésekor:", error);
-                workspace.innerHTML = renderEmptyState("Szórendezés", "Nem sikerült betölteni a feladatokat a szerverről. Kérjük, próbáld újra később!");
-                return;
+            container.appendChild(cardEl);
+
+            if (isTop) {
+                attachDragEvents(cardEl, item);
+            }
+        });
+    }
+
+    function attachDragEvents(card, item) {
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        const knowOverlay = card.querySelector('.swipe-overlay-know');
+        const practiceOverlay = card.querySelector('.swipe-overlay-practice');
+
+        function startDrag(e) {
+            if (e.target.closest('.swipe-control-btn')) return; // Ignore if clicked on buttons
+            isDragging = true;
+            card.classList.add('dragging');
+            startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            startY = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            const y = e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
+            currentX = x - startX;
+            currentY = y - startY;
+
+            const rotate = currentX * 0.05;
+            card.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotate}deg)`;
+
+            // Overlays
+            if (currentX > 50) {
+                knowOverlay.style.opacity = Math.min(currentX / 100, 1);
+                practiceOverlay.style.opacity = 0;
+            } else if (currentX < -50) {
+                practiceOverlay.style.opacity = Math.min(Math.abs(currentX) / 100, 1);
+                knowOverlay.style.opacity = 0;
+            } else {
+                knowOverlay.style.opacity = 0;
+                practiceOverlay.style.opacity = 0;
             }
         }
+
+        function endDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            card.classList.remove('dragging');
+
+            const threshold = 100;
+            if (currentX > threshold) {
+                swipeOut('right', card);
+            } else if (currentX < -threshold) {
+                swipeOut('left', card, item);
+            } else {
+                // Snap back
+                card.style.transform = '';
+                knowOverlay.style.opacity = 0;
+                practiceOverlay.style.opacity = 0;
+            }
+        }
+
+        // Mouse events
+        card.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', endDrag);
+
+        // Touch events
+        card.addEventListener('touchstart', startDrag, {passive: false});
+        document.addEventListener('touchmove', drag, {passive: false});
+        document.addEventListener('touchend', endDrag);
+
+        // Click to flip (only if not dragged)
+        card.addEventListener('click', (e) => {
+            if (Math.abs(currentX) < 5 && Math.abs(currentY) < 5) {
+                card.classList.toggle('flipped');
+            }
+        });
+
+        // Store cleanup function
+        card._cleanupDrag = () => {
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('touchend', endDrag);
+        };
     }
 
-    if (!data.items || data.items.length === 0) {
-        workspace.innerHTML = renderEmptyState("Szórendezés", "Ehhez a leckéhez hamarosan feltöltjük a feladatokat.");
-        return;
-    }
-
-    let questionsHtml = "";
-    data.items.forEach((item, i) => {
-        // Shuffle the scrambled array for display
-        const scrambledArray = item.scrambled || [];
-        const shuffled = [...scrambledArray].sort(() => Math.random() - 0.5);
-        const chipsHtml = shuffled.map(word => 
-            `<button class="word-chip" onclick="selectWordChip(this, ${i})">${word}</button>`
-        ).join("");
-
-        questionsHtml += `
-            <div class="word-order-item" data-index="${i}" style="animation-delay: ${i * 0.06}s">
-                <p class="word-order-instruction">
-                    <span class="question-number">${i + 1}.</span>
-                    Rakd helyes sorrendbe! <span class="fill-hint">${item.hu}</span>
-                </p>
-                <div class="word-chips-source" id="chips-source-${i}">${chipsHtml}</div>
-                <div class="word-order-answer" id="answer-zone-${i}" data-correct="${item.correct}">
-                    <span class="answer-placeholder">Kattints a szavakra a helyes sorrendben...</span>
-                </div>
-                <div class="word-order-actions">
-                    <button class="btn btn-check" onclick="checkWordOrder(${i})">Ellenőrzés</button>
-                    <button class="btn btn-reset" onclick="resetWordOrder(${i})">Újrakezdés</button>
-                </div>
-                <div class="quiz-feedback" id="order-feedback-${i}"></div>
-            </div>
-        `;
-    });
-
-    workspace.innerHTML = `
-        <div class="lesson-view">
-            <section class="practice-box">
-                <h2>🔀 Szórendezés – Rakd össze a mondatot!</h2>
-                <p class="section-instruction">${data.description || 'Kattints a szavakra a helyes sorrendben, hogy kiadják az angol mondatot.'}</p>
-                <div class="word-order-list">${questionsHtml}</div>
-            </section>
-            ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, true)}
-        </div>
-    `;
-
-    // Restore word order saved state
-    setTimeout(() => {
-        const answersKey = `${currentLevel}_${currentSection}_${currentSubsection}_answers`;
-        const savedAnswers = userProgress.completed[answersKey] || {};
+    function swipeOut(direction, card, item = null) {
+        if (card._cleanupDrag) card._cleanupDrag();
         
-        data.items.forEach((item, i) => {
-            const savedStr = savedAnswers[i];
-            if (savedStr) {
-                try {
-                    const savedWords = JSON.parse(savedStr);
-                    savedWords.forEach(word => {
-                        const sourceZone = document.getElementById(`chips-source-${i}`);
-                        if (!sourceZone) return;
-                        const chips = sourceZone.querySelectorAll(".word-chip:not(.used)");
-                        for (let chip of chips) {
-                            if (chip.textContent === word) {
-                                selectWordChip(chip, i);
-                                break;
-                            }
-                        }
-                    });
-                } catch(e) {
-                    console.warn("Failed to parse saved word order", e);
+        const moveOutWidth = document.body.clientWidth;
+        const endX = direction === 'right' ? moveOutWidth : -moveOutWidth;
+        card.style.transform = `translate(${endX}px, 0) rotate(${direction === 'right' ? 30 : -30}deg)`;
+        card.style.opacity = 0;
+        card.style.transition = 'transform 0.4s ease-out, opacity 0.4s ease-out';
+
+        if (direction === 'left' && item) {
+            retryPile.push(item);
+        }
+
+        setTimeout(() => {
+            remainingDeck.shift(); // Remove top item
+            renderDeck();
+        }, 400);
+    }
+
+    // Button controls
+    const btnLeft = document.getElementById('btn-swipe-left');
+    const btnRight = document.getElementById('btn-swipe-right');
+
+    const handleLeftClick = () => {
+        const topCard = container.querySelector('.swipe-card.is-top');
+        if (topCard && remainingDeck.length > 0) swipeOut('left', topCard, remainingDeck[0]);
+    };
+
+    const handleRightClick = () => {
+        const topCard = container.querySelector('.swipe-card.is-top');
+        if (topCard && remainingDeck.length > 0) swipeOut('right', topCard);
+    };
+
+    // Replace handlers to avoid duplicates if called multiple times
+    const newBtnLeft = btnLeft.cloneNode(true);
+    const newBtnRight = btnRight.cloneNode(true);
+    btnLeft.replaceWith(newBtnLeft);
+    btnRight.replaceWith(newBtnRight);
+
+    newBtnLeft.addEventListener('click', handleLeftClick);
+    newBtnRight.addEventListener('click', handleRightClick);
+
+    // Initial render
+    renderDeck();
+}
+
+
+// ==========================================================================
+// MULTIPLE-CHOICE QUIZ ENGINE (UNIFIED PHASE 5)
+// ==========================================================================
+let quizState = {
+    questions: [],
+    currentIdx: 0,
+    answers: [],
+    type: null,
+    level: null,
+    section: null,
+    subsection: null
+};
+
+// Map old exercise formats to unified multiple choice questions
+function convertItemsToQuizQuestions(type, items) {
+    if (type === 'fill_blanks') {
+        return items.map(item => {
+            const answer = item.answer.split('/')[0];
+            let opts = ["am", "is", "are", "am not", "isn't", "aren't"];
+            if (!opts.includes(answer)) {
+                opts = [answer, "is", "are", "do"];
+            }
+            opts = opts.sort(() => 0.5 - Math.random()).slice(0, 4);
+            if (!opts.includes(answer)) {
+                opts[0] = answer;
+                opts = opts.sort(() => 0.5 - Math.random());
+            }
+            return {
+                q: item.sentence.replace(/_{3,}/, "___"),
+                opts: opts,
+                correctIdx: opts.indexOf(answer),
+                explain: item.hint ? "Tipp: " + item.hint + ". A helyes megoldás: " + answer : "A helyes megoldás: " + answer
+            };
+        });
+    } else if (type === 'word_order') {
+        return items.map(item => {
+            const correct = item.correct;
+            const words = item.scrambled;
+            let opts = [correct];
+            for(let i=0; i<3; i++) {
+                let scrambled = [...words].sort(() => 0.5 - Math.random()).join(" ");
+                if (correct.endsWith(".")) scrambled += ".";
+                else if (correct.endsWith("?")) scrambled += "?";
+                
+                if (scrambled !== correct && !opts.includes(scrambled)) {
+                    opts.push(scrambled);
+                } else {
+                    scrambled = [...words].sort(() => 0.5 - Math.random()).join(" ") + (correct.endsWith("?") ? "?" : ".");
+                    opts.push(scrambled);
                 }
             }
+            opts = opts.sort(() => 0.5 - Math.random());
+            return {
+                q: 'Rakd sorba: <strong style="color: var(--color-accent-in)">' + item.hu + '</strong>',
+                opts: opts,
+                correctIdx: opts.indexOf(correct),
+                explain: 'A helyes szórend: ' + correct
+            };
         });
-    }, 50);
+    } else if (type === 'true_false') {
+        return items.map(item => {
+            return {
+                q: 'Igaz vagy hamis? <br><br><strong>"' + item.question + '"</strong>',
+                opts: ["Igaz", "Hamis"],
+                correctIdx: item.answer === true ? 0 : 1,
+                explain: item.explanation
+            };
+        });
+    }
+    return [];
 }
 
-// IGAZ VAGY HAMIS (True or False) — Two-button quiz
-async function renderTrueFalseTemplate(workspace, data) {
+async function renderQuizCardTemplate(workspace, data) {
     const source = data.dataSource;
     if (source && !data.items) {
         if (vocabCache[source]) {
-            const cached = vocabCache[source];
-            data.items = cached.items || [];
-            if (cached.description) data.description = cached.description;
+            data.items = vocabCache[source].items || [];
         } else {
             workspace.innerHTML = `
                 <div class="empty-state-section" style="min-height: 200px;">
                     <div class="empty-state">
                         <div class="empty-state-icon">⏳</div>
-                        <h2>Feladatok betöltése...</h2>
+                        <h2>Kvíz betöltése...</h2>
                         <div class="empty-state-pulse"></div>
                     </div>
                 </div>
             `;
             try {
                 const response = await fetch(source + "?v=1.0.6");
-                if (!response.ok) throw new Error("HTTP error " + response.status);
+                if (!response.ok) throw new Error("HTTP error");
                 const fetched = await response.json();
                 vocabCache[source] = fetched;
                 data.items = fetched.items || [];
-                if (fetched.description) data.description = fetched.description;
             } catch (error) {
-                console.error("Hiba a feladatok betöltésekor:", error);
-                workspace.innerHTML = renderEmptyState("Igaz vagy Hamis", "Nem sikerült betölteni a feladatokat a szerverről. Kérjük, próbáld újra később!");
+                workspace.innerHTML = renderEmptyState("Kvíz", "Nem sikerült betölteni a feladatokat.");
                 return;
             }
         }
     }
 
     if (!data.items || data.items.length === 0) {
-        workspace.innerHTML = renderEmptyState("Igaz vagy Hamis", "Ehhez a leckéhez hamarosan feltöltjük a feladatokat.");
+        workspace.innerHTML = renderEmptyState("Kvíz", "Hamarosan feltöltjük a feladatokat.");
         return;
     }
 
-    let quizHtml = "";
-    data.items.forEach((item, i) => {
-        quizHtml += `
-            <div class="quiz-item" data-index="${i}" style="animation-delay: ${i * 0.06}s">
-                <p class="quiz-question"><span class="question-number">${i + 1}.</span> ${item.question}</p>
-                <div class="quiz-buttons">
-                    <button class="btn btn-tf btn-true" onclick="checkTrueFalse(${i}, true)">
-                        <span class="tf-icon">✓</span> IGAZ
-                    </button>
-                    <button class="btn btn-tf btn-false" onclick="checkTrueFalse(${i}, false)">
-                        <span class="tf-icon">✗</span> HAMIS
-                    </button>
-                </div>
-                <div class="quiz-feedback" id="tf-feedback-${i}"></div>
-            </div>
-        `;
-    });
+    quizState = {
+        questions: convertItemsToQuizQuestions(data.type, data.items),
+        currentIdx: 0,
+        answers: [],
+        type: data.type,
+        level: currentLevel,
+        section: currentSection,
+        subsection: currentSubsection
+    };
+
+    let headerIcon = "📝";
+    let headerText = "Gyakorló Kvíz";
+    if (data.type === "fill_blanks") { headerIcon = "✏️"; headerText = "Lyukas mondatok"; }
+    else if (data.type === "word_order") { headerIcon = "🧩"; headerText = "Szórendezés"; }
+    else if (data.type === "true_false") { headerIcon = "⚖️"; headerText = "Igaz vagy Hamis"; }
 
     workspace.innerHTML = `
         <div class="lesson-view">
             <section class="practice-box">
-                <h2>✅ Igaz vagy Hamis – Döntsd el!</h2>
-                <p class="section-instruction">${data.description || 'Olvasd el az állítást, és döntsd el, hogy igaz vagy hamis!'}</p>
-                <div class="quiz-list">${quizHtml}</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2>${headerIcon} ${headerText}</h2>
+                    <span id="quiz-question-counter" style="font-size: 0.9rem; color: var(--color-accent-in); font-weight: bold;">Kérdés: 1/${quizState.questions.length}</span>
+                </div>
+                
+                <div class="quiz-card-wrapper" id="quiz-card-container">
+                    <!-- Loaded dynamically by JS -->
+                </div>
             </section>
-            ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, true)}
         </div>
     `;
 
-    // Restore true/false saved state
-    setTimeout(() => {
-        const answersKey = `${currentLevel}_${currentSection}_${currentSubsection}_answers`;
-        const savedAnswers = userProgress.completed[answersKey] || {};
-        
-        data.items.forEach((item, i) => {
-            if (savedAnswers[i] !== undefined) {
-                checkTrueFalse(i, savedAnswers[i]);
-            }
-        });
-    }, 50);
+    renderQuizCardQuestion();
 }
 
-// FEJEZET VIZSGA (Section Exam) — Mixed question types
+function renderQuizCardQuestion() {
+    const container = document.getElementById('quiz-card-container');
+    if (!container) return;
+    
+    const qData = quizState.questions[quizState.currentIdx];
+    
+    const counter = document.getElementById('quiz-question-counter');
+    if (counter) counter.textContent = `Kérdés: ${quizState.currentIdx + 1}/${quizState.questions.length}`;
+
+    if (!qData) {
+        // Quiz complete
+        let score = quizState.answers.filter(a => a.correct).length;
+        let isFlawless = score === quizState.questions.length;
+        
+        // Mark subsection completed if they got at least 50%
+        let passed = score / quizState.questions.length >= 0.5;
+        
+        // Ensure userProgress is updated
+        if (passed) {
+            const key = `${quizState.level}_${quizState.section}_${quizState.subsection}`;
+            if (!userProgress.completed[key]) {
+                userProgress.completed[key] = new Date().toISOString();
+                saveUserProgress();
+                syncSidebarRoadmapNodes();
+            }
+            if (isFlawless && typeof updateQuestProgress === 'function') {
+                updateQuestProgress('perfect_quiz', 1);
+            }
+        }
+        
+        let completionBtnHtml = passed 
+            ? getCompleteButtonHtml(quizState.level, quizState.section, quizState.subsection, true)
+            : `<button class="btn btn-primary" onclick="restartQuiz()">Újrapróbálkozás</button>`;
+
+        container.innerHTML = `
+            <div style="text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                <span style="font-size: 4rem;">🎯</span>
+                <h3 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: bold;">Kvíz befejezve!</h3>
+                <div style="font-size: 3rem; font-weight: bold; color: ${isFlawless ? 'var(--color-success)' : 'var(--color-text-main)'};">
+                    ${score} / ${quizState.questions.length}
+                </div>
+                <p style="color: var(--color-text-muted); max-width: 400px; font-size: 1.1rem; line-height: 1.6;">
+                    ${isFlawless ? 'Zseniális! Minden válaszod tökéletes lett.' : passed ? 'Szép munka! Folytathatod a következő leckével.' : 'Ezt még gyakorolni kell. Nézd át a hibákat és próbáld újra!'}
+                </p>
+                <div style="margin-top: 2rem;">
+                    ${completionBtnHtml}
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    const optsHtml = qData.opts.map((opt, i) => `
+        <button class="quiz-opt-btn" onclick="submitQuizAnswer(this, ${i})">
+            <span class="quiz-opt-badge">${String.fromCharCode(65 + i)}</span>
+            <span>${opt}</span>
+        </button>
+    `).join('');
+
+    container.innerHTML = `
+        <div class="quiz-question-box">${qData.q}</div>
+        <div class="quiz-answers-grid">${optsHtml}</div>
+        <div id="quiz-explanation" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: 12px; font-size: 1rem; line-height: 1.5; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+            <strong style="color: var(--color-accent-in);">💡 Magyarázat:</strong> <span id="quiz-explanation-text"></span>
+            <div style="margin-top: 1.5rem; text-align: right;">
+                <button class="btn btn-primary" onclick="nextQuizQuestion()">Tovább →</button>
+            </div>
+        </div>
+    `;
+}
+
+window.submitQuizAnswer = function(btnEl, chosenIdx) {
+    const buttons = document.querySelectorAll('.quiz-answers-grid button');
+    buttons.forEach(btn => btn.disabled = true);
+
+    const qData = quizState.questions[quizState.currentIdx];
+    const isCorrect = chosenIdx === qData.correctIdx;
+
+    quizState.answers.push({ questionIdx: quizState.currentIdx, correct: isCorrect });
+    
+    // Support legacy exercise attempts tracker
+    exerciseAttempts[quizState.currentIdx] = isCorrect;
+    updateSuccessRateDisplay(true);
+
+    if (isCorrect) {
+        btnEl.classList.add('correct');
+        AudioSynth.playCorrect();
+        addXP(1, btnEl, quizState.type);
+        
+        setTimeout(() => {
+            window.nextQuizQuestion();
+        }, 1000);
+    } else {
+        btnEl.classList.add('incorrect');
+        buttons[qData.correctIdx].classList.add('correct');
+        
+        AudioSynth.playIncorrect();
+
+        const explanationBox = document.getElementById('quiz-explanation');
+        const explanationText = document.getElementById('quiz-explanation-text');
+        explanationText.innerHTML = qData.explain;
+        explanationBox.style.display = 'block';
+    }
+};
+
+window.nextQuizQuestion = function() {
+    quizState.currentIdx++;
+    renderQuizCardQuestion();
+};
+
+window.restartQuiz = function() {
+    quizState.currentIdx = 0;
+    quizState.answers = [];
+    exerciseAttempts = {};
+    updateSuccessRateDisplay(true);
+    renderQuizCardQuestion();
+};
+
 async function renderSectionExamTemplate(workspace, data) {
     const source = data.dataSource;
     if (source && !data.items) {
@@ -1872,7 +3228,75 @@ async function renderSectionExamTemplate(workspace, data) {
             try {
                 const response = await fetch(source + "?v=1.0.6");
                 if (!response.ok) throw new Error("HTTP error " + response.status);
-                const fetched = await response.json();
+                let fetched = await response.json();
+                
+                // --- DYNAMIC EXAM INJECTION ---
+                if (fetched.isDynamicExam && fetched.examConfig) {
+                    let combinedItems = [];
+                    for (const sourceConfig of fetched.examConfig.sources) {
+                        try {
+                            const srcRes = await fetch(sourceConfig.file + "?v=1.0.6");
+                            if (!srcRes.ok) continue;
+                            const srcData = await srcRes.json();
+                            let itemsPool = srcData.items || srcData; 
+                            
+                            // Randomize
+                            itemsPool = itemsPool.sort(() => 0.5 - Math.random());
+                            let selected = itemsPool.slice(0, sourceConfig.count);
+                            
+                            // MAP TO EXAM FORMAT
+                            selected = selected.map(item => {
+                                if (sourceConfig.type === "fill_blanks") {
+                                    let q = item.sentence;
+                                    if (item.hint) q += ` ${item.hint}`;
+                                    return {
+                                        question: q,
+                                        type: "fill",
+                                        answer: item.answer
+                                    };
+                                } else if (sourceConfig.type === "true_false") {
+                                    let q = item.question || `"${item.statement}" – Ez a mondat helyes?`;
+                                    let ans = item.answer !== undefined ? item.answer : item.isCorrect;
+                                    return {
+                                        question: q,
+                                        type: "tf",
+                                        answer: ans,
+                                        explanation: item.explanation || item.correction
+                                    };
+                                } else if (sourceConfig.type === "word_order") {
+                                    let scrambledArr = item.scrambled || item.shuffled || [];
+                                    // Handle cases where words are mistakenly put into a single comma-separated string
+                                    if (scrambledArr.length === 1 && scrambledArr[0].includes(',')) {
+                                        scrambledArr = scrambledArr[0].split(',').map(s => s.trim());
+                                    }
+                                    return {
+                                        question: `Rakd sorrendbe a mondatot: <strong style="color:var(--color-accent-in);">${item.hu || scrambledArr.join(" / ")}</strong>`,
+                                        type: "order",
+                                        correct: item.correct || item.sentence,
+                                        scrambled: scrambledArr
+                                    };
+                                }
+                                return item;
+                            });
+                            
+                            combinedItems = combinedItems.concat(selected);
+                        } catch(e) {
+                            console.error("Error fetching dynamic source:", sourceConfig.file, e);
+                        }
+                    }
+                    // Shuffle the combined items
+                    combinedItems = combinedItems.sort(() => 0.5 - Math.random());
+                    fetched.items = combinedItems;
+                    
+                    // Because this is a brand new randomly generated exam, we MUST clear any old saved answers from localStorage!
+                    const dynamicAnswersKey = `${currentLevel}_${currentSection}_${currentSubsection}_answers`;
+                    if (userProgress.completed[dynamicAnswersKey]) {
+                        delete userProgress.completed[dynamicAnswersKey];
+                        saveUserProgress();
+                    }
+                }
+                // ------------------------------
+
                 vocabCache[source] = fetched;
                 data.items = fetched.items || [];
                 if (fetched.description) data.description = fetched.description;
@@ -2044,7 +3468,9 @@ function checkFillBlank(index) {
     const possibleAnswers = correctAnswer.toLowerCase().split("/").map(ans => ans.trim());
 
     let isCorrect = false;
-    if (possibleAnswers.includes(userAnswer)) {
+    const cleanUserAnswer = userAnswer.replace(/'/g, "");
+    const cleanPossibleAnswers = possibleAnswers.map(ans => ans.replace(/'/g, ""));
+    if (cleanPossibleAnswers.includes(cleanUserAnswer)) {
         feedback.innerHTML = `✓ Helyes válasz! Ügyes vagy!`;
         feedback.className = "quiz-feedback correct";
         input.classList.add("input-correct");
@@ -2239,7 +3665,9 @@ function gradeExam() {
             const userAnswer = input ? input.value.trim().toLowerCase() : "";
             const possibleAnswers = item.answer.toLowerCase().split("/").map(ans => ans.trim());
 
-            if (possibleAnswers.includes(userAnswer)) {
+            const cleanUserAnswer = userAnswer.replace(/'/g, "");
+            const cleanPossibleAnswers = possibleAnswers.map(ans => ans.replace(/'/g, ""));
+            if (cleanPossibleAnswers.includes(cleanUserAnswer)) {
                 correct++;
                 feedback.innerHTML = `✓ Helyes!`;
                 feedback.className = "quiz-feedback correct";
@@ -2303,6 +3731,12 @@ function gradeExam() {
         </div>
     `;
 
+    // Swap the submit button for the retake button
+    const submitBtn = document.querySelector(".btn-submit-exam");
+    if (submitBtn) {
+        submitBtn.outerHTML = `<button class="btn btn-reset" onclick="retakeExam()">🔄 Újraírás (Retake Exam)</button>`;
+    }
+
     // Update the success rate metric in the header
     const successRateDisplay = document.getElementById("success-rate-display");
     if (successRateDisplay) {
@@ -2346,11 +3780,13 @@ function gradeExam() {
     userProgress.completed[lockedKey] = true;
     saveUserProgress();
 
-    // Re-render the exam UI so the lock visually applies and inputs disable
-    setTimeout(() => {
-        const workspace = document.querySelector(".workspace-content");
-        renderSectionExamTemplate(workspace, data);
-    }, 1500); // Wait a brief moment to let them see the initial feedback popups before freezing
+    // Visually lock the inputs without re-rendering the template
+    // This preserves our beautiful result card instead of replacing it with the cached "Highest Score" from localStorage
+    document.querySelectorAll(".exam-list input, .exam-list button:not(.btn-reset)").forEach(el => {
+        el.setAttribute("disabled", "true");
+        el.style.pointerEvents = "none";
+        el.classList.add("disabled");
+    });
 }
 
 // Retake Exam Handler
@@ -2362,10 +3798,20 @@ function retakeExam() {
     userProgress.completed[answersKey] = {};
     saveUserProgress();
     
-    // Re-render the exam UI to unlock inputs
-    const workspace = document.querySelector(".workspace-content");
     const data = learningContent[currentLevel][currentSection].subsections.sectionExam;
+    
+    // If it's a dynamic exam, clear the cached items to force a re-fetch and fresh randomization
+    if (data.dataSource && vocabCache[data.dataSource] && vocabCache[data.dataSource].isDynamicExam) {
+        data.items = null;
+        delete vocabCache[data.dataSource];
+    }
+    
+    // Re-render the exam UI to unlock inputs
+    const workspace = document.getElementById("workspace");
     renderSectionExamTemplate(workspace, data);
+    
+    // Smooth scroll back to the top of the exam
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // =====================================================================
@@ -2671,6 +4117,44 @@ function renderProfileStatistics() {
     if (totalPointsDisplay) {
         totalPointsDisplay.textContent = userProgress.points || 0;
     }
+    
+    // Update active theme
+    if (userProgress.active_theme && userProgress.active_theme !== 'default') {
+        document.documentElement.setAttribute('data-theme', userProgress.active_theme);
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+    }
+    
+    // Update shop buttons
+    document.querySelectorAll('.shop-item button').forEach(btn => {
+        const onclick = btn.getAttribute('onclick');
+        if (!onclick) return;
+        
+        if (onclick.includes("unlockShopItem('cyberpunk'")) {
+            if (userProgress.active_theme === 'cyberpunk') {
+                btn.textContent = 'Aktiválva';
+                btn.disabled = true;
+            } else if (userProgress.unlocked_items?.includes('cyberpunk')) {
+                btn.textContent = 'Aktivál';
+                btn.disabled = false;
+            } else {
+                btn.textContent = 'Feloldás';
+                btn.disabled = false;
+            }
+        }
+        else if (onclick.includes("unlockShopItem('nature'")) {
+            if (userProgress.active_theme === 'nature') {
+                btn.textContent = 'Aktiválva';
+                btn.disabled = true;
+            } else if (userProgress.unlocked_items?.includes('nature')) {
+                btn.textContent = 'Aktivál';
+                btn.disabled = false;
+            } else {
+                btn.textContent = 'Feloldás';
+                btn.disabled = false;
+            }
+        }
+    });
 }
 
 async function handlePasswordChange() {
@@ -2779,3 +4263,395 @@ document.addEventListener("DOMContentLoaded", () => {
         window.history.replaceState(null, null, window.location.pathname);
     }
 });
+
+
+function checkStreakOnLoad() {
+    if (ProgressManager.isGuest) return;
+    
+    if (!userProgress.streak_last_date) {
+        userProgress.streak_last_date = new Date().toISOString().split("T")[0];
+        userProgress.streak_count = 0;
+        userProgress.streak_shields = userProgress.streak_shields || 0;
+        saveUserProgress();
+        return;
+    }
+    
+    const today = new Date();
+    const todayStr = today.toISOString().split("T")[0];
+    
+    const lastDate = new Date(userProgress.streak_last_date);
+    
+    // Normalize to midnight UTC for pure day diff
+    const utcToday = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+    const utcLast = Date.UTC(lastDate.getFullYear(), lastDate.getMonth(), lastDate.getDate());
+    
+    const diffDays = Math.floor((utcToday - utcLast) / (1000 * 60 * 60 * 24));
+    
+    if (diffDays > 1) {
+        let shieldsUsed = 0;
+        let daysToCover = diffDays - 1; // 1 day gap means yesterday was missed
+        
+        while (daysToCover > 0 && userProgress.streak_shields > 0) {
+            userProgress.streak_shields--;
+            shieldsUsed++;
+            daysToCover--;
+        }
+        
+        if (daysToCover > 0) {
+            // Lost streak
+            userProgress.streak_count = 0;
+            userProgress.streak_last_date = todayStr; // reset to today so we don't spam them, but they still need 15 XP to get 1 streak? No, leave as yesterday so they can earn it today.
+            
+            // Actually, if they lost it, we set last_date to yesterday so they can earn 1 streak today.
+            const yesterday = new Date(utcToday - 86400000);
+            userProgress.streak_last_date = yesterday.toISOString().split("T")[0];
+            
+            showStreakModal("Sajnos megszakadt a napi szériád! 😢", "Nem baj, kezdd újra ma!");
+        } else {
+            // Saved by shields!
+            // Update last_date to yesterday so they can still earn today's streak
+            const yesterday = new Date(utcToday - 86400000);
+            userProgress.streak_last_date = yesterday.toISOString().split("T")[0];
+            
+            showStreakModal("A Pajzsod megmentett!", `Kihagytál ${shieldsUsed} napot, de a pajzsaid megvédték a szériádat! 🛡️`);
+        }
+        
+        saveUserProgress();
+        updateProgressUI();
+    }
+}
+
+function showStreakModal(title, text) {
+    // Create an animated modal overlay
+    const overlay = document.createElement("div");
+    overlay.className = "auth-modal-overlay";
+    overlay.style.display = "flex";
+        if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
+    overlay.style.zIndex = "10000";
+    
+    overlay.innerHTML = `
+        <div class="auth-modal-card proto-card" style="text-align: center; max-width: 400px; animation: popIn 0.5s ease-out;">
+            <h2 style="color: var(--color-accent-in); margin-bottom: 1rem;">${title}</h2>
+            <p style="margin-bottom: 1.5rem;">${text}</p>
+            <button class="btn btn-primary" onclick="this.closest('.auth-modal-overlay').remove()">Rendben</button>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+}
+
+
+// ==========================================================================
+// PHASE 8: SHOP & ACCESSIBILITY LOGIC
+// ==========================================================================
+
+window.toggleSound = function(enabled) {
+    if (!userProgress.scores) userProgress.scores = {};
+    userProgress.scores.sound_enabled = enabled;
+    saveUserProgress();
+    if(enabled && window.AudioSynth) AudioSynth.playSuccess();
+};
+
+window.toggleReducedMotion = function(enabled) {
+    if (!userProgress.scores) userProgress.scores = {};
+    userProgress.scores.reduced_motion = enabled;
+    saveUserProgress();
+    
+    if (enabled) {
+        document.body.classList.add('reduced-motion');
+    } else {
+        document.body.classList.remove('reduced-motion');
+    }
+};
+
+window.unlockShopItem = function(itemId, cost, btnEl) {
+    if (!userProgress.unlocked_items) userProgress.unlocked_items = [];
+    
+    if (userProgress.unlocked_items.includes(itemId)) {
+        activateTheme(itemId);
+        return;
+    }
+    
+    if ((userProgress.points || 0) < cost) {
+        alert("Nincs elég XP-d!");
+        return;
+    }
+    
+    // Deduct cost
+    userProgress.points -= cost;
+    userProgress.unlocked_items.push(itemId);
+    saveUserProgress();
+    
+    if(window.AudioSynth) if(typeof AudioSynth.playLevelUp === 'function') AudioSynth.playLevelUp(); else AudioSynth.playComplete();;
+    
+    if (typeof syncShopButtonsUI === 'function') syncShopButtonsUI();
+};
+
+window.activateTheme = function(themeName) {
+    userProgress.active_theme = themeName;
+    saveUserProgress();
+    updateProgressUI();
+};
+
+window.buyStreakShield = function(cost, btnEl) {
+    if ((userProgress.points || 0) < cost) {
+        alert("Nincs elég XP-d!");
+        return;
+    }
+    
+    // Limit to 3 shields
+    userProgress.streak_shields = userProgress.streak_shields || 0;
+    if (userProgress.streak_shields >= 3) {
+        alert("Maximum 3 pajzsod lehet egyszerre!");
+        return;
+    }
+    
+    // Deduct cost
+    userProgress.points -= cost;
+    userProgress.streak_shields++;
+    saveUserProgress();
+    updateProgressUI();
+    
+    if(window.AudioSynth) AudioSynth.playSuccess();
+};
+
+window.openShopModal = function() {
+    let overlay = document.getElementById("shop-modal-overlay");
+    if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.className = "auth-modal-overlay";
+        overlay.id = "shop-modal-overlay";
+        overlay.style.display = "flex";
+        if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
+        overlay.style.zIndex = "10000";
+        
+        overlay.innerHTML = `
+            <div class="auth-modal-card proto-card" style="text-align: center; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                <h2 style="color: var(--color-accent-in); margin-bottom: 1rem; font-size: 2rem;">🛍️ Jutalom Bolt</h2>
+                <p style="margin-bottom: 2rem; color: var(--color-text-muted);">Költsd el a nehezen megszerzett XP-det extra funkciókra és témákra!</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; text-align: left;">
+                    
+                    <!-- Cyberpunk -->
+                    <div class="shop-item" style="padding: 1rem; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎛️</div>
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.2rem;">Cyberpunk Neon Téma</h3>
+                        <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 1rem;">Neon színek és sötét kontrasztok.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: bold; color: var(--color-accent-in);">0 XP (Test)</span>
+                            <button class="btn btn-secondary" onclick="unlockShopItem('cyberpunk', 0, this)">Feloldás</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Nature -->
+                    <div class="shop-item" style="padding: 1rem; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌿</div>
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.2rem;">Természet Téma</h3>
+                        <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 1rem;">Nyugtató zöld árnyalatok.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: bold; color: var(--color-accent-in);">0 XP (Test)</span>
+                            <button class="btn btn-secondary" onclick="unlockShopItem('nature', 0, this)">Feloldás</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Shield -->
+                    <div class="shop-item" style="padding: 1rem; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛡️</div>
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.2rem;">Streak Pajzs</h3>
+                        <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 1rem;">Megvéd, ha kihagysz egy napot.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: bold; color: var(--color-accent-in);">0 XP (Test)</span>
+                            <button class="btn btn-secondary" onclick="buyStreakShield(0, this)">Vásárlás</button>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <button class="btn btn-primary" onclick="this.closest('.auth-modal-overlay').style.display='none'" style="margin-top: 2rem; width: 100%; justify-content: center;">Vissza</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
+    } else {
+        overlay.style.display = "flex";
+        if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
+    }
+};
+
+window.initSettingsUI = function() {
+    if (userProgress.scores) {
+        const soundTgl = document.getElementById("sound-toggle");
+        if (soundTgl) soundTgl.checked = userProgress.scores.sound_enabled !== false;
+        
+        const motionTgl = document.getElementById("reduced-motion-toggle");
+        if (motionTgl) {
+            motionTgl.checked = userProgress.scores.reduced_motion === true;
+            if (motionTgl.checked) document.body.classList.add('reduced-motion');
+        }
+    }
+};
+
+
+// ==========================================================================
+// PHASE 8.3: DAILY QUESTS LOGIC
+// ==========================================================================
+let allQuestsPool = [];
+
+async function initDailyQuests() {
+    // 1. Fetch the quest pool
+    try {
+        const res = await fetch('data/quests.json');
+        if (res.ok) {
+            allQuestsPool = await res.json();
+        }
+    } catch (e) {
+        console.warn('Failed to load quests.json', e);
+        return;
+    }
+    
+    if (allQuestsPool.length === 0) return;
+    
+    // 2. Check if it's a new day
+    const today = new Date().toISOString().split('T')[0];
+    if (userProgress.daily_quests_date !== today) {
+        userProgress.daily_quests_date = today;
+        userProgress.quest_progress = {};
+        userProgress.completed_quests_today = [];
+        
+        // Pick 3 random quests
+        let shuffled = [...allQuestsPool].sort(() => 0.5 - Math.random());
+        userProgress.active_quests = shuffled.slice(0, 3).map(q => q.id);
+        
+        // Initialize progress
+        userProgress.active_quests.forEach(qId => {
+            userProgress.quest_progress[qId] = 0;
+        });
+        
+        saveUserProgress();
+    }
+    
+    // Check login quest immediately
+    updateQuestProgress('login', 1);
+}
+
+window.updateQuestProgress = function(type, amount) {
+    if (!userProgress.active_quests) return;
+    
+    let updated = false;
+    userProgress.active_quests.forEach(qId => {
+        const questData = allQuestsPool.find(q => q.id === qId);
+        if (!questData || questData.type !== type) return;
+        
+        if (!userProgress.completed_quests_today.includes(qId)) {
+            let current = userProgress.quest_progress[qId] || 0;
+            current += amount;
+            if (current > questData.target) current = questData.target;
+            userProgress.quest_progress[qId] = current;
+            updated = true;
+        }
+    });
+    
+    if (updated) {
+        saveUserProgress();
+        renderQuestModalContent(); // Refresh UI if open
+    }
+};
+
+window.claimQuestReward = function(questId) {
+    if (userProgress.completed_quests_today.includes(questId)) return;
+    
+    const questData = allQuestsPool.find(q => q.id === questId);
+    if (!questData) return;
+    
+    const current = userProgress.quest_progress[questId] || 0;
+    if (current >= questData.target) {
+        // Reward
+        userProgress.completed_quests_today.push(questId);
+        addXP(questData.reward, document.querySelector(`#btn-claim-${questId}`) || document.body);
+        
+        if (window.AudioSynth) if(typeof AudioSynth.playLevelUp === 'function') AudioSynth.playLevelUp(); else AudioSynth.playComplete();;
+        
+        saveUserProgress();
+        renderQuestModalContent();
+    }
+};
+
+window.openQuestsModal = function() {
+    let overlay = document.getElementById("quests-modal-overlay");
+    if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.className = "auth-modal-overlay";
+        overlay.id = "quests-modal-overlay";
+        overlay.style.display = "flex";
+        if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
+        overlay.style.zIndex = "10000";
+        
+        overlay.innerHTML = `
+            <div class="auth-modal-card proto-card" style="text-align: center; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                <h2 style="color: var(--color-accent-in); margin-bottom: 1rem; font-size: 2rem;">🎯 Napi Küldetések</h2>
+                <p style="margin-bottom: 2rem; color: var(--color-text-muted);">Teljesítsd a küldetéseket, és szerezz bónusz XP-t minden nap!</p>
+                
+                <div id="quests-container" style="display: flex; flex-direction: column; gap: 1rem; text-align: left;">
+                    <!-- Dynamically populated -->
+                </div>
+                
+                <button class="btn btn-primary" onclick="this.closest('.auth-modal-overlay').style.display='none'" style="margin-top: 2rem; width: 100%; justify-content: center;">Vissza</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+    } else {
+        overlay.style.display = "flex";
+        if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
+    }
+    
+    renderQuestModalContent();
+};
+
+function renderQuestModalContent() {
+    const container = document.getElementById("quests-container");
+    if (!container) return;
+    
+    if (!userProgress.active_quests || userProgress.active_quests.length === 0) {
+        container.innerHTML = "<p style='text-align:center;'>Nincsenek elérhető küldetések.</p>";
+        return;
+    }
+    
+    let html = "";
+    userProgress.active_quests.forEach(qId => {
+        const qData = allQuestsPool.find(q => q.id === qId);
+        if (!qData) return;
+        
+        const current = userProgress.quest_progress[qId] || 0;
+        const target = qData.target;
+        const isCompleted = userProgress.completed_quests_today.includes(qId);
+        const canClaim = current >= target && !isCompleted;
+        
+        const progressPercent = Math.min(100, Math.round((current / target) * 100));
+        
+        let buttonHtml = `<div style="font-weight:bold; color:var(--color-text-muted);">${current} / ${target}</div>`;
+        
+        if (isCompleted) {
+            buttonHtml = `<button class="btn btn-secondary" disabled style="border-color:var(--color-success); color:var(--color-success);">Begyűjtve ✓</button>`;
+        } else if (canClaim) {
+            buttonHtml = `<button id="btn-claim-${qId}" class="btn btn-primary" onclick="claimQuestReward('${qId}')">Begűjtés (+${qData.reward} XP)</button>`;
+        }
+        
+        html += `
+            <div style="padding: 1rem; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                    <div>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 0.2rem;">${qData.title}</h3>
+                        <p style="font-size: 0.8rem; color: var(--color-text-muted);">${qData.desc}</p>
+                    </div>
+                    ${buttonHtml}
+                </div>
+                <!-- Progress bar -->
+                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-top: 0.5rem;">
+                    <div style="height: 100%; width: ${progressPercent}%; background: ${isCompleted ? 'var(--color-success)' : 'var(--color-accent-in)'}; transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}

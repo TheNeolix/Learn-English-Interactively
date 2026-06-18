@@ -1,0 +1,24 @@
+{
+  "isDynamicExam": true,
+  "description": "Ez a vizsga 15 véletlenszerűen kiválasztott kérdésből áll a korábbi gyakorlatokból. Legalább 10 helyes válaszra van szükséged a sikeres vizsgához.",
+  "examConfig": {
+    "totalQuestions": 15,
+    "sources": [
+      {
+        "file": "data/A1/Lesson2_ToHave/fillBlanks.json",
+        "count": 5,
+        "type": "fill_blanks"
+      },
+      {
+        "file": "data/A1/Lesson2_ToHave/trueFalse.json",
+        "count": 5,
+        "type": "true_false"
+      },
+      {
+        "file": "data/A1/Lesson2_ToHave/wordOrder.json",
+        "count": 5,
+        "type": "word_order"
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+[
+    {
+        "id": "quest_xp_20",
+        "type": "earn_xp",
+        "target": 20,
+        "reward": 10,
+        "title": "Szerezz 20 XP-t ma!",
+        "desc": "Tanulj szorgalmasan, és gyűjts össze 20 pontot."
+    },
+    {
+        "id": "quest_xp_50",
+        "type": "earn_xp",
+        "target": 50,
+        "reward": 25,
+        "title": "Szerezz 50 XP-t ma!",
+        "desc": "Légy mester, és gyűjts be ma 50 pontot!"
+    },
+    {
+        "id": "quest_lesson_1",
+        "type": "complete_lesson",
+        "target": 1,
+        "reward": 15,
+        "title": "Fejezz be 1 új leckét",
+        "desc": "Haladj a tananyaggal, és fejezz be egy új modult."
+    },
+    {
+        "id": "quest_lesson_2",
+        "type": "complete_lesson",
+        "target": 2,
+        "reward": 30,
+        "title": "Tanulj 2 leckét!",
+        "desc": "Fejezz be legalább két leckét a roadmap-en."
+    },
+    {
+        "id": "quest_perfect_quiz",
+        "type": "perfect_quiz",
+        "target": 1,
+        "reward": 20,
+        "title": "Hiba nélküli kvíz",
+        "desc": "Oldj meg egy kvízt úgy, hogy nem hibázol."
+    },
+    {
+        "id": "quest_login_streak",
+        "type": "login",
+        "target": 1,
+        "reward": 5,
+        "title": "Napi bejelentkezés",
+        "desc": "Jelentkezz be és tanulj ma is!"
+    }
+]

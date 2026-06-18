@@ -501,3 +501,20 @@ a {
         transform: translateY(-2px); /* Changes direction to match layout orientation */
     }
 }
+
+/* Gamification Themes */
+[data-theme="cyberpunk"] {
+    --color-bg-base: oklch(0.12 0.05 320);
+    --color-bg-surface: oklch(0.15 0.08 320 / 0.7);
+    --color-accent-in: oklch(0.7 0.25 320);
+    --color-accent-on: oklch(0.8 0.2 190);
+    --color-accent-at: oklch(0.85 0.2 120);
+}
+
+[data-theme="nature"] {
+    --color-bg-base: oklch(0.15 0.05 140);
+    --color-bg-surface: oklch(0.2 0.08 140 / 0.6);
+    --color-accent-in: oklch(0.75 0.2 140);
+    --color-accent-on: oklch(0.8 0.15 100);
+    --color-accent-at: oklch(0.7 0.15 60);
+}
