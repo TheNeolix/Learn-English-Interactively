@@ -32,7 +32,8 @@ try {
         PDO::ATTR_EMULATE_PREPARES => false
     ]);
 } catch (PDOException $e) {
-    echo json_encode(['error' => 'Database connection failed: ' . $e->getMessage()]);
+    error_log('Database connection failed: ' . $e->getMessage());
+    echo json_encode(['error' => 'Hiba történt az adatbázis csatlakozás során.']);
     exit;
 }
 
@@ -163,7 +164,8 @@ function handleSignup($pdo, $data) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
         }
-        echo json_encode(['error' => 'Hiba történt a regisztráció során: ' . $e->getMessage()]);
+        error_log('Registration error: ' . $e->getMessage());
+        echo json_encode(['error' => 'Hiba történt a regisztráció során. Kérjük, próbáld újra később.']);
     }
 }
 
@@ -203,7 +205,8 @@ function handleLogin($pdo, $data) {
         ]);
 
     } catch (Exception $e) {
-        echo json_encode(['error' => 'Hiba történt a bejelentkezés során: ' . $e->getMessage()]);
+        error_log('Login error: ' . $e->getMessage());
+        echo json_encode(['error' => 'Hiba történt a bejelentkezés során. Kérjük, próbáld újra később.']);
     }
 }
 
@@ -276,7 +279,8 @@ function handleGetSession($pdo) {
         ]);
 
     } catch (Exception $e) {
-        echo json_encode(['error' => 'Hiba a munkamenet betöltésekor: ' . $e->getMessage()]);
+        error_log('Session load error: ' . $e->getMessage());
+        echo json_encode(['error' => 'Hiba a munkamenet betöltésekor. Kérjük, próbáld újra később.']);
     }
 }
 
@@ -299,7 +303,8 @@ function handleSaveProgress($pdo, $data) {
 
         echo json_encode(['success' => true]);
     } catch (Exception $e) {
-        echo json_encode(['error' => 'Mentési hiba: ' . $e->getMessage()]);
+        error_log('Progress save error: ' . $e->getMessage());
+        echo json_encode(['error' => 'Hiba a mentés során. Kérjük, próbáld újra később.']);
     }
 }
 
@@ -342,7 +347,8 @@ function handleUpdatePassword($pdo, $data) {
 
         echo json_encode(['success' => true]);
     } catch (Exception $e) {
-        echo json_encode(['error' => 'Hiba a jelszó módosításakor: ' . $e->getMessage()]);
+        error_log('Password update error: ' . $e->getMessage());
+        echo json_encode(['error' => 'Hiba a jelszó módosításakor. Kérjük, próbáld újra később.']);
     }
 }
 
@@ -405,7 +411,8 @@ function handleForgotPassword($pdo, $data) {
         }
 
     } catch (Exception $e) {
-        echo json_encode(['error' => 'Hiba történt a kérelem feldolgozása során: ' . $e->getMessage()]);
+        error_log('Forgot password error: ' . $e->getMessage());
+        echo json_encode(['error' => 'Hiba történt a kérelem feldolgozása során. Kérjük, próbáld újra később.']);
     }
 }
 
@@ -443,6 +450,7 @@ function handleResetPassword($pdo, $data) {
         echo json_encode(['success' => true, 'message' => 'A jelszó sikeresen megváltoztatva! Most már bejelentkezhetsz.']);
 
     } catch (Exception $e) {
-        echo json_encode(['error' => 'Hiba történt a jelszó visszaállítása során: ' . $e->getMessage()]);
+        error_log('Reset password error: ' . $e->getMessage());
+        echo json_encode(['error' => 'Hiba történt a jelszó visszaállítása során. Kérjük, próbáld újra később.']);
     }
 }
