@@ -1,0 +1,532 @@
+{
+  "description": "Rakd a szavakat helyes sorrendbe, hogy nyelvtanilag helyes mondatot vagy kérdést kapj.",
+  "items": [
+    {
+      "scrambled": [
+        "She",
+        "is",
+        "my",
+        "sister"
+      ],
+      "correct": "She is my sister.",
+      "hu": "Ő a nővérem/húgom."
+    },
+    {
+      "scrambled": [
+        "Where",
+        "is",
+        "my",
+        "phone"
+      ],
+      "correct": "Where is my phone?",
+      "hu": "Hol van a telefonom?"
+    },
+    {
+      "scrambled": [
+        "I",
+        "don't",
+        "know",
+        "him"
+      ],
+      "correct": "I don't know him.",
+      "hu": "Nem ismerem őt."
+    },
+    {
+      "scrambled": [
+        "Their",
+        "house",
+        "is",
+        "big"
+      ],
+      "correct": "Their house is big.",
+      "hu": "Az ő házuk nagy."
+    },
+    {
+      "scrambled": [
+        "Can",
+        "you",
+        "help",
+        "us"
+      ],
+      "correct": "Can you help us?",
+      "hu": "Tudsz nekünk segíteni?"
+    },
+    {
+      "scrambled": [
+        "Her",
+        "eyes",
+        "are",
+        "blue"
+      ],
+      "correct": "Her eyes are blue.",
+      "hu": "Az ő szeme kék."
+    },
+    {
+      "scrambled": [
+        "Come",
+        "with",
+        "me"
+      ],
+      "correct": "Come with me.",
+      "hu": "Gyere velem."
+    },
+    {
+      "scrambled": [
+        "What",
+        "is",
+        "their",
+        "problem"
+      ],
+      "correct": "What is their problem?",
+      "hu": "Mi az ő problémájuk?"
+    },
+    {
+      "scrambled": [
+        "He",
+        "likes",
+        "his",
+        "job"
+      ],
+      "correct": "He likes his job.",
+      "hu": "Szereti a munkáját."
+    },
+    {
+      "scrambled": [
+        "Do",
+        "call",
+        "them",
+        "today"
+      ],
+      "correct": "Do call them today.",
+      "hu": "Mindenképp hívd fel őket ma."
+    },
+    {
+      "scrambled": [
+        "My",
+        "car",
+        "is",
+        "nice"
+      ],
+      "correct": "My car is nice.",
+      "hu": "Az autóm szép."
+    },
+    {
+      "scrambled": [
+        "Do",
+        "you",
+        "know",
+        "her"
+      ],
+      "correct": "Do you know her?",
+      "hu": "Ismered őt?"
+    },
+    {
+      "scrambled": [
+        "His",
+        "dog",
+        "is",
+        "big"
+      ],
+      "correct": "His dog is big.",
+      "hu": "Az ő kutyája nagy."
+    },
+    {
+      "scrambled": [
+        "Our",
+        "computer",
+        "doesn't",
+        "work"
+      ],
+      "correct": "Our computer doesn't work.",
+      "hu": "A számítógépünk nem működik."
+    },
+    {
+      "scrambled": [
+        "Please",
+        "look",
+        "at",
+        "him"
+      ],
+      "correct": "Please look at him.",
+      "hu": "Kérlek, nézz rá."
+    },
+    {
+      "scrambled": [
+        "Its",
+        "screen",
+        "is",
+        "broken"
+      ],
+      "correct": "Its screen is broken.",
+      "hu": "A képernyője elromlott."
+    },
+    {
+      "scrambled": [
+        "Where",
+        "are",
+        "your",
+        "keys"
+      ],
+      "correct": "Where are your keys?",
+      "hu": "Hol vannak a kulcsaid?"
+    },
+    {
+      "scrambled": [
+        "I",
+        "can",
+        "open",
+        "it"
+      ],
+      "correct": "I can open it.",
+      "hu": "Ki tudom nyitni."
+    },
+    {
+      "scrambled": [
+        "Their",
+        "meeting",
+        "is",
+        "today"
+      ],
+      "correct": "Their meeting is today.",
+      "hu": "Az ő megbeszélésük ma van."
+    },
+    {
+      "scrambled": [
+        "Can",
+        "you",
+        "help",
+        "me"
+      ],
+      "correct": "Can you help me?",
+      "hu": "Tudsz nekem segíteni?"
+    },
+    {
+      "scrambled": [
+        "This",
+        "is",
+        "my",
+        "new",
+        "phone"
+      ],
+      "correct": "This is my new phone.",
+      "hu": "Ez az új telefonom."
+    },
+    {
+      "scrambled": [
+        "I",
+        "love",
+        "her",
+        "sister"
+      ],
+      "correct": "I love her sister.",
+      "hu": "Szeretem a nővérét/húgát."
+    },
+    {
+      "scrambled": [
+        "His",
+        "office",
+        "is",
+        "clean"
+      ],
+      "correct": "His office is clean.",
+      "hu": "Az irodája tiszta."
+    },
+    {
+      "scrambled": [
+        "We",
+        "want",
+        "a",
+        "coffee",
+        "with",
+        "them"
+      ],
+      "correct": "We want a coffee with them.",
+      "hu": "Kávézni szeretnénk velük."
+    },
+    {
+      "scrambled": [
+        "What",
+        "is",
+        "your",
+        "name"
+      ],
+      "correct": "What is your name?",
+      "hu": "Mi a neved?"
+    },
+    {
+      "scrambled": [
+        "They",
+        "live",
+        "in",
+        "our",
+        "house"
+      ],
+      "correct": "They live in our house.",
+      "hu": "A mi házunkban laknak."
+    },
+    {
+      "scrambled": [
+        "Its",
+        "laptop",
+        "has",
+        "a",
+        "good",
+        "battery"
+      ],
+      "correct": "Its laptop has a good battery.",
+      "hu": "A laptopjának jó akkumulátora van."
+    },
+    {
+      "scrambled": [
+        "I",
+        "don't",
+        "know",
+        "it"
+      ],
+      "correct": "I don't know it.",
+      "hu": "Nem tudom azt."
+    },
+    {
+      "scrambled": [
+        "Our",
+        "boss",
+        "is",
+        "very",
+        "nice"
+      ],
+      "correct": "Our boss is very nice.",
+      "hu": "A főnökünk nagyon kedves."
+    },
+    {
+      "scrambled": [
+        "Do",
+        "you",
+        "call",
+        "us",
+        "every",
+        "day"
+      ],
+      "correct": "Do you call us every day?",
+      "hu": "Minden nap hívsz minket?"
+    },
+    {
+      "scrambled": [
+        "He",
+        "is",
+        "my",
+        "friend"
+      ],
+      "correct": "He is my friend.",
+      "hu": "Ő a barátom."
+    },
+    {
+      "scrambled": [
+        "What",
+        "color",
+        "are",
+        "her",
+        "eyes"
+      ],
+      "correct": "What color are her eyes?",
+      "hu": "Milyen színű a szeme?"
+    },
+    {
+      "scrambled": [
+        "They",
+        "don't",
+        "like",
+        "their",
+        "job"
+      ],
+      "correct": "They don't like their job.",
+      "hu": "Nem szeretik a munkájukat."
+    },
+    {
+      "scrambled": [
+        "Does",
+        "he",
+        "speak",
+        "to",
+        "me"
+      ],
+      "correct": "Does he speak to me?",
+      "hu": "Beszél hozzám?"
+    },
+    {
+      "scrambled": [
+        "Your",
+        "keys",
+        "are",
+        "on",
+        "the",
+        "table"
+      ],
+      "correct": "Your keys are on the table.",
+      "hu": "A kulcsaid az asztalon vannak."
+    },
+    {
+      "scrambled": [
+        "We",
+        "have",
+        "a",
+        "problem",
+        "with",
+        "it"
+      ],
+      "correct": "We have a problem with it.",
+      "hu": "Problémánk van vele."
+    },
+    {
+      "scrambled": [
+        "Their",
+        "house",
+        "is",
+        "in",
+        "Nitra"
+      ],
+      "correct": "Their house is in Nitra.",
+      "hu": "Az ő házuk Nyitrán van."
+    },
+    {
+      "scrambled": [
+        "Do",
+        "you",
+        "buy",
+        "food",
+        "for",
+        "him"
+      ],
+      "correct": "Do you buy food for him?",
+      "hu": "Veszel neki ételt?"
+    },
+    {
+      "scrambled": [
+        "My",
+        "key",
+        "is",
+        "in",
+        "her",
+        "bag"
+      ],
+      "correct": "My key is in her bag.",
+      "hu": "A kulcsom az ő táskájában van."
+    },
+    {
+      "scrambled": [
+        "When",
+        "does",
+        "our",
+        "meeting",
+        "start"
+      ],
+      "correct": "When does our meeting start?",
+      "hu": "Mikor kezdődik a megbeszélésünk?"
+    },
+    {
+      "scrambled": [
+        "They",
+        "have",
+        "their",
+        "test",
+        "today"
+      ],
+      "correct": "They have their test today.",
+      "hu": "Ma van a tesztjük."
+    },
+    {
+      "scrambled": [
+        "I",
+        "don't",
+        "see",
+        "them",
+        "here"
+      ],
+      "correct": "I don't see them here.",
+      "hu": "Nem látom őket itt."
+    },
+    {
+      "scrambled": [
+        "His",
+        "telephone",
+        "is",
+        "old"
+      ],
+      "correct": "His telephone is old.",
+      "hu": "A telefonja régi."
+    },
+    {
+      "scrambled": [
+        "Do",
+        "you",
+        "understand",
+        "it"
+      ],
+      "correct": "Do you understand it?",
+      "hu": "Érted?"
+    },
+    {
+      "scrambled": [
+        "Her",
+        "baby",
+        "is",
+        "small"
+      ],
+      "correct": "Her baby is small.",
+      "hu": "A babája kicsi."
+    },
+    {
+      "scrambled": [
+        "We",
+        "want",
+        "some",
+        "water",
+        "for",
+        "us"
+      ],
+      "correct": "We want some water for us.",
+      "hu": "Szeretnénk magunknak egy kis vizet."
+    },
+    {
+      "scrambled": [
+        "This",
+        "is",
+        "its",
+        "laptop",
+        "screen"
+      ],
+      "correct": "This is its laptop screen.",
+      "hu": "Ez a laptop képernyője."
+    },
+    {
+      "scrambled": [
+        "Do",
+        "you",
+        "speak",
+        "with",
+        "her"
+      ],
+      "correct": "Do you speak with her?",
+      "hu": "Beszélsz vele?"
+    },
+    {
+      "scrambled": [
+        "My",
+        "family",
+        "is",
+        "big"
+      ],
+      "correct": "My family is big.",
+      "hu": "A családom nagy."
+    },
+    {
+      "scrambled": [
+        "Who",
+        "can",
+        "help",
+        "them"
+      ],
+      "correct": "Who can help them?",
+      "hu": "Ki tud nekik segíteni?"
+    }
+  ]
+}

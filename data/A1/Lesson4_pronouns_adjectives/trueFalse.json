@@ -1,0 +1,255 @@
+{
+  "description": "Olvasd el a mondatokat. Jelöld igaznak, ha a mondat nyelvtanilag helyes, és hamisnak, ha hibát tartalmaz.",
+  "items": [
+    {
+      "question": "This is me car.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: This is my car."
+    },
+    {
+      "question": "I see him every day.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Her eyes are blue.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Can you help we?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Can you help us?"
+    },
+    {
+      "question": "His dog is very big.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Look at she! She is happy.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Look at her! She is happy."
+    },
+    {
+      "question": "Where is your key?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "We live in they house.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: We live in their house."
+    },
+    {
+      "question": "I don't know her.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The laptop has its screen.",
+      "answer": true,
+      "explanation": "Nyelvtanilag elfogadható mondat, az its birtokos alak helyes."
+    },
+    {
+      "question": "This is my new phone.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Give the pen to he, please.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Give the pen to him, please."
+    },
+    {
+      "question": "Their office is very clean.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Do you like us manager?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Do you like our manager?"
+    },
+    {
+      "question": "I don't have it key.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: I don't have its key."
+    },
+    {
+      "question": "She loves her sister.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Can you spell your name?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Look at them, they are busy.",
+      "answer": true,
+      "explanation": "A névmás helyes: them."
+    },
+    {
+      "question": "We like him job.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: We like his job."
+    },
+    {
+      "question": "The dog has its ball in the garden.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "This house is for we.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: This house is for us."
+    },
+    {
+      "question": "Where are my clean keys?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "I want to work with her today.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "He works in me office.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: He works in my office."
+    },
+    {
+      "question": "Their car doesn't have a good battery.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Does he speak to you everyday?",
+      "answer": true,
+      "explanation": "A névmás helyes. Stílusosan: every day."
+    },
+    {
+      "question": "This computer has it screen broken.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: This computer has its screen broken."
+    },
+    {
+      "question": "I know him, he is a doctor.",
+      "answer": true,
+      "explanation": "A névmások helyesek."
+    },
+    {
+      "question": "She lives with him brother.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: She lives with her brother."
+    },
+    {
+      "question": "Our meeting starts at 9 o'clock.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Do they like them new laptops?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Do they like their new laptops?"
+    },
+    {
+      "question": "Can you help me with this code?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Her starts work at 8 AM everyday.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: She starts work at 8 AM every day."
+    },
+    {
+      "question": "This is a problem for us.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Welcome to me house in Nitra.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Welcome to my house in Nitra."
+    },
+    {
+      "question": "His phone is on the table.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "I don't know they number.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: I don't know their number."
+    },
+    {
+      "question": "Call them today, please.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The house and its rooms are big.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "We don't see she here.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: We don't see her here."
+    },
+    {
+      "question": "Is this your pen or my pen?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "He has a question for us.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "They live in our village.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Look at him! He is driving a car.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Him dog is very friendly.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: His dog is very friendly."
+    },
+    {
+      "question": "She has a nice phone. I like it.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Where is me job?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Where is my job?"
+    },
+    {
+      "question": "Can we start our lesson now?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "I don't understand them problem.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: I don't understand their problem."
+    },
+    {
+      "question": "She likes her work very much.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    }
+  ]
+}

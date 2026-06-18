@@ -1,0 +1,255 @@
+{
+  "description": "Egeszítsd ki a mondatokat a zárójelben lévo helyes névmással vagy birtokos melléknévvel.",
+  "items": [
+    {
+      "sentence": "I have a new phone. This is ______ phone.",
+      "answer": "my",
+      "hint": "(my / me)"
+    },
+    {
+      "sentence": "She is my sister. I love ______.",
+      "answer": "her",
+      "hint": "(her / him)"
+    },
+    {
+      "sentence": "He lives in Nitra. ______ house is big.",
+      "answer": "His",
+      "hint": "(His / He)"
+    },
+    {
+      "sentence": "We are hungry. Can you help ______?",
+      "answer": "us",
+      "hint": "(us / our)"
+    },
+    {
+      "sentence": "They have a dog. ______ dog is nice.",
+      "answer": "Their",
+      "hint": "(Their / Them)"
+    },
+    {
+      "sentence": "Look at John! ______ works in an office.",
+      "answer": "He",
+      "hint": "(He / Him)"
+    },
+    {
+      "sentence": "Where is my key? I don't know where ______ is.",
+      "answer": "it",
+      "hint": "(it / its)"
+    },
+    {
+      "sentence": "Do you know Mary? I don't know ______.",
+      "answer": "her",
+      "hint": "(her / she)"
+    },
+    {
+      "sentence": "This is Peter. Do you like ______?",
+      "answer": "him",
+      "hint": "(him / his)"
+    },
+    {
+      "sentence": "Welcome to ______ house!",
+      "answer": "our",
+      "hint": "(our / us)"
+    },
+    {
+      "sentence": "The laptop is old and ______ battery is bad.",
+      "answer": "its",
+      "hint": "(its / it)"
+    },
+    {
+      "sentence": "Where are my friends? I want to see ______.",
+      "answer": "them",
+      "hint": "(them / their)"
+    },
+    {
+      "sentence": "This is a great meeting. Do you like ______?",
+      "answer": "it",
+      "hint": "(it / its)"
+    },
+    {
+      "sentence": "Mark has a nice car. ______ car is black.",
+      "answer": "His",
+      "hint": "(His / He)"
+    },
+    {
+      "sentence": "We have a question. Can you answer ______?",
+      "answer": "us",
+      "hint": "(us / our)"
+    },
+    {
+      "sentence": "She plays tennis every day. It is ______ favorite sport.",
+      "answer": "her",
+      "hint": "(her / she)"
+    },
+    {
+      "sentence": "I don't have my phone. Can I use ______ phone?",
+      "answer": "your",
+      "hint": "(your / you)"
+    },
+    {
+      "sentence": "Look at ______! They are playing football.",
+      "answer": "them",
+      "hint": "(them / their)"
+    },
+    {
+      "sentence": "We love our village. ______ house is in Cabaj-Čápor.",
+      "answer": "Our",
+      "hint": "(Our / Us)"
+    },
+    {
+      "sentence": "Do you know the answer? Please tell ______.",
+      "answer": "me",
+      "hint": "(me / my)"
+    },
+    {
+      "sentence": "The dog has beautiful eyes. ______ eyes are blue.",
+      "answer": "Its",
+      "hint": "(Its / It)"
+    },
+    {
+      "sentence": "They don't have money. This is ______ problem.",
+      "answer": "their",
+      "hint": "(their / them)"
+    },
+    {
+      "sentence": "Where is Jane? I need to call ______ today.",
+      "answer": "her",
+      "hint": "(her / she)"
+    },
+    {
+      "sentence": "This is a clean office. I like ______.",
+      "answer": "it",
+      "hint": "(it / its)"
+    },
+    {
+      "sentence": "He is a good boss. We like ______ a lot.",
+      "answer": "him",
+      "hint": "(him / his)"
+    },
+    {
+      "sentence": "Are these your keys? No, ______ keys are in my bag.",
+      "answer": "my",
+      "hint": "(my / me)"
+    },
+    {
+      "sentence": "Come with ______ to the cafe!",
+      "answer": "us",
+      "hint": "(us / our)"
+    },
+    {
+      "sentence": "They have a test today. ______ test starts at 9.",
+      "answer": "Their",
+      "hint": "(Their / They)"
+    },
+    {
+      "sentence": "She works in a bank. ______ job is interesting.",
+      "answer": "Her",
+      "hint": "(Her / She)"
+    },
+    {
+      "sentence": "I see Peter every morning. I speak to ______.",
+      "answer": "him",
+      "hint": "(him / he)"
+    },
+    {
+      "sentence": "Is this your telephone? Yes, it belongs to ______.",
+      "answer": "me",
+      "hint": "(me / my)"
+    },
+    {
+      "sentence": "We don't like cold tea. This is ______ opinion.",
+      "answer": "our",
+      "hint": "(our / us)"
+    },
+    {
+      "sentence": "The computer doesn't work. ______ screen is broken.",
+      "answer": "Its",
+      "hint": "(Its / It)"
+    },
+    {
+      "sentence": "Look at ______! She is very happy today.",
+      "answer": "her",
+      "hint": "(her / she)"
+    },
+    {
+      "sentence": "He lives with ______ sister in Nitra.",
+      "answer": "his",
+      "hint": "(his / him)"
+    },
+    {
+      "sentence": "Do they know the new manager? No, they don't know ______.",
+      "answer": "him",
+      "hint": "(him / his)"
+    },
+    {
+      "sentence": "I am a professional. This is ______ work.",
+      "answer": "my",
+      "hint": "(my / me)"
+    },
+    {
+      "sentence": "Can you help ______? They have a big problem.",
+      "answer": "them",
+      "hint": "(them / their)"
+    },
+    {
+      "sentence": "Where do you live? Is ______ house big?",
+      "answer": "your",
+      "hint": "(your / you)"
+    },
+    {
+      "sentence": "We are late for ______ meeting.",
+      "answer": "our",
+      "hint": "(our / us)"
+    },
+    {
+      "sentence": "The children are in the garden with ______ dog.",
+      "answer": "their",
+      "hint": "(their / them)"
+    },
+    {
+      "sentence": "This book is very good. Read ______!",
+      "answer": "it",
+      "hint": "(it / its)"
+    },
+    {
+      "sentence": "She is a very nice person. I like ______.",
+      "answer": "her",
+      "hint": "(her / she)"
+    },
+    {
+      "sentence": "He has a black pen. Is this pen ______?",
+      "answer": "his",
+      "hint": "(his / him)"
+    },
+    {
+      "sentence": "Excuse ______, can you help me with this box?",
+      "answer": "me",
+      "hint": "(me / my)"
+    },
+    {
+      "sentence": "We have a meeting with ______ boss today.",
+      "answer": "our",
+      "hint": "(our / us)"
+    },
+    {
+      "sentence": "Where are my keys? I can't find ______.",
+      "answer": "them",
+      "hint": "(them / their)"
+    },
+    {
+      "sentence": "Mary has a new job. ______ starts on Monday.",
+      "answer": "She",
+      "hint": "(Her / She)"
+    },
+    {
+      "sentence": "The cat is small but ______ ball is big.",
+      "answer": "its",
+      "hint": "(its / it)"
+    },
+    {
+      "sentence": "Do you like ______ new laptop?",
+      "answer": "your",
+      "hint": "(your / you)"
+    }
+  ]
+}
