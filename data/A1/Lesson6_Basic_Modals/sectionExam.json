@@ -5,17 +5,17 @@
     "totalQuestions": 15,
     "sources": [
       {
-        "file": "data/A1/Lesson3_Present_Simple/fillBlanks.json",
+        "file": "data/A1/Lesson6_Basic_Modals/fillBlanks.json",
         "count": 5,
         "type": "fill_blanks"
       },
       {
-        "file": "data/A1/Lesson3_Present_Simple/trueFalse.json",
+        "file": "data/A1/Lesson6_Basic_Modals/trueFalse.json",
         "count": 5,
         "type": "true_false"
       },
       {
-        "file": "data/A1/Lesson3_Present_Simple/wordOrder.json",
+        "file": "data/A1/Lesson6_Basic_Modals/wordOrder.json",
         "count": 5,
         "type": "word_order"
       }
