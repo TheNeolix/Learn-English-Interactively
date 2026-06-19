@@ -4,62 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tanuló Felület - Online Angol Iskola</title>
-    <link rel="stylesheet" href="css/main.css?v=1.0.9">
-    <link rel="stylesheet" href="css/dashboard.css?v=1.0.9">
+    <link rel="stylesheet" href="css/main.css?v=1.1.2">
+    <link rel="stylesheet" href="css/dashboard.css?v=2.0.13">
+    <!-- DEFERRED CSS -->
+    <link rel="stylesheet" href="css/learning-materials.css?v=1.0.1" media="print" onload="this.media='all'">
+    
+    <!-- DASHBOARD LOGIC -->
+    <script src="js/dashboard.js?v=1.1.12" defer></script>
 </head>
 <body>
 
-    <!-- 1. GLOBAL STATIC HORIZONTAL TOP NAVBAR -->
-    <header class="site-header">
-        <div class="header-container">
-            <a href="index.html" class="logo" aria-label="Vissza a főoldalra">
-                <span class="logo-text">NeolixStudio</span>
-            </a>
-            
-            <!-- Hamburger Menu Toggle -->
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menü megnyitása" aria-expanded="false">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-
-            <!-- Nav Drawer Wrapper -->
-            <div class="nav-drawer" id="nav-drawer">
-                <nav class="main-nav" aria-label="Szintválasztó navigáció">
-                    <ul class="nav-list">
-                        <li><a href="#" class="nav-link" id="nav-a1">A1 Kezdő</a></li>
-                        <li><a href="#" class="nav-link" id="nav-a2">A2 Alapfok</a></li>
-                        <li><a href="#" class="nav-link" id="nav-b1">B1 Középfok</a></li>
-                        <li><a href="#" class="nav-link" id="nav-b2">B2 Haladó</a></li>
-                    </ul>
-                </nav>
-
-                <div class="header-actions">
-                    <span class="user-welcome" id="user-profile-btn" role="button" tabindex="0" title="Profil megtekintése">Szia, Vendég!</span>
-                    <a href="index.html" class="btn btn-logout">Kijelentkezés</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
     <!-- 2. MAIN LAYOUT GRID FRAMEWORK -->
     <div class="dashboard-container">
+
+        <!-- A. LEFT NAVIGATION SIDEBAR -->
+        <aside class="dashboard-left-sidebar" aria-label="Fő navigáció">
+            <button class="mobile-close-stats-btn" onclick="toggleMobileNavDrawer(false)" style="margin-bottom: 1rem;">✕ Bezárás</button>
+            <a href="index.html" class="logo" aria-label="Vissza a főoldalra" style="display: block; margin-bottom: 2.5rem; text-decoration: none;">
+                <span class="logo-text" style="font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(135deg, #fff, var(--color-accent-in)); -webkit-background-clip: text; color: transparent;">NeolixStudio</span>
+            </a>
+            
+            <nav class="main-nav" aria-label="Szintválasztó navigáció" style="margin-bottom: auto;">
+                <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-text-muted); margin-bottom: 1rem; padding-left: 1rem;">Utazás</div>
+                <ul class="nav-list left-nav-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="#" class="nav-link active left-nav-link" id="nav-a1"><span class="nav-icon">🌱</span> A1 Kezdő</a></li>
+                    <li><a href="#" class="nav-link left-nav-link" id="nav-a2"><span class="nav-icon">🌿</span> A2 Alapfok</a></li>
+                    <li><a href="#" class="nav-link left-nav-link" id="nav-b1"><span class="nav-icon">🌳</span> B1 Középfok</a></li>
+                    <li><a href="#" class="nav-link left-nav-link" id="nav-b2"><span class="nav-icon">🎓</span> B2 Haladó</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer" style="margin-top: 2rem;">
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="#" class="nav-link left-nav-link" id="user-profile-btn"><span class="nav-icon">👤</span> Profilom</a></li>
+                    <li><a href="index.html" class="nav-link left-nav-link" style="color: var(--color-error);"><span class="nav-icon">🚪</span> Kijelentkezés</a></li>
+                </ul>
+            </div>
+        </aside>
+        
+        <div class="main-stage-track">
         
         
         <!-- MAIN DISPLAY VIEWPORT & SLIDER -->
         <div class="main-slider-wrapper" id="main-slider">
             
             <!-- VIEW 1: ROADMAP MAP -->
-            <div class="roadmap-view-panel" id="roadmap-panel">
-                <div class="roadmap-hero-header" style="margin: 1.5rem 1.5rem 0 1.5rem;">
-                    <div class="hero-icon">🚀</div>
-                    <div class="hero-text">
-                        <h1>Tanulási Útvonal</h1>
-                        <p>Haladj végig a leckéken, gyűjts XP-t és nyisd meg az új kihívásokat!</p>
-                    </div>
-                </div>
+            <div class="roadmap-view-panel" id="roadmap-panel" style="display: flex; flex-direction: column; height: 100%; overflow: hidden;">
                 <!-- Dynamic roadmap container where JS will inject SVG path and nodes -->
-                <div id="main-roadmap-container" class="main-roadmap-container" style="padding: 1.5rem;">
+                <div id="main-roadmap-container" class="main-roadmap-container" style="flex-grow: 1; scroll-behavior: smooth;">
                     <!-- Loaded via JS -->
                 </div>
             </div>
@@ -76,16 +68,9 @@
         <!-- B. MAIN DISPLAY VIEWPORT -->
         <main class="dashboard-content">
             
-            <!-- HERO RESUME CTA -->
-            <div class="resume-cta-card">
-                <div>
-                    <div class="resume-cta-header">Következő lecke</div>
-                    <div class="resume-cta-title">A1 - A "Lenni" Ige</div>
-                </div>
-                <a href="#" class="resume-cta-action" id="btn-resume-lesson">
-                    <span>Folytatás</span>
-                    <span style="font-size: 1.2rem;">→</span>
-                </a>
+            <!-- HERO RESUME CTA (Replaced with simple fancy header) -->
+            <div id="hero-card-container" style="width: 100%; margin-bottom: 2rem; padding: 0 1.5rem;">
+                <div class="fancy-dashboard-header" id="hero-card-title">A1 - A "Lenni" Ige</div>
             </div>
 
             <!-- Tracking Breadcrumb Navigation -->
@@ -122,11 +107,11 @@
                 </main>
             </div>
         </div>
-
+        </div> <!-- end main-stage-track -->
     
         <!-- C. STATS & CONTROL PANEL RIGHT SIDEBAR -->
         <aside class="dashboard-right-sidebar" aria-label="Statisztikák és Beállítások panel">
-            <div class="proto-card" style="padding: 1.5rem; height: 100%; overflow-y: auto;">
+            <div style="display: flex; flex-direction: column; gap: 0.2rem; padding-bottom: 100px;">
                 <button class="mobile-close-stats-btn" onclick="toggleMobileStatsDrawer(false)">✕ Bezárás</button>
                 <!-- XP és Szint progresszió -->
                 <div class="stats-widget">
@@ -234,19 +219,23 @@
 
     <!-- MOBILE BOTTOM NAVIGATION BAR -->
     <nav class="mobile-bottom-bar" aria-label="Mobil navigáció">
-        <a href="#" class="bottom-nav-item active" id="mobile-nav-home" onclick="closeWorkspace(); toggleMobileStatsDrawer(false); return false;">
+        <a href="#" class="bottom-nav-item" id="mobile-nav-menu" onclick="openMobileDrawer('nav'); return false;">
+            <span class="bottom-nav-icon">☰</span>
+            <span>Szintek</span>
+        </a>
+        <a href="#" class="bottom-nav-item active" id="mobile-nav-home" onclick="openMobileDrawer('home'); return false;">
             <span class="bottom-nav-icon">🏠</span>
             <span>Tananyag</span>
         </a>
-        <a href="#" class="bottom-nav-item" id="mobile-nav-quests" onclick="openQuestsModal(); return false;">
+        <a href="#" class="bottom-nav-item" id="mobile-nav-quests" onclick="openMobileDrawer('quests'); return false;">
             <span class="bottom-nav-icon">🎯</span>
             <span>Küldetések</span>
         </a>
-        <a href="#" class="bottom-nav-item" id="mobile-nav-stats" onclick="toggleMobileStatsDrawer(); return false;">
+        <a href="#" class="bottom-nav-item" id="mobile-nav-stats" onclick="openMobileDrawer('stats'); return false;">
             <span class="bottom-nav-icon">📊</span>
             <span>Statisztika</span>
         </a>
-        <a href="#" class="bottom-nav-item" id="mobile-nav-profile" onclick="document.getElementById('profile-modal').classList.add('is-active'); return false;">
+        <a href="#" class="bottom-nav-item" id="mobile-nav-profile" onclick="openMobileDrawer('profile'); return false;">
             <span class="bottom-nav-icon">👤</span>
             <span>Profil</span>
         </a>
@@ -284,9 +273,9 @@
     </div>
 
     <!-- PROFILE MODAL -->
-    <div id="profile-modal" class="modal-overlay" aria-hidden="true">
-        <div class="modal-content glass-panel profile-glass-panel">
-            <button id="close-profile-btn" class="btn-close-icon" aria-label="Bezárás">✕</button>
+    <div id="profile-modal" class="modal-overlay" aria-hidden="true" onclick="if(event.target===this)this.classList.remove('is-active')">
+        <div class="modal-content drawer-modal-content glass-panel profile-glass-panel" onclick="event.stopPropagation()">
+            <button id="close-profile-btn" class="btn-close-icon" aria-label="Bezárás" onclick="document.getElementById('profile-modal').classList.remove('is-active')">✕</button>
             <h2 class="profile-title">👤 Profilom</h2>
             
             <div class="profile-layout">
@@ -376,6 +365,6 @@
     <script src="js/config.js?v=1.0.9"></script>
     <script src="js/data.js?v=1.0.9"></script>
     <script src="js/nav.js?v=1.0.9"></script>
-    <script src="js/dashboard.js?v=1.0.9"></script>
+    <script src="js/dashboard.js?v=1.1.12"></script>
 </body>
 </html>

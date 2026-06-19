@@ -533,16 +533,47 @@ function initSettingsUI() {
 }
 
 // 7. Mobile Drawer toggler
+window.openMobileDrawer = function(type) {
+    // 1. Close all first
+    const leftSidebar = document.querySelector(".dashboard-left-sidebar");
+    const rightSidebar = document.querySelector(".dashboard-right-sidebar");
+    const profileModal = document.getElementById("profile-modal");
+    const questsModal = document.getElementById("quests-modal-overlay");
+    
+    if (leftSidebar && type !== 'nav') leftSidebar.classList.remove("is-active");
+    if (rightSidebar && type !== 'stats') rightSidebar.classList.remove("is-active");
+    if (profileModal && type !== 'profile') profileModal.classList.remove("is-active");
+    if (questsModal && type !== 'quests') questsModal.classList.remove("is-active");
+
+    // 2. Open the requested one
+    if (type === 'nav' && leftSidebar) {
+        leftSidebar.classList.toggle("is-active");
+    } else if (type === 'stats' && rightSidebar) {
+        rightSidebar.classList.toggle("is-active");
+    } else if (type === 'profile' && profileModal) {
+        profileModal.classList.toggle("is-active");
+    } else if (type === 'quests') {
+        if(window.openQuestsModal) window.openQuestsModal();
+    } else if (type === 'home') {
+        if(window.closeWorkspace) window.closeWorkspace();
+    }
+}
+
+// Keep old functions for backwards compatibility with closing buttons inside panels
 window.toggleMobileStatsDrawer = function(open) {
     const sidebar = document.querySelector(".dashboard-right-sidebar");
     if (!sidebar) return;
-    if (typeof open === 'undefined') {
-        sidebar.classList.toggle("is-active");
-    } else if (open) {
-        sidebar.classList.add("is-active");
-    } else {
-        sidebar.classList.remove("is-active");
-    }
+    if (typeof open === 'undefined') sidebar.classList.toggle("is-active");
+    else if (open) sidebar.classList.add("is-active");
+    else sidebar.classList.remove("is-active");
+}
+
+window.toggleMobileNavDrawer = function(open) {
+    const sidebar = document.querySelector(".dashboard-left-sidebar");
+    if (!sidebar) return;
+    if (typeof open === 'undefined') sidebar.classList.toggle("is-active");
+    else if (open) sidebar.classList.add("is-active");
+    else sidebar.classList.remove("is-active");
 };
 
 // 8. Desktop layout and Sidebar Roadmap Navigation handlers
@@ -1523,53 +1554,24 @@ function renderRoadmap(levelName) {
         
         const numNodes = subKeys.length || 1;
         
-        // Dynamically calculate height to prevent clamping on mobile
-        // Give 120px minimum vertical space per node
-        const dynamicHeight = Math.max(400, numNodes * 120);
-        
-        // Mathematically scale the Y coordinates to match the dynamic height perfectly
-        // This prevents the SVG preserveAspectRatio stretching from warping the arc lengths
-        const scaleY = dynamicHeight / 400;
-        const y1 = 60 * scaleY;
-        const y2 = 100 * scaleY;
-        const y3 = 180 * scaleY;
-        const y4 = 260 * scaleY;
-        const y5 = 300 * scaleY;
-        const y6 = 350 * scaleY;
-        const y7 = 370 * scaleY;
-        
-        const pathData = `M 300,${y1} C 380,${y2} 400,${y3} 300,${y4} C 220,${y5} 200,${y6} 300,${y7}`;
-        
-        // Create an invisible SVG path to calculate exact arc lengths natively
-        const tempSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        const tempPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        tempPath.setAttribute("d", pathData);
-        tempSvg.appendChild(tempPath);
-        // Temporarily append to DOM to ensure calculations work in all browsers
-        tempSvg.style.position = "absolute";
-        tempSvg.style.visibility = "hidden";
-        document.body.appendChild(tempSvg); 
-        
-        const totalLength = tempPath.getTotalLength();
-
         subKeys.forEach((subKey, idx) => {
             const subData = sectionData.subsections[subKey];
             const isAccessible = isContentAccessible(levelName, sectionKey, subKey);
+            const progressKey = `${levelName}_${sectionKey}_${subKey}`;
+            const isCompleted = userProgress.completed[progressKey];
+            const isContentAccess = true;
+            const isLinearLocked = false;
             
-            // Calculate exact position based on TRUE arc length
-            const lengthAtIdx = numNodes > 1 ? (idx / (numNodes - 1)) * totalLength : 0;
-            const pt = tempPath.getPointAtLength(lengthAtIdx);
-            
-            // Map directly to percentages based on the dynamic height viewBox
-            const pos = { x: (pt.x / 600) * 100, y: (pt.y / dynamicHeight) * 100 };
+            // In a viewBox of 300, center is 150.
+            // Amplitude 60 means nodes go from 90 to 210 in viewBox units (30% to 70% of width)
+            const xOffsetViewBox = Math.sin(idx * 0.8) * 60;
+            const nodeLeftPercent = (xOffsetViewBox / 300) * 100;
             
             let statusClass = "locked";
-            let lockHtml = '<div class="lock-overlay" style="position: absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index:4;">🔒</div>';
+            let lockHtml = `<div class="locked-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; z-index: 10;">🔒</div>`;
             
             if (isAccessible) {
-                // Check if completed
-                const progressKey = `${levelName}_${sectionKey}_${subKey}`;
-                if (userProgress.completed[progressKey]) {
+                if (isCompleted) {
                     statusClass = "completed";
                     lockHtml = "";
                 } else {
@@ -1581,31 +1583,44 @@ function renderRoadmap(levelName) {
             let iconHtml = subData.icon || "📝";
             if (isExam(subData)) iconHtml = "🏆";
             
+            // 2. Build the incremental SVG connector to the NEXT node
+            let connectorHtml = "";
+            if (idx < subKeys.length - 1) {
+                const nextXOffsetViewBox = Math.sin((idx + 1) * 0.8) * 60;
+                
+                // SVG coordinates in viewBox 0 0 300 120
+                const startX = 150 + xOffsetViewBox;
+                const startY = 60; // Bottom of current node (node is ~60px tall)
+                const endX = 150 + nextXOffsetViewBox;
+                const endY = 120; // Top of next node (padding-bottom 60px makes wrapper 120px tall)
+                
+                const controlY = startY + (endY - startY) / 2;
+                const pathData = `M ${startX},${startY} C ${startX},${controlY} ${endX},${controlY} ${endX},${endY}`;
+                
+                connectorHtml = `
+                    <svg class="roadmap-connector-svg" viewBox="0 0 300 120" preserveAspectRatio="none">
+                        <path class="roadmap-connector-path" d="${pathData}" vector-effect="non-scaling-stroke" />
+                    </svg>
+                `;
+            }
+            
+            // 3. Assemble the HTML for this node
             nodesHtml += `
-                <div class="lesson-node ${statusClass}" style="left: ${pos.x}%; top: ${pos.y}%;" onclick="openRoadmapNode('${levelName}', '${sectionKey}', '${subKey}', ${isAccessible})">
-                    <div class="lesson-node-circle">${iconHtml}</div>
-                    ${lockHtml}
+                <div class="node-wrapper">
+                    ${connectorHtml}
+                    <div class="lesson-node ${statusClass}" style="left: ${nodeLeftPercent}%;" onclick="openRoadmapNode('${levelName}', '${sectionKey}', '${subKey}', ${isAccessible})">
+                        <div class="lesson-node-circle">${iconHtml}</div>
+                        ${lockHtml}
+                    </div>
                 </div>
             `;
         });
-        
-        document.body.removeChild(tempSvg); // Clean up invisible SVG
         
         const sectionHtml = `
             <div class="lesson-section-box">
                 <h2 class="lesson-section-title">${title}</h2>
                 <p class="lesson-section-subtitle">${sectionData.description || 'Teljesítsd az összes modult!'}</p>
-                <div class="lesson-nodes-container" style="height: ${dynamicHeight}px;">
-                    <svg class="lesson-svg-path" viewBox="0 0 600 ${dynamicHeight}" preserveAspectRatio="none">
-                        <defs>
-                            <linearGradient id="glow-${sectionIndex}" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stop-color="var(--color-success)" />
-                                <stop offset="100%" stop-color="var(--color-accent-in)" />
-                            </linearGradient>
-                        </defs>
-                        <path d="${pathData}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12" stroke-linecap="round" />
-                        <!-- We can optionally add a glowing progress path here -->
-                    </svg>
+                <div class="lesson-nodes-container-flex">
                     ${nodesHtml}
                 </div>
             </div>
@@ -1613,6 +1628,8 @@ function renderRoadmap(levelName) {
         
         container.insertAdjacentHTML("beforeend", sectionHtml);
     });
+    
+    setupHeroCardAndScroll(levelName);
 }
 
 window.openRoadmapNode = function(level, section, subsection, isAccessible) {
@@ -4580,33 +4597,45 @@ window.openQuestsModal = function() {
     let overlay = document.getElementById("quests-modal-overlay");
     if (!overlay) {
         overlay = document.createElement("div");
-        overlay.className = "auth-modal-overlay";
+        overlay.className = "modal-overlay";
         overlay.id = "quests-modal-overlay";
-        overlay.style.display = "flex";
         if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
-        overlay.style.zIndex = "10000";
+        
+        // When clicking the overlay background, close the modal
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                overlay.classList.remove('is-active');
+            }
+        });
         
         overlay.innerHTML = `
-            <div class="auth-modal-card proto-card" style="text-align: center; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
+            <div class="modal-content drawer-modal-content proto-card" style="text-align: center; max-width: 500px; padding: 2rem;">
                 <h2 style="color: var(--color-accent-in); margin-bottom: 1rem; font-size: 2rem;">🎯 Napi Küldetések</h2>
                 <p style="margin-bottom: 2rem; color: var(--color-text-muted);">Teljesítsd a küldetéseket, és szerezz bónusz XP-t minden nap!</p>
                 
                 <div id="quests-container" style="display: flex; flex-direction: column; gap: 1rem; text-align: left;">
                     <!-- Dynamically populated -->
                 </div>
-                
-                <button class="btn btn-primary" onclick="this.closest('.auth-modal-overlay').style.display='none'" style="margin-top: 2rem; width: 100%; justify-content: center;">Vissza</button>
             </div>
         `;
         document.body.appendChild(overlay);
+        
+        // Force reflow before adding is-active
+        overlay.offsetHeight;
+        overlay.classList.add('is-active');
     } else {
-        overlay.style.display = "flex";
-        if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
+        overlay.classList.add('is-active');
     }
+    if(typeof syncShopButtonsUI === "function") syncShopButtonsUI();
     
-    renderQuestModalContent();
+    // Auto-populate quests if empty
+    setTimeout(() => {
+        if (!userProgress.active_quests || userProgress.active_quests.length === 0) {
+            checkAndGenerateDailyQuests();
+        }
+        renderQuestModalContent();
+    }, 50);
 };
-
 function renderQuestModalContent() {
     const container = document.getElementById("quests-container");
     if (!container) return;

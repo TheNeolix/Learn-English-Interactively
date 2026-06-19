@@ -2,8 +2,8 @@
    1. DASHBOARD RESPONSIVE CONTAINER LAYOUT (Mobile-First)
    ========================================================================== */
 .dashboard-container {
-    max-width: 1400px;
-    margin: 70px auto 0 auto;
+    width: 100%;
+    margin: 70px 0 0 0;
     min-height: calc(100vh - 70px);
     display: flex;
     flex-direction: column;
@@ -14,18 +14,33 @@
 /* ==========================================================================
    2. STICKY VERTICAL SIDEBAR MENU PANEL
    ========================================================================== */
-.dashboard-sidebar {
-    background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    border-right: none;
-    padding: 1.5rem 1.5rem 0 1.5rem;
-    height: auto;
-    position: static;
+.dashboard-left-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Hidden by default on mobile */
+    width: 100%; /* Full screen drawer on mobile */
+    height: 100vh;
+    background: oklch(0.18 0.01 260 / 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 2000;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 2.5rem 1.5rem 90px 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    overflow-y: visible;
+    overflow-y: auto;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+}
+
+.dashboard-left-sidebar.is-active {
+    left: 0;
+}
+
+.dashboard-left-sidebar::after {
+    content: '';
+    display: block;
+    min-height: 90px;
+    flex-shrink: 0;
 }
 
 
@@ -1009,14 +1024,6 @@
         grid-template-columns: 1fr;
     }
 
-    .dashboard-sidebar {
-        height: auto;
-        position: relative;
-        top: 0;
-        border-right: none;
-        border-bottom: var(--glass-border);
-    }
-
     .metrics-grid {
         grid-template-columns: 1fr; /* Stack dashboard counters vertically */
         gap: 1rem;
@@ -1024,6 +1031,36 @@
 
     .dashboard-content {
         padding: 1.5rem;
+    }
+
+    .drawer-modal-content {
+        position: fixed !important;
+        top: 0;
+        right: -100%;
+        width: 100% !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        max-width: none !important;
+        border-radius: 0 !important;
+        transform: none !important;
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        padding: 2.5rem 1.5rem 90px 1.5rem !important;
+        overflow-y: auto;
+    }
+    
+    .modal-overlay.is-active .drawer-modal-content {
+        right: 0 !important;
+    }
+    
+    .drawer-modal-content::after {
+        content: '';
+        display: block;
+        min-height: 90px;
+        flex-shrink: 0;
+    }
+    
+    #close-profile-btn {
+        display: none !important;
     }
 
     .words-table th,
@@ -1867,7 +1904,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    z-index: 2000;
+    z-index: 3100;
 }
 
 .bottom-nav-item {
@@ -1958,6 +1995,35 @@
 }
 
 /* ==========================================================================
+   TABLET/DESKTOP MEDIA QUERY (>= 768px)
+   ========================================================================== */
+@media (min-width: 768px) {
+    .sidebar-nav {
+        flex-direction: column;
+        gap: 1.5rem;
+        overflow-x: visible;
+        scroll-snap-type: none;
+    }
+    
+    .sidebar-nav > .nav-group {
+        flex: auto;
+        scroll-snap-align: none;
+    }
+    
+    .resume-cta-card {
+        margin: 0 0 2rem 0; /* Reset margins for grid context */
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .resume-cta-action {
+        align-self: center;
+        margin-bottom: 0;
+    }
+}
+
+/* ==========================================================================
    MINI ROADMAP (LEFT SIDEBAR)
    ========================================================================== */
 .sidebar-roadmap-group {
@@ -1965,11 +2031,46 @@
 }
 
 @media (min-width: 992px) {
+    .dashboard-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 1.5rem;
+    }
+    
+    .dashboard-left-sidebar {
+        position: sticky;
+        left: auto;
+        width: 100%;
+        height: calc(100vh - 70px);
+        top: 70px;
+        background: transparent;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 2.5rem 1.5rem;
+        box-shadow: none;
+        z-index: 900;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        transition: none;
+    }
+    
+    .sidebar-nav {
+        flex-direction: column;
+        overflow-x: visible;
+    }
+
     .sidebar-roadmap-group {
         display: block;
         margin-top: 2rem;
         padding-top: 1.5rem;
         border-top: 1px solid oklch(1 0 0 / 0.1);
+    }
+    
+    .mobile-close-stats-btn {
+        display: none !important;
+    }
+    
+    .mobile-bottom-bar {
+        display: none !important;
     }
     
     .sidebar-roadmap-container {
@@ -2076,11 +2177,18 @@
     -webkit-backdrop-filter: blur(12px);
     z-index: 2000;
     transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem 90px 1.5rem;
     overflow-y: auto;
     box-shadow: -10px 0 30px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
+}
+
+.dashboard-right-sidebar::after {
+    content: '';
+    display: block;
+    min-height: 90px;
+    flex-shrink: 0;
 }
 
 .dashboard-right-sidebar.is-active {
@@ -2111,66 +2219,14 @@
     flex-direction: column;
 }
 
-/* ==========================================================================
-   DESKTOP MEDIA QUERY (>= 768px)
-   ========================================================================== */
-@media (min-width: 768px) {
-    .dashboard-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0;
-        padding-bottom: 0;
-    }
-    
-    .dashboard-sidebar {
-        background: oklch(0.18 0.01 260 / 0.7);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-right: var(--glass-border);
-        padding: 2rem 1.5rem;
-        height: calc(100vh - 70px);
-        position: sticky;
-        top: 70px;
-        flex-direction: column;
-        gap: 2rem;
-        overflow-y: auto;
-    }
-    
-    .sidebar-nav {
-        flex-direction: column;
-        gap: 1.5rem;
-        overflow-x: visible;
-        scroll-snap-type: none;
-    }
-    
-    .sidebar-nav > .nav-group {
-        flex: auto;
-        scroll-snap-align: none;
-    }
-    
-    .mobile-bottom-bar {
-        display: none;
-    }
-    
-    .resume-cta-card {
-        margin: 0 0 2rem 0; /* Reset margins for grid context */
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-    
-    .resume-cta-action {
-        align-self: center;
-        margin-bottom: 0;
-    }
-}
+ 
 
 /* ==========================================================================
    LARGE DESKTOP MEDIA QUERY (>= 1200px)
    ========================================================================== */
 @media (min-width: 1200px) {
     .dashboard-container {
-        grid-template-columns: 1fr 350px;
+        grid-template-columns: 250px 1fr 350px;
     }
     
     .dashboard-right-sidebar {
@@ -2460,12 +2516,77 @@ body::after {
     font-size: 1.5rem;
     color: var(--color-accent-in);
     margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.lesson-section-title::before,
+.lesson-section-title::after {
+    content: '';
+    flex: 1;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    margin: 0 15px;
+}
+
+.fancy-dashboard-header {
+    font-size: 1.2rem;
+    color: var(--color-accent-in);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.fancy-dashboard-header::before,
+.fancy-dashboard-header::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0 15px;
 }
 
 .lesson-section-subtitle {
     color: var(--color-text-muted);
     font-size: 0.9rem;
     margin-bottom: 2rem;
+}
+
+.lesson-nodes-container-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.node-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 60px; /* Instead of margin, to give height to absolute SVG */
+}
+
+.roadmap-connector-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.roadmap-connector-path {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.15);
+    stroke-width: 10;
+    stroke-linecap: round;
 }
 
 .lesson-nodes-container {
@@ -2482,18 +2603,18 @@ body::after {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    }
+}
 
 .lesson-node {
-    position: absolute;
+    position: relative; /* Prototype requires relative */
     z-index: 3;
     cursor: pointer;
-    transform: translate(-50%, -50%);
+    transform: none; /* Removed -50% translate because it's in a flex container */
     transition: transform 0.3s, filter 0.3s;
 }
 
 .lesson-node:hover:not(.locked) {
-    transform: translate(-50%, -50%) scale(1.15);
+    transform: scale(1.15);
     filter: drop-shadow(0 0 10px var(--color-accent-in));
 }
 
