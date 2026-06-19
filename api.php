@@ -148,6 +148,7 @@ function handleSignup($pdo, $data) {
         $pdo->commit();
 
         // Establish PHP session right away (direct sign-up)
+        session_regenerate_id(true);
         $_SESSION['user_id'] = $userId;
         $_SESSION['username'] = $username;
         $_SESSION['email'] = $email;
@@ -192,6 +193,7 @@ function handleLogin($pdo, $data) {
         }
 
         // Establish session
+        session_regenerate_id(true);
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['email'] = $user['email'];
