@@ -1,0 +1,255 @@
+{
+  "description": "Olvasd el a mondatokat. Jelöld igaznak, ha a mondat nyelvtanilag helyes, és hamisnak, ha hibát tartalmaz.",
+  "items": [
+    {
+      "question": "He cans drive a big car.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: He can drive a big car."
+    },
+    {
+      "question": "Can you help me, please?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "She can't swimming today.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: She can't swim today."
+    },
+    {
+      "question": "Do you can speak English?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Can you speak English?"
+    },
+    {
+      "question": "Can I use your phone?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "They can play football very well.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "We don't can come to the meeting.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: We can't come to the meeting."
+    },
+    {
+      "question": "Can she spell her name?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "I can to help you with that.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: I can help you with that."
+    },
+    {
+      "question": "It can't start because it is broken.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "She can speaks three languages.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: She can speak three languages."
+    },
+    {
+      "question": "Can I have a glass of water, please?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "They can't to find their keys.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: They can't find their keys."
+    },
+    {
+      "question": "Mark can run very fast.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Does he can drive a bus?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Can he drive a bus?"
+    },
+    {
+      "question": "We can start the project tomorrow.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "I cannot to open this window.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: I cannot open this window."
+    },
+    {
+      "question": "Can you tell me where the office is?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "He can plays tennis very well.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: He can play tennis very well."
+    },
+    {
+      "question": "The baby can't talk yet.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Do you can help us with the box?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Can you help us with the box?"
+    },
+    {
+      "question": "She can't come to work because she is sick.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "They cans speak Slovak.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: They can speak Slovak."
+    },
+    {
+      "question": "Can I see your new telephone?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "We don't can understand this text.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: We can't understand this text."
+    },
+    {
+      "question": "He can read the screen without glasses.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Can you to spell your name, please?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Can you spell your name, please?"
+    },
+    {
+      "question": "The car can't move without petrol.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "She can writes beautiful code.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: She can write beautiful code."
+    },
+    {
+      "question": "Can we have a meeting at 10 o'clock?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "I can't driving a car, I don't have a license.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: I can't drive a car; I don't have a license."
+    },
+    {
+      "question": "They can swim across the river.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "He can to fix your broken computer.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: He can fix your broken computer."
+    },
+    {
+      "question": "Can she play football with us tonight?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The laptop cans run this simple program.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: The laptop can run this simple program."
+    },
+    {
+      "question": "We can't see the mountains today because of the clouds.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Do they can speak English well?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Can they speak English well?"
+    },
+    {
+      "question": "Can I use your pen for a minute?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "She cannot comes to the cafe today.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: She cannot come to the cafe today."
+    },
+    {
+      "question": "My dog can run very fast in the garden.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "I can to hear a strange noise outside.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: I can hear a strange noise outside."
+    },
+    {
+      "question": "Can you speak more slowly, please?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Those poor people can't buy an expensive house.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "We cans have a coffee together.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: We can have a coffee together."
+    },
+    {
+      "question": "Can he open the locked door?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "She can't swimming because the water is cold.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: She can't swim because the water is cold."
+    },
+    {
+      "question": "I can find my phone, it is on the table.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Can you to help me with my work?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Can you help me with my work?"
+    },
+    {
+      "question": "The old clock can't tell the correct time.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "They can play tennis on weekends.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    }
+  ]
+}

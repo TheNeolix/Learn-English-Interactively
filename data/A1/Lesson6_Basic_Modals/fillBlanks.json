@@ -1,0 +1,255 @@
+{
+  "description": "Egészítsd ki a mondatokat a helyes szóval: can vagy can't.",
+  "items": [
+    {
+      "sentence": "I ______ speak English, but I cannot speak Spanish.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ you help me with this problem, please?",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "He is a driver. He ______ drive a car very well.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "I am sorry, I ______ come to the meeting today. I am busy.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "She ______ swim. She goes to the pool every weekend.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ I have a coffee and a glass of water, please?",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "The laptop is broken. It ______ start.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ you spell your name for me, please?",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "They are poor. They ______ buy a big house.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "Open the window, please. ______ you reach it?",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "Mark is an IT expert. He ______ write code very fast.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "My grandmother is 85. She ______ see very well without her glasses.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ I use your telephone for a minute? My battery is dead.",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "This box is too heavy. We ______ lift it together.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ you tell me where the office is, please?",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "The restaurant is closed, so we ______ eat dinner here.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "She is busy right now. She ______ talk to you.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ I open the window? It is very hot here.",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "He is fluent. He ______ speak Slovak and English.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "I don't have my keys, so I ______ open the front door.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ you hear that noise outside? What is it?",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "The child is very small. He ______ drive a car.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "Excuse me, ______ you say that again, please?",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "We have a lot of time. We ______ watch a movie before the meeting.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "I ______ find my pen. Is it on your desk?",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ they play tennis? Yes, they go to the court every Saturday.",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "The screen is dark. I ______ read the text.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ you swim across this big river? No, it is too dangerous.",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "He is happy because he ______ start his new job tomorrow.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "I am poor. I ______ buy this expensive phone.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ I see your passport, please?",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "The door is open. You ______ come inside.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "She ______ play football today because her leg is broken.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ you understand this difficult code?",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "We ______ have a meeting today because the manager is sick.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "He is a good singer. He ______ sing very beautifully.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ I have a clean glass, please? This one is dirty.",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "My car has no petrol. It ______ move.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ you help us find our dog? He is in the garden.",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "I am sorry, I ______ understand you. Can you speak slowly?",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "They are rich. They ______ buy any car they want.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ we start the test now, teacher?",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "This phone is great. Its battery ______ last for two days.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "He ______ come to the cafe because he is working late.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ you open this bottle for me? It is very hard.",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "The birds are free. They ______ fly high in the sky.",
+      "answer": "can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "I have a lot of work. I ______ play football with you tonight.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ you speak English? Yes, a little bit.",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "This computer is old and slow. It ______ run this game.",
+      "answer": "can't",
+      "hint": "(can / can't)"
+    },
+    {
+      "sentence": "______ I sit here next to you? Is this chair empty?",
+      "answer": "Can",
+      "hint": "(can / can't)"
+    }
+  ]
+}
