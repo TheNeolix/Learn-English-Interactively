@@ -1,0 +1,661 @@
+{
+  "description": "Rakd a szavakat helyes sorrendbe, hogy nyelvtanilag helyes mondatot vagy kérdést kapj.",
+  "items": [
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "a",
+        "computer",
+        "on",
+        "the",
+        "desk"
+      ],
+      "correct": "There is a computer on the desk.",
+      "hu": "Van egy számítógép az asztalon."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "there",
+        "dogs",
+        "in",
+        "the",
+        "garden"
+      ],
+      "correct": "Are there dogs in the garden?",
+      "hu": "Vannak kutyák a kertben?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "are",
+        "many",
+        "rooms",
+        "in",
+        "the",
+        "house"
+      ],
+      "correct": "There are many rooms in the house.",
+      "hu": "Sok szoba van a házban."
+    },
+    {
+      "scrambled": [
+        "There",
+        "isn't",
+        "money",
+        "in",
+        "my",
+        "bag"
+      ],
+      "correct": "There isn't money in my bag.",
+      "hu": "Nincs pénz a táskámban."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "there",
+        "a",
+        "key",
+        "on",
+        "the",
+        "table"
+      ],
+      "correct": "Is there a key on the table?",
+      "hu": "Van egy kulcs az asztalon?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "aren't",
+        "physical",
+        "phones",
+        "in",
+        "the",
+        "office"
+      ],
+      "correct": "There aren't physical phones in the office.",
+      "hu": "Nincsenek fizikai telefonok az irodában."
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "a",
+        "meeting",
+        "at",
+        "10",
+        "o'clock"
+      ],
+      "correct": "There is a meeting at 10 o'clock.",
+      "hu": "10 órakor van egy megbeszélés."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "there",
+        "any",
+        "problem",
+        "with",
+        "the",
+        "code"
+      ],
+      "correct": "Is there any problem with the code?",
+      "hu": "Van valami probléma a kóddal?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "are",
+        "people",
+        "on",
+        "the",
+        "street"
+      ],
+      "correct": "There are people on the street.",
+      "hu": "Emberek vannak az utcán."
+    },
+    {
+      "scrambled": [
+        "There",
+        "isn't",
+        "a",
+        "big",
+        "screen",
+        "here"
+      ],
+      "correct": "There isn't a big screen here.",
+      "hu": "Nincs itt nagy képernyő."
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "a",
+        "car",
+        "in",
+        "the",
+        "garage"
+      ],
+      "correct": "There is a car in the garage.",
+      "hu": "Van egy autó a garázsban."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "there",
+        "any",
+        "cups",
+        "in",
+        "the",
+        "kitchen"
+      ],
+      "correct": "Are there any cups in the kitchen?",
+      "hu": "Vannak poharak a konyhában?"
+    },
+    {
+      "scrambled": [
+        "Are",
+        "there",
+        "three",
+        "pens",
+        "on",
+        "the",
+        "table"
+      ],
+      "correct": "Are there three pens on the table?",
+      "hu": "Három toll van az asztalon?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "isn't",
+        "a",
+        "physical",
+        "clock",
+        "on",
+        "the",
+        "wall"
+      ],
+      "correct": "There isn't a physical clock on the wall.",
+      "hu": "Nincs fizikai óra a falon."
+    },
+    {
+      "scrambled": [
+        "There",
+        "are",
+        "five",
+        "rooms",
+        "in",
+        "the",
+        "big",
+        "house"
+      ],
+      "correct": "There are five rooms in the big house.",
+      "hu": "Öt szoba van a nagy házban."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "there",
+        "a",
+        "computer",
+        "on",
+        "the",
+        "desk"
+      ],
+      "correct": "Is there a computer on the desk?",
+      "hu": "Van egy számítógép az asztalon?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "aren't",
+        "any",
+        "cars",
+        "on",
+        "the",
+        "street"
+      ],
+      "correct": "There aren't any cars on the street.",
+      "hu": "Nincsenek autók az utcán."
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "a",
+        "new",
+        "manager",
+        "in",
+        "the",
+        "office"
+      ],
+      "correct": "There is a new manager in the office.",
+      "hu": "Van egy új menedzser az irodában."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "there",
+        "any",
+        "water",
+        "in",
+        "the",
+        "glass"
+      ],
+      "correct": "Is there any water in the glass?",
+      "hu": "Van víz a pohárban?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "aren't",
+        "empty",
+        "folders",
+        "on",
+        "the",
+        "laptop"
+      ],
+      "correct": "There aren't empty folders on the laptop.",
+      "hu": "Nincsenek üres mappák a laptopon."
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "a",
+        "file",
+        "in",
+        "this",
+        "folder"
+      ],
+      "correct": "There is a file in this folder.",
+      "hu": "Van egy fájl ebben a mappában."
+    },
+    {
+      "scrambled": [
+        "There",
+        "are",
+        "a",
+        "lot",
+        "of",
+        "books",
+        "on",
+        "the",
+        "table"
+      ],
+      "correct": "There are a lot of books on the table.",
+      "hu": "Sok könyv van az asztalon."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "there",
+        "any",
+        "problems",
+        "in",
+        "the",
+        "team"
+      ],
+      "correct": "Are there any problems in the team?",
+      "hu": "Vannak problémák a csapatban?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "isn't",
+        "a",
+        "key",
+        "in",
+        "my",
+        "pocket"
+      ],
+      "correct": "There isn't a key in my pocket.",
+      "hu": "Nincs kulcs a zsebemben."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "there",
+        "blue",
+        "birds",
+        "in",
+        "the",
+        "garden"
+      ],
+      "correct": "Are there blue birds in the garden?",
+      "hu": "Vannak kék madarak a kertben?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "a",
+        "big",
+        "table",
+        "in",
+        "the",
+        "meeting",
+        "room"
+      ],
+      "correct": "There is a big table in the meeting room.",
+      "hu": "Van egy nagy asztal a tárgyalóban."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "there",
+        "a",
+        "doctor",
+        "in",
+        "the",
+        "building"
+      ],
+      "correct": "Is there a doctor in the building?",
+      "hu": "Van orvos az épületben?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "isn't",
+        "any",
+        "money",
+        "inside",
+        "the",
+        "bag"
+      ],
+      "correct": "There isn't any money inside the bag.",
+      "hu": "Nincs pénz a táskában."
+    },
+    {
+      "scrambled": [
+        "There",
+        "are",
+        "people",
+        "across",
+        "the",
+        "street"
+      ],
+      "correct": "There are people across the street.",
+      "hu": "Emberek vannak az utca túloldalán."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "there",
+        "a",
+        "test",
+        "on",
+        "Monday"
+      ],
+      "correct": "Is there a test on Monday?",
+      "hu": "Van teszt hétfőn?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "a",
+        "lot",
+        "of",
+        "food",
+        "in",
+        "the",
+        "kitchen"
+      ],
+      "correct": "There is a lot of food in the kitchen.",
+      "hu": "Sok étel van a konyhában."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "there",
+        "dogs",
+        "in",
+        "the",
+        "garden"
+      ],
+      "correct": "Are there dogs in the garden?",
+      "hu": "Vannak kutyák a kertben?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "isn't",
+        "a",
+        "good",
+        "screen",
+        "on",
+        "this",
+        "computer"
+      ],
+      "correct": "There isn't a good screen on this computer.",
+      "hu": "Nincs jó képernyő ezen a számítógépen."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "there",
+        "any",
+        "windows",
+        "in",
+        "this",
+        "room"
+      ],
+      "correct": "Are there any windows in this room?",
+      "hu": "Vannak ablakok ebben a szobában?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "are",
+        "many",
+        "employees",
+        "in",
+        "the",
+        "office"
+      ],
+      "correct": "There are many employees in the office.",
+      "hu": "Sok alkalmazott van az irodában."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "there",
+        "a",
+        "key",
+        "under",
+        "the",
+        "table"
+      ],
+      "correct": "Is there a key under the table?",
+      "hu": "Van kulcs az asztal alatt?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "isn't",
+        "any",
+        "money",
+        "in",
+        "the",
+        "bank"
+      ],
+      "correct": "There isn't any money in the bank.",
+      "hu": "Nincs pénz a bankban."
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "a",
+        "nice",
+        "restaurant",
+        "in",
+        "town"
+      ],
+      "correct": "There is a nice restaurant in town.",
+      "hu": "Van egy szép étterem a városban."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "there",
+        "any",
+        "errors",
+        "on",
+        "the",
+        "laptop"
+      ],
+      "correct": "Are there any errors on the laptop?",
+      "hu": "Vannak hibák a laptopon?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "isn't",
+        "a",
+        "garden",
+        "behind",
+        "the",
+        "house"
+      ],
+      "correct": "There isn't a garden behind the house.",
+      "hu": "Nincs kert a ház mögött."
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "a",
+        "box",
+        "near",
+        "the",
+        "window"
+      ],
+      "correct": "There is a box near the window.",
+      "hu": "Van egy doboz az ablak mellett."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "there",
+        "any",
+        "questions",
+        "about",
+        "the",
+        "code"
+      ],
+      "correct": "Are there any questions about the code?",
+      "hu": "Vannak kérdések a kóddal kapcsolatban?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "are",
+        "beautiful",
+        "houses",
+        "on",
+        "this",
+        "street"
+      ],
+      "correct": "There are beautiful houses on this street.",
+      "hu": "Szép házak vannak ezen az utcán."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "there",
+        "a",
+        "bus",
+        "station",
+        "near",
+        "here"
+      ],
+      "correct": "Is there a bus station near here?",
+      "hu": "Van buszállomás a közelben?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "aren't",
+        "any",
+        "files",
+        "on",
+        "the",
+        "server"
+      ],
+      "correct": "There aren't any files on the server.",
+      "hu": "Nincsenek fájlok a szerveren."
+    },
+    {
+      "scrambled": [
+        "There",
+        "are",
+        "three",
+        "clean",
+        "rooms",
+        "in",
+        "the",
+        "apartment"
+      ],
+      "correct": "There are three clean rooms in the apartment.",
+      "hu": "Három tiszta szoba van a lakásban."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "there",
+        "a",
+        "telephone",
+        "in",
+        "your",
+        "bag"
+      ],
+      "correct": "Is there a telephone in your bag?",
+      "hu": "Van telefon a táskádban?"
+    },
+    {
+      "scrambled": [
+        "There",
+        "aren't",
+        "any",
+        "clean",
+        "cups",
+        "in",
+        "the",
+        "kitchen"
+      ],
+      "correct": "There aren't any clean cups in the kitchen.",
+      "hu": "Nincsenek tiszta poharak a konyhában."
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "a",
+        "big",
+        "bird",
+        "in",
+        "that",
+        "tree"
+      ],
+      "correct": "There is a big bird in that tree.",
+      "hu": "Van egy nagy madár azon a fán."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "there",
+        "any",
+        "paper",
+        "in",
+        "the",
+        "printer"
+      ],
+      "correct": "Is there any paper in the printer?",
+      "hu": "Van papír a nyomtatóban?"
+    }
+  ]
+}

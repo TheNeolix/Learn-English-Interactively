@@ -1,0 +1,255 @@
+{
+  "description": "Olvasd el a mondatokat. Jelöld igaznak, ha a mondat nyelvtanilag helyes, és hamisnak, ha hibát tartalmaz.",
+  "items": [
+    {
+      "question": "I drink coffee on the morning.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: I drink coffee in the morning."
+    },
+    {
+      "question": "The computer is in the desk.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: The computer is on the desk."
+    },
+    {
+      "question": "The meeting starts at 9 o'clock.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "We don't work in Sundays.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: We don't work on Sundays."
+    },
+    {
+      "question": "My dog is sleeping under the table.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The key is in my pocket.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "We go on holiday on July.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: We go on holiday in July."
+    },
+    {
+      "question": "Look at the picture in the wall.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Look at the picture on the wall."
+    },
+    {
+      "question": "He likes to watch TV at night.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The laptop is under the desk floor.",
+      "answer": false,
+      "explanation": "Helytelen. Természetesebben: The laptop is under the desk."
+    },
+    {
+      "question": "Neolix Studio started in 2024.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Is your phone on your bag?",
+      "answer": false,
+      "explanation": "Helytelen a várt jelentéshez. A helyes mondat: Is your phone in your bag?"
+    },
+    {
+      "question": "She works in the afternoon.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The cat is hiding under the chair.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The test is at Monday morning.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: The test is on Monday morning."
+    },
+    {
+      "question": "We live in a big house.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "I go to sleep in midnight.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: I go to sleep at midnight."
+    },
+    {
+      "question": "The papers are on the floor.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "It is very cold here on winter.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: It is very cold here in winter."
+    },
+    {
+      "question": "The manager is in his office.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "My birthday is on May 1st.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The pen is under the table.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "We have a meeting in Tuesday.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: We have a meeting on Tuesday."
+    },
+    {
+      "question": "There is food in the kitchen.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The lesson finishes on 10:30.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: The lesson finishes at 10:30."
+    },
+    {
+      "question": "They play football on weekends.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There is an error on the screen.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "She reads books at the evening.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: She reads books in the evening."
+    },
+    {
+      "question": "The ball is under the car.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "We buy groceries on Saturdays.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The files are in the folder.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Do they arrive in noon?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Do they arrive at noon?"
+    },
+    {
+      "question": "It is very hot in summer.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The laptop is on the desk.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "My keys are under the bed.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The office closes at 5 PM.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "We have a meeting on the morning.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: We have a meeting in the morning."
+    },
+    {
+      "question": "Do they live in Slovakia?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The printer is on the table.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "He never works in night.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: He never works at night."
+    },
+    {
+      "question": "The key is in the box.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The project starts on September.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: The project starts in September."
+    },
+    {
+      "question": "Is your phone in your bag?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The document is under the laptop.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The train leaves at 8:15.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "It is beautiful here in December.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There are dirty marks in the screen.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There are dirty marks on the screen."
+    },
+    {
+      "question": "We play tennis on Friday afternoon.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "The box is under the stairs.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Are there many rooms on the house?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Are there many rooms in the house?"
+    }
+  ]
+}

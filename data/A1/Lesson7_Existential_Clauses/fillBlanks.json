@@ -1,0 +1,255 @@
+{
+  "description": "Egészítsd ki a mondatokat a helyes szerkezettel: There is / There are / There isn't / There aren't / Is there / Are there.",
+  "items": [
+    {
+      "sentence": "______ a computer on my desk.",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ two dogs in the garden.",
+      "answer": "There are",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ a screen in this office. We cannot watch the video.",
+      "answer": "There isn't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ any cars on the street today?",
+      "answer": "Are there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ many rooms in your new house?",
+      "answer": "Are there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ a meeting at 9 o'clock. Don't be late!",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ a key in my pocket. I cannot open the door.",
+      "answer": "There isn't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ any problems with the new laptop?",
+      "answer": "Are there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ a lot of books on the table.",
+      "answer": "There are",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ any money in the bag. It is empty.",
+      "answer": "There isn't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ a black car next to my house.",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ three pens on your desk?",
+      "answer": "Are there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ any clean cups in the kitchen. All of them are dirty.",
+      "answer": "There aren't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ a new manager in our team. She starts today.",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ an empty chair near the window?",
+      "answer": "Is there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ any computers in this room. The room is empty.",
+      "answer": "There aren't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ many people at the meeting right now.",
+      "answer": "There are",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ a telephone in your bag?",
+      "answer": "Is there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ a good battery in this phone. It dies very fast.",
+      "answer": "There isn't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ five rooms in their big house.",
+      "answer": "There are",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ any water in the glass?",
+      "answer": "Is there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ an error in this line of code.",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ any keys on the floor. I checked everywhere.",
+      "answer": "There aren't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ many students in the lesson today?",
+      "answer": "Are there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ a big window in my office.",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ a doctor in the building?",
+      "answer": "Is there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ any petrol in the car. We cannot drive to Nitra.",
+      "answer": "There isn't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ two laptops on the table.",
+      "answer": "There are",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ any problems with your new job?",
+      "answer": "Are there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ a physical clock on the wall. We use our phones.",
+      "answer": "There isn't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ a lot of food in the supermarket.",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ any books in your bag?",
+      "answer": "Are there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ any children in the garden. It is completely quiet.",
+      "answer": "There aren't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ a test on Monday morning.",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ an office for the new employees?",
+      "answer": "Is there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ a screen on this machine. It is just a box.",
+      "answer": "There isn't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ two sisters in her family.",
+      "answer": "There are",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ any questions about the project?",
+      "answer": "Are there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ any money in my bank account. I am poor.",
+      "answer": "There isn't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ a beautiful garden behind the house.",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ a restaurant across the street?",
+      "answer": "Is there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ any physical documents on the desk. Everything is digital.",
+      "answer": "There aren't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ many blue birds in that old tree.",
+      "answer": "There are",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ any cars in the garage?",
+      "answer": "Are there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ a problem with the connection today.",
+      "answer": "There isn't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ a big table in the meeting room.",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ a key to the server room?",
+      "answer": "Is there",
+      "hint": "(Question)"
+    },
+    {
+      "sentence": "______ any employees in the office on weekends.",
+      "answer": "There aren't",
+      "hint": "(Negative)"
+    },
+    {
+      "sentence": "______ a glass of water on my plate.",
+      "answer": "There is",
+      "hint": "(Affirmative)"
+    },
+    {
+      "sentence": "______ any files in this folder?",
+      "answer": "Are there",
+      "hint": "(Question)"
+    }
+  ]
+}

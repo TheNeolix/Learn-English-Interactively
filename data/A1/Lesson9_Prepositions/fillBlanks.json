@@ -1,0 +1,255 @@
+{
+  "description": "Egészítsd ki a mondatokat a helyes hely- vagy időhatározói elöljárószóval: in, on, under vagy at.",
+  "items": [
+    {
+      "sentence": "There is a computer ______ my desk.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The meeting starts ______ 9 o'clock.",
+      "answer": "at",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "My dog loves to sleep ______ the table near my feet.",
+      "answer": "under",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "I drink a hot coffee ______ the morning.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "We don't go to the office ______ Sundays.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The keys are ______ my pocket.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "We plan to go on holiday ______ July.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "Look at that beautiful picture ______ the wall!",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "He likes to watch TV ______ night.",
+      "answer": "at",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The key is ______ the book. You cannot see it.",
+      "answer": "under",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "Neolix Studio started ______ 2024.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "There is a clean screen ______ the laptop.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "She works ______ the afternoon, from 1 PM to 5 PM.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The cat is hiding ______ the chair because it is scared.",
+      "answer": "under",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "Our test is ______ Monday morning.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "They live ______ a big house near Nitra.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "I go to sleep ______ midnight.",
+      "answer": "at",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The documents are ______ the floor. Please pick them up.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "It is very cold here ______ winter.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "Is the manager ______ his office right now?",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "My birthday is ______ the first of May.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The pen fell ______ the desk, so it is on the floor now.",
+      "answer": "under",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "We have a very important meeting ______ Tuesday.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "There is a lot of food ______ the kitchen.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The lesson finishes ______ 10:30.",
+      "answer": "at",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "They play football ______ weekends.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "I see an error ______ the screen.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "She likes to read a book ______ the evening.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The ball is ______ the car. Look near the wheels.",
+      "answer": "under",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "We buy groceries ______ Saturdays.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The files are stored ______ this small folder.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The boss arrives ______ noon for lunch.",
+      "answer": "at",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "It is beautiful here ______ summer.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "Your telephone is ______ the table next to your coffee.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The child is playing ______ the blanket on the bed.",
+      "answer": "under",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The office closes ______ 5 PM.",
+      "answer": "at",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "We have a meeting ______ the morning.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "My sister lives ______ Slovakia.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The printer is ______ the desk near the computer.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "He never works ______ night.",
+      "answer": "at",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The card is ______ the box. Open it and check.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The project starts ______ September.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "Is your phone ______ your bag?",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The paper is ______ the dictionary. Lift the dictionary up.",
+      "answer": "under",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The train leaves ______ 8:15.",
+      "answer": "at",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "We have a holiday ______ December.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "Look at the dirty marks ______ the window screen!",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "They always play tennis ______ Friday afternoon.",
+      "answer": "on",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "The tools are ______ the stairs in the dark.",
+      "answer": "under",
+      "hint": "(in / on / under / at)"
+    },
+    {
+      "sentence": "There are many physical phones ______ the office building.",
+      "answer": "in",
+      "hint": "(in / on / under / at)"
+    }
+  ]
+}

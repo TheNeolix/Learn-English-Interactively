@@ -1,0 +1,255 @@
+{
+  "description": "Egészítsd ki a mondatokat a megfelelő kérdőszóval.",
+  "items": [
+    {
+      "sentence": "______ is your name?",
+      "answer": "What",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you live?",
+      "answer": "Where",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is that man over there? He is my boss.",
+      "answer": "Who",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you go to work? By car.",
+      "answer": "How",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ does the meeting start? At 9 o'clock.",
+      "answer": "When",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ are you today? I am fine, thank you.",
+      "answer": "How",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is my key? It is on the table.",
+      "answer": "Where",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you drink in the morning? Coffee.",
+      "answer": "What",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is your sister? She is at home.",
+      "answer": "Where",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do they play football? On weekends.",
+      "answer": "When",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is this big house? It is mine.",
+      "answer": "Whose",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you work with? I work with Peter.",
+      "answer": "Who",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ does she go on holiday? In July.",
+      "answer": "When",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ can help me with this task?",
+      "answer": "Who",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is the screen broken? Because it fell.",
+      "answer": "Why",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you spell your name? L-A-D-I-S-L-A-V.",
+      "answer": "How",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is your favorite color? Blue.",
+      "answer": "What",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do they live now? In Nitra.",
+      "answer": "Where",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ does he have in his hand? A pen.",
+      "answer": "What",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is the laptop? It is on the desk.",
+      "answer": "Where",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ does she drink tea? Every afternoon.",
+      "answer": "When",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is your phone number?",
+      "answer": "What",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you like your job? Because it is interesting.",
+      "answer": "Why",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is that woman? She is Mary.",
+      "answer": "Who",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ does the train arrive? At 10:30.",
+      "answer": "When",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you feel? I am happy.",
+      "answer": "How",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is the office? In the city center.",
+      "answer": "Where",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you do on weekends? I watch TV.",
+      "answer": "What",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is your birthday?",
+      "answer": "When",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is the manager of the team?",
+      "answer": "Who",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you buy groceries? At the supermarket.",
+      "answer": "Where",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ does this button do? It starts the computer.",
+      "answer": "What",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you speak English so well? I practice every day.",
+      "answer": "How",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is that blue car? It belongs to John.",
+      "answer": "Whose",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ does the lesson finish? In ten minutes.",
+      "answer": "When",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ are my keys? Check your pocket.",
+      "answer": "Where",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ does he want to see? The new project.",
+      "answer": "What",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you know the answer? It is easy.",
+      "answer": "How",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is the battery empty? You didn't charge it.",
+      "answer": "Why",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do we have a meeting? Monday morning.",
+      "answer": "When",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is the weather today? It is hot.",
+      "answer": "How",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ wants a coffee? Me, please!",
+      "answer": "Who",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you store the files? In the database.",
+      "answer": "Where",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do they want? They want a big house.",
+      "answer": "What",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is your dog? He is in the garden.",
+      "answer": "Where",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ does she speak to? Her sister.",
+      "answer": "Who",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is the code wrong? There is a typo.",
+      "answer": "Why",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ do you open this box? With a key.",
+      "answer": "How",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ does the office close? At 5 PM.",
+      "answer": "When",
+      "hint": "(Who / What / Where / When / How)"
+    },
+    {
+      "sentence": "______ is that noise? It's just the wind.",
+      "answer": "What",
+      "hint": "(Who / What / Where / When / How)"
+    }
+  ]
+}

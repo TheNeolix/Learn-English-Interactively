@@ -1,0 +1,255 @@
+{
+  "description": "Olvasd el a mondatokat. Jelöld igaznak, ha a mondat nyelvtanilag helyes, és hamisnak, ha hibát tartalmaz.",
+  "items": [
+    {
+      "question": "There is two phones on the table.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There are two phones on the table."
+    },
+    {
+      "question": "Is there a car in the garage?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There aren't any problems with the screen.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There are a big house in the street.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There is a big house in the street."
+    },
+    {
+      "question": "Are there many people at the meeting?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There isn't no money in my pocket.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There isn't any money in my pocket."
+    },
+    {
+      "question": "There's a computer on my desk.",
+      "answer": true,
+      "explanation": "Helyes mondat. There's = There is."
+    },
+    {
+      "question": "Are there a key on the table?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Is there a key on the table?"
+    },
+    {
+      "question": "There are three rooms in the house.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There isn't a good battery in this laptop.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There are a new manager in the office.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There is a new manager in the office."
+    },
+    {
+      "question": "Is there any clean cups in the kitchen?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Are there any clean cups in the kitchen?"
+    },
+    {
+      "question": "There isn't any food in the bag.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There are two dogs in the garden.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Are there a empty chair near the window?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Is there an empty chair near the window?"
+    },
+    {
+      "question": "There is five lines of code with errors.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There are five lines of code with errors."
+    },
+    {
+      "question": "There aren't any cars on the street today.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Is there a computer on your desk?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There is many rooms in our new house.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There are many rooms in our new house."
+    },
+    {
+      "question": "There isn't a physical clock on the wall.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Are there many students in the lesson?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There are a lot of books on the floor.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There isn't any water in my glass.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Is there two meetings on Monday morning?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Are there two meetings on Monday morning?"
+    },
+    {
+      "question": "There are a beautiful tree behind the house.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There is a beautiful tree behind the house."
+    },
+    {
+      "question": "There aren't problems with the new system.",
+      "answer": true,
+      "explanation": "Helyes mondat. A mondat természetesebb any-vel: There aren't any problems with the new system."
+    },
+    {
+      "question": "Is there any petrol in the car?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There's three pens in my hand.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There are three pens in my hand."
+    },
+    {
+      "question": "There isn't a screen in this small office.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Are there any children in the school?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There are a doctor in the building.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There is a doctor in the building."
+    },
+    {
+      "question": "There aren't no keys in my pocket.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There aren't any keys in my pocket."
+    },
+    {
+      "question": "Is there a problem with your laptop?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There is many people across the street.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There are many people across the street."
+    },
+    {
+      "question": "There are three clean windows in the room.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Are there any questions about the project?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There isn't a big table in the kitchen.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There is two black cars in the garage.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There are two black cars in the garage."
+    },
+    {
+      "question": "Is there an error in this document?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There are many empty folders on the server.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There aren't any money in my bank account.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There isn't any money in my bank account."
+    },
+    {
+      "question": "Is there a nice restaurant near the office?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There's a big dog in front of the door.",
+      "answer": true,
+      "explanation": "Helyes mondat. There's = There is."
+    },
+    {
+      "question": "Are there three empty boxes on the shelf?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There is any problems with the code.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There are some problems with the code. / Are there any problems with the code?"
+    },
+    {
+      "question": "There isn't a key to the front door in my bag.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "Are there a telephone on your desk?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: Is there a telephone on your desk?"
+    },
+    {
+      "question": "There are five employees in the room right now.",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    },
+    {
+      "question": "There isn't any people in the garden.",
+      "answer": false,
+      "explanation": "Helytelen. A helyes mondat: There aren't any people in the garden."
+    },
+    {
+      "question": "Is there a bottle of water on the table?",
+      "answer": true,
+      "explanation": "Helyes mondat."
+    }
+  ]
+}

@@ -1,0 +1,590 @@
+{
+  "description": "Rakd a szavakat helyes sorrendbe, hogy nyelvtanilag helyes mondatot vagy kérdést kapj.",
+  "items": [
+    {
+      "scrambled": [
+        "My",
+        "computer",
+        "is",
+        "on",
+        "the",
+        "desk"
+      ],
+      "correct": "My computer is on the desk.",
+      "hu": "A számítógépem az asztalon van."
+    },
+    {
+      "scrambled": [
+        "The",
+        "meeting",
+        "starts",
+        "at",
+        "9",
+        "o'clock"
+      ],
+      "correct": "The meeting starts at 9 o'clock.",
+      "hu": "A megbeszélés 9 órakor kezdődik."
+    },
+    {
+      "scrambled": [
+        "The",
+        "dog",
+        "is",
+        "under",
+        "the",
+        "table"
+      ],
+      "correct": "The dog is under the table.",
+      "hu": "A kutya az asztal alatt van."
+    },
+    {
+      "scrambled": [
+        "I",
+        "drink",
+        "coffee",
+        "in",
+        "the",
+        "morning"
+      ],
+      "correct": "I drink coffee in the morning.",
+      "hu": "Reggel kávét iszom."
+    },
+    {
+      "scrambled": [
+        "We",
+        "don't",
+        "work",
+        "on",
+        "Sundays"
+      ],
+      "correct": "We don't work on Sundays.",
+      "hu": "Vasárnaponként nem dolgozunk."
+    },
+    {
+      "scrambled": [
+        "The",
+        "keys",
+        "are",
+        "in",
+        "my",
+        "pocket"
+      ],
+      "correct": "The keys are in my pocket.",
+      "hu": "A kulcsok a zsebemben vannak."
+    },
+    {
+      "scrambled": [
+        "We",
+        "go",
+        "on",
+        "holiday",
+        "in",
+        "July"
+      ],
+      "correct": "We go on holiday in July.",
+      "hu": "Júliusban megyünk nyaralni."
+    },
+    {
+      "scrambled": [
+        "The",
+        "picture",
+        "is",
+        "on",
+        "the",
+        "wall"
+      ],
+      "correct": "The picture is on the wall.",
+      "hu": "A kép a falon van."
+    },
+    {
+      "scrambled": [
+        "They",
+        "watch",
+        "TV",
+        "at",
+        "night"
+      ],
+      "correct": "They watch TV at night.",
+      "hu": "Éjszaka tévét néznek."
+    },
+    {
+      "scrambled": [
+        "The",
+        "key",
+        "is",
+        "under",
+        "the",
+        "book"
+      ],
+      "correct": "The key is under the book.",
+      "hu": "A kulcs a könyv alatt van."
+    },
+    {
+      "scrambled": [
+        "The",
+        "business",
+        "started",
+        "in",
+        "2024"
+      ],
+      "correct": "The business started in 2024.",
+      "hu": "A vállalkozás 2024-ben indult."
+    },
+    {
+      "scrambled": [
+        "Your",
+        "phone",
+        "is",
+        "on",
+        "the",
+        "table"
+      ],
+      "correct": "Your phone is on the table.",
+      "hu": "A telefonod az asztalon van."
+    },
+    {
+      "scrambled": [
+        "She",
+        "works",
+        "in",
+        "the",
+        "afternoon"
+      ],
+      "correct": "She works in the afternoon.",
+      "hu": "Délután dolgozik."
+    },
+    {
+      "scrambled": [
+        "The",
+        "cat",
+        "is",
+        "under",
+        "the",
+        "chair"
+      ],
+      "correct": "The cat is under the chair.",
+      "hu": "A macska a szék alatt van."
+    },
+    {
+      "scrambled": [
+        "The",
+        "test",
+        "is",
+        "on",
+        "Monday",
+        "morning"
+      ],
+      "correct": "The test is on Monday morning.",
+      "hu": "A teszt hétfő reggel van."
+    },
+    {
+      "scrambled": [
+        "We",
+        "live",
+        "in",
+        "a",
+        "big",
+        "house"
+      ],
+      "correct": "We live in a big house.",
+      "hu": "Egy nagy házban lakunk."
+    },
+    {
+      "scrambled": [
+        "I",
+        "go",
+        "to",
+        "sleep",
+        "at",
+        "midnight"
+      ],
+      "correct": "I go to sleep at midnight.",
+      "hu": "Éjfélkor megyek aludni."
+    },
+    {
+      "scrambled": [
+        "The",
+        "papers",
+        "are",
+        "on",
+        "the",
+        "floor"
+      ],
+      "correct": "The papers are on the floor.",
+      "hu": "A papírok a padlón vannak."
+    },
+    {
+      "scrambled": [
+        "It",
+        "is",
+        "cold",
+        "in",
+        "winter"
+      ],
+      "correct": "It is cold in winter.",
+      "hu": "Télen hideg van."
+    },
+    {
+      "scrambled": [
+        "The",
+        "manager",
+        "is",
+        "in",
+        "his",
+        "office"
+      ],
+      "correct": "The manager is in his office.",
+      "hu": "A menedzser az irodájában van."
+    },
+    {
+      "scrambled": [
+        "My",
+        "birthday",
+        "is",
+        "on",
+        "May",
+        "1st"
+      ],
+      "correct": "My birthday is on May 1st.",
+      "hu": "A születésnapom május 1-jén van."
+    },
+    {
+      "scrambled": [
+        "The",
+        "pen",
+        "is",
+        "under",
+        "the",
+        "desk"
+      ],
+      "correct": "The pen is under the desk.",
+      "hu": "A toll az asztal alatt van."
+    },
+    {
+      "scrambled": [
+        "We",
+        "have",
+        "a",
+        "meeting",
+        "on",
+        "Tuesday"
+      ],
+      "correct": "We have a meeting on Tuesday.",
+      "hu": "Kedden megbeszélésünk van."
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "food",
+        "in",
+        "the",
+        "kitchen"
+      ],
+      "correct": "There is food in the kitchen.",
+      "hu": "Van étel a konyhában."
+    },
+    {
+      "scrambled": [
+        "The",
+        "lesson",
+        "finishes",
+        "at",
+        "10:30"
+      ],
+      "correct": "The lesson finishes at 10:30.",
+      "hu": "Az óra 10:30-kor ér véget."
+    },
+    {
+      "scrambled": [
+        "They",
+        "play",
+        "football",
+        "on",
+        "weekends"
+      ],
+      "correct": "They play football on weekends.",
+      "hu": "Hétvégén fociznak."
+    },
+    {
+      "scrambled": [
+        "There",
+        "is",
+        "an",
+        "error",
+        "on",
+        "the",
+        "screen"
+      ],
+      "correct": "There is an error on the screen.",
+      "hu": "Hiba van a képernyőn."
+    },
+    {
+      "scrambled": [
+        "She",
+        "reads",
+        "in",
+        "the",
+        "evening"
+      ],
+      "correct": "She reads in the evening.",
+      "hu": "Este olvas."
+    },
+    {
+      "scrambled": [
+        "The",
+        "ball",
+        "is",
+        "under",
+        "the",
+        "car"
+      ],
+      "correct": "The ball is under the car.",
+      "hu": "A labda az autó alatt van."
+    },
+    {
+      "scrambled": [
+        "We",
+        "buy",
+        "food",
+        "on",
+        "Saturdays"
+      ],
+      "correct": "We buy food on Saturdays.",
+      "hu": "Szombatonként ételt vásárolunk."
+    },
+    {
+      "scrambled": [
+        "The",
+        "files",
+        "are",
+        "in",
+        "the",
+        "folder"
+      ],
+      "correct": "The files are in the folder.",
+      "hu": "A fájlok a mappában vannak."
+    },
+    {
+      "scrambled": [
+        "Do",
+        "they",
+        "arrive",
+        "at",
+        "noon"
+      ],
+      "correct": "Do they arrive at noon?",
+      "hu": "Délben érkeznek?"
+    },
+    {
+      "scrambled": [
+        "It",
+        "is",
+        "hot",
+        "in",
+        "summer"
+      ],
+      "correct": "It is hot in summer.",
+      "hu": "Nyáron meleg van."
+    },
+    {
+      "scrambled": [
+        "The",
+        "laptop",
+        "is",
+        "on",
+        "the",
+        "desk"
+      ],
+      "correct": "The laptop is on the desk.",
+      "hu": "A laptop az asztalon van."
+    },
+    {
+      "scrambled": [
+        "My",
+        "shoes",
+        "are",
+        "under",
+        "the",
+        "bed"
+      ],
+      "correct": "My shoes are under the bed.",
+      "hu": "A cipőim az ágy alatt vannak."
+    },
+    {
+      "scrambled": [
+        "The",
+        "office",
+        "closes",
+        "at",
+        "5",
+        "PM"
+      ],
+      "correct": "The office closes at 5 PM.",
+      "hu": "Az iroda 17:00-kor zár."
+    },
+    {
+      "scrambled": [
+        "We",
+        "have",
+        "a",
+        "meeting",
+        "in",
+        "the",
+        "morning"
+      ],
+      "correct": "We have a meeting in the morning.",
+      "hu": "Reggel megbeszélésünk van."
+    },
+    {
+      "scrambled": [
+        "Do",
+        "they",
+        "live",
+        "in",
+        "Slovakia"
+      ],
+      "correct": "Do they live in Slovakia?",
+      "hu": "Szlovákiában élnek?"
+    },
+    {
+      "scrambled": [
+        "The",
+        "printer",
+        "is",
+        "on",
+        "the",
+        "table"
+      ],
+      "correct": "The printer is on the table.",
+      "hu": "A nyomtató az asztalon van."
+    },
+    {
+      "scrambled": [
+        "He",
+        "never",
+        "works",
+        "at",
+        "night"
+      ],
+      "correct": "He never works at night.",
+      "hu": "Soha nem dolgozik éjszaka."
+    },
+    {
+      "scrambled": [
+        "The",
+        "key",
+        "is",
+        "in",
+        "the",
+        "box"
+      ],
+      "correct": "The key is in the box.",
+      "hu": "A kulcs a dobozban van."
+    },
+    {
+      "scrambled": [
+        "The",
+        "project",
+        "starts",
+        "in",
+        "September"
+      ],
+      "correct": "The project starts in September.",
+      "hu": "A projekt szeptemberben kezdődik."
+    },
+    {
+      "scrambled": [
+        "Is",
+        "your",
+        "phone",
+        "in",
+        "your",
+        "bag"
+      ],
+      "correct": "Is your phone in your bag?",
+      "hu": "A telefonod a táskádban van?"
+    },
+    {
+      "scrambled": [
+        "The",
+        "paper",
+        "is",
+        "under",
+        "the",
+        "book"
+      ],
+      "correct": "The paper is under the book.",
+      "hu": "A papír a könyv alatt van."
+    },
+    {
+      "scrambled": [
+        "The",
+        "train",
+        "leaves",
+        "at",
+        "8:15"
+      ],
+      "correct": "The train leaves at 8:15.",
+      "hu": "A vonat 8:15-kor indul."
+    },
+    {
+      "scrambled": [
+        "It",
+        "is",
+        "cold",
+        "in",
+        "December"
+      ],
+      "correct": "It is cold in December.",
+      "hu": "Decemberben hideg van."
+    },
+    {
+      "scrambled": [
+        "There",
+        "are",
+        "marks",
+        "on",
+        "the",
+        "screen"
+      ],
+      "correct": "There are marks on the screen.",
+      "hu": "Nyomok vannak a képernyőn."
+    },
+    {
+      "scrambled": [
+        "We",
+        "play",
+        "tennis",
+        "on",
+        "Friday"
+      ],
+      "correct": "We play tennis on Friday.",
+      "hu": "Pénteken teniszezünk."
+    },
+    {
+      "scrambled": [
+        "The",
+        "box",
+        "is",
+        "under",
+        "the",
+        "stairs"
+      ],
+      "correct": "The box is under the stairs.",
+      "hu": "A doboz a lépcső alatt van."
+    },
+    {
+      "scrambled": [
+        "Are",
+        "there",
+        "rooms",
+        "in",
+        "the",
+        "house"
+      ],
+      "correct": "Are there rooms in the house?",
+      "hu": "Vannak szobák a házban?"
+    }
+  ]
+}

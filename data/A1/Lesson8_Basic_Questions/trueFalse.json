@@ -1,0 +1,255 @@
+{
+  "description": "Olvasd el a kérdéseket. Jelöld igaznak, ha a kérdés nyelvtanilag helyes, és hamisnak, ha hibát tartalmaz.",
+  "items": [
+    {
+      "question": "Where do you live?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "What is that man over there?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: Who is that man over there?"
+    },
+    {
+      "question": "When does the meeting start?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "How you go to work?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: How do you go to work?"
+    },
+    {
+      "question": "Who is your favorite color?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: What is your favorite color?"
+    },
+    {
+      "question": "Where is my keys?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: Where are my keys?"
+    },
+    {
+      "question": "What do you want?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "When is your birthday?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "How are you today?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Where she lives?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: Where does she live?"
+    },
+    {
+      "question": "Who can help me?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "What does he does every day?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: What does he do every day?"
+    },
+    {
+      "question": "When do they arrive?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "How do you spell your name?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Where is the office?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Who is that car?",
+      "answer": false,
+      "explanation": "Helytelen. Természetesebben: Whose car is that?"
+    },
+    {
+      "question": "What do you drink in the morning?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Where do he work?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: Where does he work?"
+    },
+    {
+      "question": "When does the shop closes?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: When does the shop close?"
+    },
+    {
+      "question": "How does this machine work?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Who are you?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "What time is it?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Where is my phone?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "When do you goes to sleep?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: When do you go to sleep?"
+    },
+    {
+      "question": "How much is this laptop?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Who do you work with?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "What does she likes?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: What does she like?"
+    },
+    {
+      "question": "Where are the dogs?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "When is the next meeting?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "How do you know the answer?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Who is in the kitchen?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "What is your job?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Where do they play football?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "When the lesson starts?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: When does the lesson start?"
+    },
+    {
+      "question": "How can I help you?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Who house is this?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: Whose house is this?"
+    },
+    {
+      "question": "What do they have in the box?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Where does live your sister?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: Where does your sister live?"
+    },
+    {
+      "question": "When do we eat lunch?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "How is the screen broken?",
+      "answer": true,
+      "explanation": "Nyelvtanilag helyes kérdés."
+    },
+    {
+      "question": "Who is the new teacher?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "What color are your eyes?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Where do you buy books?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "When does he drives to work?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: When does he drive to work?"
+    },
+    {
+      "question": "How many rooms are there?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "Who do you want to see?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "What does means this word?",
+      "answer": false,
+      "explanation": "Helytelen. A helyes kérdés: What does this word mean?"
+    },
+    {
+      "question": "Where are my clean keys?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "When is the office open?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    },
+    {
+      "question": "How old are you?",
+      "answer": true,
+      "explanation": "Helyes kérdés."
+    }
+  ]
+}
