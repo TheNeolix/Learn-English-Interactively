@@ -1,0 +1,34 @@
+name: Semgrep Scan
+
+on:
+  pull_request: {}
+  push:
+    branches: [main]
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Semgrep Scan
+        id: semgrep_scan
+        run: |
+          # Runs the scan and outputs a quick text summary
+          pip install semgrep
+          semgrep scan --config auto > semgrep_results.txt || true
+          cat semgrep_results.txt
+
+      - name: Send Notification to Slack
+        if: always() # Ensures you get a message even if a scan finds a critical bug and fails the build
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          # Read the last few lines of the log containing the findings count
+          SUMMARY=$(tail -n 10 semgrep_results.txt | tr '\n' '\\n' | tr '"' '\"')
+          
+          # Payload payload structure to make it look professional in Slack
+          payload="{\"text\": \"*Semgrep Security Scan Complete*\\n\`\`\`${SUMMARY}\`\`\`\"}"
+          
+          curl -X POST -H 'Content-type: application/json' --data "$payload" $SLACK_WEBHOOK
