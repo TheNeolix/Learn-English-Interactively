@@ -649,6 +649,9 @@ function isExam(subsectionData) {
 
 // Gatekeeper logic for content access (Limits guests, respects RBAC/subscriptions)
 function isContentAccessible(level, courseKey, subsectionType = null) {
+    // For testing purposes, allow all users (including guests) full access to all levels/content
+    return true;
+
     if (!ProgressManager.isGuest) {
         // Admin or Lifetime bypasses everything
         if (ProgressManager.data.role === "admin" || ProgressManager.data.subscription_tier === "lifetime") {
@@ -1542,6 +1545,75 @@ function renderSidebar(levelName) {
     renderRoadmap(levelName);
 }
 
+const englishAlphabet = [
+    { letter: 'A', phonetic: 'éj', audioUrl: 'assets/audio/alpha/a.mp3' },
+    { letter: 'B', phonetic: 'bí', audioUrl: 'assets/audio/alpha/b.mp3' },
+    { letter: 'C', phonetic: 'szí', audioUrl: 'assets/audio/alpha/c.mp3' },
+    { letter: 'D', phonetic: 'dí', audioUrl: 'assets/audio/alpha/d.mp3' },
+    { letter: 'E', phonetic: 'í', audioUrl: 'assets/audio/alpha/e.mp3' },
+    { letter: 'F', phonetic: 'ef', audioUrl: 'assets/audio/alpha/f.mp3' },
+    { letter: 'G', phonetic: 'dzsí', audioUrl: 'assets/audio/alpha/g.mp3' },
+    { letter: 'H', phonetic: 'éjcs', audioUrl: 'assets/audio/alpha/h.mp3' },
+    { letter: 'I', phonetic: 'áj', audioUrl: 'assets/audio/alpha/i.mp3' },
+    { letter: 'J', phonetic: 'dzséj', audioUrl: 'assets/audio/alpha/j.mp3' },
+    { letter: 'K', phonetic: 'kéj', audioUrl: 'assets/audio/alpha/k.mp3' },
+    { letter: 'L', phonetic: 'el', audioUrl: 'assets/audio/alpha/l.mp3' },
+    { letter: 'M', phonetic: 'em', audioUrl: 'assets/audio/alpha/m.mp3' },
+    { letter: 'N', phonetic: 'en', audioUrl: 'assets/audio/alpha/n.mp3' },
+    { letter: 'O', phonetic: 'ó', audioUrl: 'assets/audio/alpha/o.mp3' },
+    { letter: 'P', phonetic: 'pí', audioUrl: 'assets/audio/alpha/p.mp3' },
+    { letter: 'Q', phonetic: 'kjú', audioUrl: 'assets/audio/alpha/q.mp3' },
+    { letter: 'R', phonetic: 'ár', audioUrl: 'assets/audio/alpha/r.mp3' },
+    { letter: 'S', phonetic: 'esz', audioUrl: 'assets/audio/alpha/s.mp3' },
+    { letter: 'T', phonetic: 'tí', audioUrl: 'assets/audio/alpha/t.mp3' },
+    { letter: 'U', phonetic: 'jú', audioUrl: 'assets/audio/alpha/u.mp3' },
+    { letter: 'V', phonetic: 'ví', audioUrl: 'assets/audio/alpha/v.mp3' },
+    { letter: 'W', phonetic: 'dablju', audioUrl: 'assets/audio/alpha/w.mp3' },
+    { letter: 'X', phonetic: 'eksz', audioUrl: 'assets/audio/alpha/x.mp3' },
+    { letter: 'Y', phonetic: 'váj', audioUrl: 'assets/audio/alpha/y.mp3' },
+    { letter: 'Z', phonetic: 'zed / zí', audioUrl: 'assets/audio/alpha/z.mp3' }
+];
+
+window.toggleAlphabetWidget = function() {
+    const gridContainer = document.getElementById("alphabet-grid-container");
+    const toggleBtn = document.getElementById("toggle-alphabet-btn");
+    if (!gridContainer || !toggleBtn) return;
+    
+    if (gridContainer.style.display === "none") {
+        gridContainer.style.display = "block";
+        toggleBtn.textContent = "Bezárás";
+    } else {
+        gridContainer.style.display = "none";
+        toggleBtn.textContent = "Megnyitás";
+    }
+};
+
+window.playAlphabetSound = function(letter, audioUrl) {
+    if (audioUrl) {
+        const audio = new Audio(audioUrl);
+        audio.play().catch(err => {
+            console.log("Audio file play failed, falling back to SpeechSynthesis", err);
+            speakLetter(letter);
+        });
+    } else {
+        speakLetter(letter);
+    }
+};
+
+function speakLetter(letter) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        // Speak only the letter character in lowercase. If letter is "Z (zed / zí)", extract the first letter character.
+        const cleanLetter = letter.trim().charAt(0).toLowerCase();
+        const utterance = new SpeechSynthesisUtterance(cleanLetter);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.75;
+        window.speechSynthesis.speak(utterance);
+    } else {
+        console.warn("SpeechSynthesis not supported.");
+    }
+}
+
 function renderRoadmap(levelName) {
     const container = document.getElementById("main-roadmap-container");
     if (!container) return;
@@ -1550,6 +1622,40 @@ function renderRoadmap(levelName) {
     
     const levelData = learningContent[levelName];
     if (!levelData) return;
+    
+    if (levelName === "A1") {
+        let alphabetCardsHtml = "";
+        englishAlphabet.forEach(entry => {
+            alphabetCardsHtml += `
+                <div class="alphabet-card">
+                    <div class="alphabet-letter">${entry.letter.split(' ')[0]}</div>
+                    <div class="alphabet-phonetic">[${entry.phonetic}]</div>
+                    <button class="alphabet-audio-btn" onclick="playAlphabetSound('${entry.letter}', '${entry.audioUrl}')" aria-label="${entry.letter} kiejtése">🔊</button>
+                </div>
+            `;
+        });
+        
+        const alphabetHtml = `
+            <div class="alphabet-banner-card">
+                <div class="alphabet-banner-header" onclick="toggleAlphabetWidget()" style="cursor: pointer;">
+                    <div class="alphabet-banner-info">
+                        <span class="alphabet-banner-icon">🔤</span>
+                        <div>
+                            <h3 class="alphabet-banner-title">Angol Ábécé (English Alphabet)</h3>
+                            <p class="alphabet-banner-subtitle">Bármikor elérhető kiejtési segédlet hanggal</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" id="toggle-alphabet-btn" onclick="event.stopPropagation(); toggleAlphabetWidget();">Megnyitás</button>
+                </div>
+                <div id="alphabet-grid-container" style="display: none;">
+                    <div class="alphabet-grid">
+                        ${alphabetCardsHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML("beforeend", alphabetHtml);
+    }
     
     // Generate the path dynamically
     Object.keys(levelData).forEach((sectionKey, sectionIndex) => {

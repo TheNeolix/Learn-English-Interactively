@@ -3113,3 +3113,152 @@ input:checked + .slider:before {
     gap: 0.5rem;
     opacity: 0.8;
 }
+
+/* English Alphabet Widget Styles */
+.alphabet-banner-card {
+    width: 100%;
+    max-width: 600px;
+    margin: 1.5rem 0 0 0;
+    box-sizing: border-box;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.alphabet-banner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.alphabet-banner-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.alphabet-banner-icon {
+    font-size: 2.2rem;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.6rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alphabet-banner-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent-in);
+    letter-spacing: -0.3px;
+}
+
+.alphabet-banner-subtitle {
+    margin: 0.2rem 0 0 0;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.alphabet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Individual Alphabet Card */
+.alphabet-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.alphabet-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-accent-in);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.alphabet-letter {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-text-main);
+    margin-bottom: 0.15rem;
+    line-height: 1;
+}
+
+.alphabet-phonetic {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.1rem 0.4rem;
+    border-radius: 6px;
+    margin-bottom: 0.4rem;
+}
+
+.alphabet-audio-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-text-muted);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.alphabet-audio-btn:hover {
+    background: var(--color-accent-in);
+    border-color: var(--color-accent-in);
+    color: #000;
+    transform: scale(1.1);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 576px) {
+    .alphabet-banner-card {
+        margin: 1rem 0 0 0;
+        padding: 1rem;
+    }
+    .alphabet-banner-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    #toggle-alphabet-btn {
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.75rem;
+    }
+    .alphabet-grid {
+        grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+        gap: 0.5rem;
+    }
+    .alphabet-letter {
+        font-size: 1.5rem;
+    }
+}
