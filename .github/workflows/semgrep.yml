@@ -4,6 +4,7 @@ on:
   pull_request: {}
   push:
     branches: [main]
+  workflow_dispatch: {}  # Ensure this aligns exactly with 'pull_request' and 'push'
 
 jobs:
   semgrep:
