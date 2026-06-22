@@ -35,6 +35,17 @@ let currentLevel = "A1";
 let currentSection = "ToBe";
 let currentSubsection = "explanation";
 
+// Helper to escape HTML characters to prevent DOM XSS
+function escapeHTML(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
 // LocalStorage Persistence Layer specifically for Guests
 const LocalSavingsService = {
     getKey: () => `neolix_guest_progress`,
@@ -3488,14 +3499,14 @@ function checkFillBlank(index) {
     const cleanUserAnswer = userAnswer.replace(/'/g, "");
     const cleanPossibleAnswers = possibleAnswers.map(ans => ans.replace(/'/g, ""));
     if (cleanPossibleAnswers.includes(cleanUserAnswer)) {
-        feedback.innerHTML = `✓ Helyes válasz! Ügyes vagy!`;
+        feedback.textContent = `✓ Helyes válasz! Ügyes vagy!`;
         feedback.className = "quiz-feedback correct";
         input.classList.add("input-correct");
         input.classList.remove("input-incorrect");
         isCorrect = true;
     } else {
         const displayAnswer = correctAnswer.replace(/\//g, " / ");
-        feedback.innerHTML = `✗ Nem jó. A helyes válasz: <strong>${displayAnswer}</strong>`;
+        feedback.innerHTML = `✗ Nem jó. A helyes válasz: <strong>${escapeHTML(displayAnswer)}</strong>`;
         feedback.className = "quiz-feedback incorrect";
         input.classList.add("input-incorrect");
         input.classList.remove("input-correct");
@@ -3534,10 +3545,10 @@ function checkTrueFalse(index, studentAnswer) {
 
     const isCorrect = (studentAnswer === item.answer);
     if (isCorrect) {
-        feedback.innerHTML = `✓ ${item.explanation}`;
+        feedback.textContent = `✓ ${item.explanation}`;
         feedback.className = "quiz-feedback correct";
     } else {
-        feedback.innerHTML = `✗ ${item.explanation}`;
+        feedback.textContent = `✗ ${item.explanation}`;
         feedback.className = "quiz-feedback incorrect";
     }
     
@@ -3608,11 +3619,11 @@ function checkWordOrder(index) {
 
     let isCorrect = false;
     if (cleanUser === cleanCorrect) {
-        feedback.innerHTML = `✓ Helyes! A mondat: "${correctAnswer}"`;
+        feedback.textContent = `✓ Helyes! A mondat: "${correctAnswer}"`;
         feedback.className = "quiz-feedback correct";
         isCorrect = true;
     } else {
-        feedback.innerHTML = `✗ Nem jó. A helyes sorrend: "${correctAnswer}"`;
+        feedback.textContent = `✗ Nem jó. A helyes sorrend: "${correctAnswer}"`;
         feedback.className = "quiz-feedback incorrect";
     }
     
@@ -3642,7 +3653,7 @@ function resetWordOrder(index) {
     // Clear answer zone
     answerZone.innerHTML = `<span class="answer-placeholder">Kattints a szavakra a helyes sorrendben...</span>`;
     feedback.className = "quiz-feedback";
-    feedback.innerHTML = "";
+    feedback.textContent = "";
 }
 
 // Exam T/F selection handler (does not grade immediately)
@@ -3686,12 +3697,12 @@ function gradeExam() {
             const cleanPossibleAnswers = possibleAnswers.map(ans => ans.replace(/'/g, ""));
             if (cleanPossibleAnswers.includes(cleanUserAnswer)) {
                 correct++;
-                feedback.innerHTML = `✓ Helyes!`;
+                feedback.textContent = `✓ Helyes!`;
                 feedback.className = "quiz-feedback correct";
                 if (input) { input.classList.add("input-correct"); input.classList.remove("input-incorrect"); }
             } else {
                 const displayAnswer = item.answer.replace(/\//g, " / ");
-                feedback.innerHTML = `✗ A helyes válasz: <strong>${displayAnswer}</strong>`;
+                feedback.innerHTML = `✗ A helyes válasz: <strong>${escapeHTML(displayAnswer)}</strong>`;
                 feedback.className = "quiz-feedback incorrect";
                 if (input) { input.classList.add("input-incorrect"); input.classList.remove("input-correct"); }
             }
@@ -3702,11 +3713,11 @@ function gradeExam() {
 
             if (userAnswer === item.answer) {
                 correct++;
-                feedback.innerHTML = `✓ Helyes! ${item.explanation || ""}`;
+                feedback.textContent = `✓ Helyes! ${item.explanation || ""}`;
                 feedback.className = "quiz-feedback correct";
             } else {
                 const displayCorrect = item.answer ? "IGAZ" : "HAMIS";
-                feedback.innerHTML = `✗ Helytelen! A helyes válasz: <strong>${displayCorrect}</strong>. ${item.explanation || ""}`;
+                feedback.innerHTML = `✗ Helytelen! A helyes válasz: <strong>${escapeHTML(displayCorrect)}</strong>. ${escapeHTML(item.explanation || "")}`;
                 feedback.className = "quiz-feedback incorrect";
             }
         } else if (item.type === "order") {
@@ -3721,10 +3732,10 @@ function gradeExam() {
 
             if (cleanUser === cleanCorrect) {
                 correct++;
-                feedback.innerHTML = `✓ Helyes!`;
+                feedback.textContent = `✓ Helyes!`;
                 feedback.className = "quiz-feedback correct";
             } else {
-                feedback.innerHTML = `✗ A helyes sorrend: "${correctAnswer}"`;
+                feedback.textContent = `✗ A helyes sorrend: "${correctAnswer}"`;
                 feedback.className = "quiz-feedback incorrect";
             }
         }
