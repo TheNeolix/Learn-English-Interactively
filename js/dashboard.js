@@ -1629,8 +1629,8 @@ function renderRoadmap(levelName) {
         
         const sectionHtml = `
             <div class="lesson-section-box">
-                <h2 class="lesson-section-title">${title}</h2>
-                <p class="lesson-section-subtitle">${sectionData.description || 'Teljesítsd az összes modult!'}</p>
+                <h2 class="lesson-section-title">${escapeHTML(title)}</h2>
+                <p class="lesson-section-subtitle">${escapeHTML(sectionData.description || 'Teljesítsd az összes modult!')}</p>
                 <div class="lesson-nodes-container-flex">
                     ${nodesHtml}
                 </div>
@@ -1902,7 +1902,7 @@ function switchGlobalLevel(levelName, startEmpty = false) {
         if (breadcrumbs) {
             const levelLabel = levelName === "A1" ? "A1 Kezdő" : levelName === "A2" ? "A2 Alapfok" : levelName;
             breadcrumbs.innerHTML = `
-                <li>${levelLabel}</li>
+                <li>${escapeHTML(levelLabel)}</li>
                 <li aria-current="page">Áttekintés</li>
             `;
         }
@@ -1941,9 +1941,9 @@ function renderSubsection(level, section, subsection) {
     if (breadcrumbs) {
         const levelLabel = level === "A1" ? "A1 Kezdő" : level === "A2" ? "A2 Alapfok" : level;
         breadcrumbs.innerHTML = `
-            <li>${levelLabel}</li>
-            <li>${moduleData?.title || 'Lecke'}</li>
-            <li aria-current="page">${subsectionTitle}</li>
+            <li>${escapeHTML(levelLabel)}</li>
+            <li>${escapeHTML(moduleData?.title || 'Lecke')}</li>
+            <li aria-current="page">${escapeHTML(subsectionTitle)}</li>
         `;
     }
 
@@ -2324,9 +2324,13 @@ function renderExplanationTemplate(workspace, data, moduleData) {
                 <div class="explanation-next-hint">
                     <p>Ha megértetted a magyarázatot, lépj tovább a <strong>Szavak</strong> szekcióra! →</p>
                 </div>
-                ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, false)}
+                <div id="explanation-completion-btn-container-to-be"></div>
             </div>
         `;
+        const btnContainer = document.getElementById("explanation-completion-btn-container-to-be");
+        if (btnContainer) {
+            btnContainer.innerHTML = getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, false);
+        }
         initExplanationTabs();
     } else if (currentSection === "ToHave") {
         workspace.innerHTML = `
@@ -2629,17 +2633,21 @@ function renderExplanationTemplate(workspace, data, moduleData) {
                 <div class="explanation-next-hint">
                     <p>Ha megértetted a magyarázatot, lépj tovább a <strong>Szavak</strong> szekcióra! →</p>
                 </div>
-                ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, false)}
+                <div id="explanation-completion-btn-container-to-have"></div>
             </div>
         `;
+        const btnContainer = document.getElementById("explanation-completion-btn-container-to-have");
+        if (btnContainer) {
+            btnContainer.innerHTML = getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, false);
+        }
         initExplanationTabs();
     } else {
         workspace.innerHTML = `
             <div class="lesson-view">
                 <article class="explanation-box explanation-main">
-                    <h2>📚 ${moduleData.title}</h2>
+                    <h2 id="explanation-title-el">📚 </h2>
                     <div class="explanation-content">
-                        <p>${data.content || moduleData.explanation || 'Ehhez a leckéhez hamarosan feltöltjük a magyarázatot.'}</p>
+                        <p id="explanation-content-el"></p>
                     </div>
                 </article>
                 <div class="explanation-next-hint">
@@ -2648,6 +2656,14 @@ function renderExplanationTemplate(workspace, data, moduleData) {
                 ${getCompleteButtonHtml(currentLevel, currentSection, currentSubsection, false)}
             </div>
         `;
+        const titleEl = document.getElementById("explanation-title-el");
+        if (titleEl) {
+            titleEl.textContent = `📚 ${moduleData.title}`;
+        }
+        const contentEl = document.getElementById("explanation-content-el");
+        if (contentEl) {
+            contentEl.innerHTML = data.content || moduleData.explanation || 'Ehhez a leckéhez hamarosan feltöltjük a magyarázatot.';
+        }
     }
 }
 
@@ -2709,9 +2725,9 @@ async function renderWordsTemplate(workspace, data, moduleData) {
     items.forEach((item, i) => {
         rowsHtml += `
             <tr class="word-row" style="animation-delay: ${i * 0.05}s">
-                <td class="word-en">${item.en}</td>
-                <td class="word-hu">${item.hu}</td>
-                <td class="word-example"><em>${item.example}</em></td>
+                <td class="word-en">${escapeHTML(item.en)}</td>
+                <td class="word-hu">${escapeHTML(item.hu)}</td>
+                <td class="word-example"><em>${escapeHTML(item.example)}</em></td>
             </tr>
         `;
     });
@@ -2828,13 +2844,13 @@ function initSwipeDeck(items, containerId) {
                 <div class="swipe-overlay swipe-overlay-practice">MÉG GYAKORLOM</div>
                 <div class="swipe-card-inner">
                     <div class="swipe-card-front">
-                        <div class="swipe-card-word">${item.en}</div>
+                        <div class="swipe-card-word">${escapeHTML(item.en)}</div>
                         <div class="tap-hint">👆 Kattints a fordításért</div>
                     </div>
                     <div class="swipe-card-back">
-                        <div class="swipe-card-word">${item.en}</div>
-                        <div class="swipe-card-hu">${item.hu}</div>
-                        <div class="swipe-card-example">"${item.example}"</div>
+                        <div class="swipe-card-word">${escapeHTML(item.en)}</div>
+                        <div class="swipe-card-hu">${escapeHTML(item.hu)}</div>
+                        <div class="swipe-card-example">"${escapeHTML(item.example)}"</div>
                     </div>
                 </div>
             `;
@@ -3159,14 +3175,21 @@ function renderQuizCardQuestion() {
                 <div style="font-size: 3rem; font-weight: bold; color: ${isFlawless ? 'var(--color-success)' : 'var(--color-text-main)'};">
                     ${score} / ${quizState.questions.length}
                 </div>
-                <p style="color: var(--color-text-muted); max-width: 400px; font-size: 1.1rem; line-height: 1.6;">
-                    ${isFlawless ? 'Zseniális! Minden válaszod tökéletes lett.' : passed ? 'Szép munka! Folytathatod a következő leckével.' : 'Ezt még gyakorolni kell. Nézd át a hibákat és próbáld újra!'}
-                </p>
+                <p id="quiz-complete-message" style="color: var(--color-text-muted); max-width: 400px; font-size: 1.1rem; line-height: 1.6;"></p>
                 <div style="margin-top: 2rem;">
                     ${completionBtnHtml}
                 </div>
             </div>
         `;
+        
+        const messageEl = document.getElementById("quiz-complete-message");
+        if (messageEl) {
+            messageEl.textContent = isFlawless 
+                ? 'Zseniális! Minden válaszod tökéletes lett.' 
+                : passed 
+                    ? 'Szép munka! Folytathatod a következő leckével.' 
+                    : 'Ezt még gyakorolni kell. Nézd át a hibákat és próbáld újra!';
+        }
         return;
     }
 
@@ -3398,7 +3421,7 @@ async function renderSectionExamTemplate(workspace, data) {
             <section class="practice-box exam-section">
                 <div class="exam-header">
                     <h2>🏆 Fejezet vizsga</h2>
-                    <p class="section-instruction">${data.description || 'Ez a fejezet összefoglaló vizsgája. Válaszolj az összes kérdésre, majd nyomj az értékelésre!'}</p>
+                    <p class="section-instruction" id="exam-section-description"></p>
                 </div>
                 <div class="exam-list">${questionsHtml}</div>
                 <div class="exam-footer">
@@ -3411,6 +3434,11 @@ async function renderSectionExamTemplate(workspace, data) {
             </section>
         </div>
     `;
+
+    const descEl = document.getElementById("exam-section-description");
+    if (descEl) {
+        descEl.textContent = data.description || 'Ez a fejezet összefoglaló vizsgája. Válaszolj az összes kérdésre, majd nyomj az értékelésre!';
+    }
 
     // Restore Exam UI state
     setTimeout(() => {
