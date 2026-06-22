@@ -2,37 +2,42 @@
   "description": "Rakd a szavakat helyes sorrendbe, hogy nyelvtanilag helyes kérdést kapj.",
   "items": [
     {
-      "scrambled": [
+      "hu": "Mi a neved?",
+      "id": "wo_001",
+      "scrambledWords": [
         "What",
         "is",
         "your",
         "name"
       ],
-      "correct": "What is your name?",
-      "hu": "Mi a neved?"
+      "correctAnswer": "What is your name?"
     },
     {
-      "scrambled": [
+      "hu": "Hol laksz?",
+      "id": "wo_002",
+      "scrambledWords": [
         "Where",
         "do",
         "you",
         "live"
       ],
-      "correct": "Where do you live?",
-      "hu": "Hol laksz?"
+      "correctAnswer": "Where do you live?"
     },
     {
-      "scrambled": [
+      "hu": "Ki az a férfi?",
+      "id": "wo_003",
+      "scrambledWords": [
         "Who",
         "is",
         "that",
         "man"
       ],
-      "correct": "Who is that man?",
-      "hu": "Ki az a férfi?"
+      "correctAnswer": "Who is that man?"
     },
     {
-      "scrambled": [
+      "hu": "Hogyan mész munkába?",
+      "id": "wo_004",
+      "scrambledWords": [
         "How",
         "do",
         "you",
@@ -40,42 +45,46 @@
         "to",
         "work"
       ],
-      "correct": "How do you go to work?",
-      "hu": "Hogyan mész munkába?"
+      "correctAnswer": "How do you go to work?"
     },
     {
-      "scrambled": [
+      "hu": "Mikor kezdődik a megbeszélés?",
+      "id": "wo_005",
+      "scrambledWords": [
         "When",
         "does",
         "the",
         "meeting",
         "start"
       ],
-      "correct": "When does the meeting start?",
-      "hu": "Mikor kezdődik a megbeszélés?"
+      "correctAnswer": "When does the meeting start?"
     },
     {
-      "scrambled": [
+      "hu": "Hogy vagy ma?",
+      "id": "wo_006",
+      "scrambledWords": [
         "How",
         "are",
         "you",
         "today"
       ],
-      "correct": "How are you today?",
-      "hu": "Hogy vagy ma?"
+      "correctAnswer": "How are you today?"
     },
     {
-      "scrambled": [
+      "hu": "Hol vannak a kulcsaim?",
+      "id": "wo_007",
+      "scrambledWords": [
         "Where",
         "are",
         "my",
         "keys"
       ],
-      "correct": "Where are my keys?",
-      "hu": "Hol vannak a kulcsaim?"
+      "correctAnswer": "Where are my keys?"
     },
     {
-      "scrambled": [
+      "hu": "Mit iszol reggel?",
+      "id": "wo_008",
+      "scrambledWords": [
         "What",
         "do",
         "you",
@@ -84,32 +93,35 @@
         "the",
         "morning"
       ],
-      "correct": "What do you drink in the morning?",
-      "hu": "Mit iszol reggel?"
+      "correctAnswer": "What do you drink in the morning?"
     },
     {
-      "scrambled": [
+      "hu": "Hol van a nővéred/húgod?",
+      "id": "wo_009",
+      "scrambledWords": [
         "Where",
         "is",
         "your",
         "sister"
       ],
-      "correct": "Where is your sister?",
-      "hu": "Hol van a nővéred/húgod?"
+      "correctAnswer": "Where is your sister?"
     },
     {
-      "scrambled": [
+      "hu": "Mikor fociznak?",
+      "id": "wo_010",
+      "scrambledWords": [
         "When",
         "do",
         "they",
         "play",
         "football"
       ],
-      "correct": "When do they play football?",
-      "hu": "Mikor fociznak?"
+      "correctAnswer": "When do they play football?"
     },
     {
-      "scrambled": [
+      "hu": "Mi ez az asztalon?",
+      "id": "wo_011",
+      "scrambledWords": [
         "What",
         "is",
         "this",
@@ -117,52 +129,57 @@
         "the",
         "table"
       ],
-      "correct": "What is this on the table?",
-      "hu": "Mi ez az asztalon?"
+      "correctAnswer": "What is this on the table?"
     },
     {
-      "scrambled": [
+      "hu": "Kivel dolgozol?",
+      "id": "wo_012",
+      "scrambledWords": [
         "Who",
         "do",
         "you",
         "work",
         "with"
       ],
-      "correct": "Who do you work with?",
-      "hu": "Kivel dolgozol?"
+      "correctAnswer": "Who do you work with?"
     },
     {
-      "scrambled": [
+      "hu": "Hol lakik ő?",
+      "id": "wo_013",
+      "scrambledWords": [
         "Where",
         "does",
         "she",
         "live"
       ],
-      "correct": "Where does she live?",
-      "hu": "Hol lakik ő?"
+      "correctAnswer": "Where does she live?"
     },
     {
-      "scrambled": [
+      "hu": "Mikor kezdhetünk?",
+      "id": "wo_014",
+      "scrambledWords": [
         "When",
         "can",
         "we",
         "start"
       ],
-      "correct": "When can we start?",
-      "hu": "Mikor kezdhetünk?"
+      "correctAnswer": "When can we start?"
     },
     {
-      "scrambled": [
+      "hu": "Hol van a telefonod?",
+      "id": "wo_015",
+      "scrambledWords": [
         "Where",
         "is",
         "your",
         "phone"
       ],
-      "correct": "Where is your phone?",
-      "hu": "Hol van a telefonod?"
+      "correctAnswer": "Where is your phone?"
     },
     {
-      "scrambled": [
+      "hu": "Hogyan betűzöd ezt a szót?",
+      "id": "wo_016",
+      "scrambledWords": [
         "How",
         "do",
         "you",
@@ -170,74 +187,81 @@
         "this",
         "word"
       ],
-      "correct": "How do you spell this word?",
-      "hu": "Hogyan betűzöd ezt a szót?"
+      "correctAnswer": "How do you spell this word?"
     },
     {
-      "scrambled": [
+      "hu": "Milyen színű az autód?",
+      "id": "wo_017",
+      "scrambledWords": [
         "What",
         "color",
         "is",
         "your",
         "car"
       ],
-      "correct": "What color is your car?",
-      "hu": "Milyen színű az autód?"
+      "correctAnswer": "What color is your car?"
     },
     {
-      "scrambled": [
+      "hu": "Hol vannak most?",
+      "id": "wo_018",
+      "scrambledWords": [
         "Where",
         "are",
         "they",
         "now"
       ],
-      "correct": "Where are they now?",
-      "hu": "Hol vannak most?"
+      "correctAnswer": "Where are they now?"
     },
     {
-      "scrambled": [
+      "hu": "Mit akar ő?",
+      "id": "wo_019",
+      "scrambledWords": [
         "What",
         "does",
         "he",
         "want"
       ],
-      "correct": "What does he want?",
-      "hu": "Mit akar ő?"
+      "correctAnswer": "What does he want?"
     },
     {
-      "scrambled": [
+      "hu": "Hol van a laptop?",
+      "id": "wo_020",
+      "scrambledWords": [
         "Where",
         "is",
         "the",
         "laptop"
       ],
-      "correct": "Where is the laptop?",
-      "hu": "Hol van a laptop?"
+      "correctAnswer": "Where is the laptop?"
     },
     {
-      "scrambled": [
+      "hu": "Mikor iszik kávét?",
+      "id": "wo_021",
+      "scrambledWords": [
         "When",
         "does",
         "she",
         "drink",
         "coffee"
       ],
-      "correct": "When does she drink coffee?",
-      "hu": "Mikor iszik kávét?"
+      "correctAnswer": "When does she drink coffee?"
     },
     {
-      "scrambled": [
+      "hu": "Kinek van ez a könyv?",
+      "id": "wo_022",
+      "scrambledWords": [
         "Who",
         "is",
         "this",
         "book",
         "for"
       ],
-      "correct": "Who is this book for?",
-      "hu": "Kinek van ez a könyv?"
+      "correctAnswer": "Who is this book for?"
     },
     {
-      "scrambled": [
+      "hu": "Miért szereted a munkádat?",
+      "id": "wo_023",
+      "scrambledWords": [
         "Why",
         "do",
         "you",
@@ -245,53 +269,58 @@
         "your",
         "job"
       ],
-      "correct": "Why do you like your job?",
-      "hu": "Miért szereted a munkádat?"
+      "correctAnswer": "Why do you like your job?"
     },
     {
-      "scrambled": [
+      "hu": "Ki az orvos?",
+      "id": "wo_024",
+      "scrambledWords": [
         "Who",
         "is",
         "the",
         "doctor"
       ],
-      "correct": "Who is the doctor?",
-      "hu": "Ki az orvos?"
+      "correctAnswer": "Who is the doctor?"
     },
     {
-      "scrambled": [
+      "hu": "Mikor indul a busz?",
+      "id": "wo_025",
+      "scrambledWords": [
         "When",
         "does",
         "the",
         "bus",
         "leave"
       ],
-      "correct": "When does the bus leave?",
-      "hu": "Mikor indul a busz?"
+      "correctAnswer": "When does the bus leave?"
     },
     {
-      "scrambled": [
+      "hu": "Hogy érzed magad ma?",
+      "id": "wo_026",
+      "scrambledWords": [
         "How",
         "do",
         "you",
         "feel",
         "today"
       ],
-      "correct": "How do you feel today?",
-      "hu": "Hogy érzed magad ma?"
+      "correctAnswer": "How do you feel today?"
     },
     {
-      "scrambled": [
+      "hu": "Hol van az iroda?",
+      "id": "wo_027",
+      "scrambledWords": [
         "Where",
         "is",
         "the",
         "office"
       ],
-      "correct": "Where is the office?",
-      "hu": "Hol van az iroda?"
+      "correctAnswer": "Where is the office?"
     },
     {
-      "scrambled": [
+      "hu": "Mit csinálsz minden nap?",
+      "id": "wo_028",
+      "scrambledWords": [
         "What",
         "do",
         "you",
@@ -299,237 +328,258 @@
         "every",
         "day"
       ],
-      "correct": "What do you do every day?",
-      "hu": "Mit csinálsz minden nap?"
+      "correctAnswer": "What do you do every day?"
     },
     {
-      "scrambled": [
+      "hu": "Mikor van a teszt?",
+      "id": "wo_029",
+      "scrambledWords": [
         "When",
         "is",
         "the",
         "test"
       ],
-      "correct": "When is the test?",
-      "hu": "Mikor van a teszt?"
+      "correctAnswer": "When is the test?"
     },
     {
-      "scrambled": [
+      "hu": "Ki beszél?",
+      "id": "wo_030",
+      "scrambledWords": [
         "Who",
         "is",
         "speaking"
       ],
-      "correct": "Who is speaking?",
-      "hu": "Ki beszél?"
+      "correctAnswer": "Who is speaking?"
     },
     {
-      "scrambled": [
+      "hu": "Mikor zár a bolt?",
+      "id": "wo_031",
+      "scrambledWords": [
         "When",
         "does",
         "the",
         "shop",
         "close"
       ],
-      "correct": "When does the shop close?",
-      "hu": "Mikor zár a bolt?"
+      "correctAnswer": "When does the shop close?"
     },
     {
-      "scrambled": [
+      "hu": "Hogyan mondod azt, hogy „hello”?",
+      "id": "wo_032",
+      "scrambledWords": [
         "How",
         "do",
         "you",
         "say",
         "hello"
       ],
-      "correct": "How do you say \"hello\"?",
-      "hu": "Hogyan mondod azt, hogy „hello”?"
+      "correctAnswer": "How do you say \"hello\"?"
     },
     {
-      "scrambled": [
+      "hu": "Mi van ebben a dobozban?",
+      "id": "wo_033",
+      "scrambledWords": [
         "What",
         "is",
         "in",
         "this",
         "box"
       ],
-      "correct": "What is in this box?",
-      "hu": "Mi van ebben a dobozban?"
+      "correctAnswer": "What is in this box?"
     },
     {
-      "scrambled": [
+      "hu": "Hol van az apád?",
+      "id": "wo_034",
+      "scrambledWords": [
         "Where",
         "is",
         "your",
         "father"
       ],
-      "correct": "Where is your father?",
-      "hu": "Hol van az apád?"
+      "correctAnswer": "Where is your father?"
     },
     {
-      "scrambled": [
+      "hu": "Mikor érkeznek?",
+      "id": "wo_035",
+      "scrambledWords": [
         "When",
         "do",
         "they",
         "arrive"
       ],
-      "correct": "When do they arrive?",
-      "hu": "Mikor érkeznek?"
+      "correctAnswer": "When do they arrive?"
     },
     {
-      "scrambled": [
+      "hu": "Hol dolgozik ő?",
+      "id": "wo_036",
+      "scrambledWords": [
         "Where",
         "does",
         "he",
         "work"
       ],
-      "correct": "Where does he work?",
-      "hu": "Hol dolgozik ő?"
+      "correctAnswer": "Where does he work?"
     },
     {
-      "scrambled": [
+      "hu": "Hol veszel ételt?",
+      "id": "wo_037",
+      "scrambledWords": [
         "Where",
         "do",
         "you",
         "buy",
         "food"
       ],
-      "correct": "Where do you buy food?",
-      "hu": "Hol veszel ételt?"
+      "correctAnswer": "Where do you buy food?"
     },
     {
-      "scrambled": [
+      "hu": "Miért vagy boldog?",
+      "id": "wo_038",
+      "scrambledWords": [
         "Why",
         "are",
         "you",
         "happy"
       ],
-      "correct": "Why are you happy?",
-      "hu": "Miért vagy boldog?"
+      "correctAnswer": "Why are you happy?"
     },
     {
-      "scrambled": [
+      "hu": "Hol vannak a kutyák?",
+      "id": "wo_039",
+      "scrambledWords": [
         "Where",
         "are",
         "the",
         "dogs"
       ],
-      "correct": "Where are the dogs?",
-      "hu": "Hol vannak a kutyák?"
+      "correctAnswer": "Where are the dogs?"
     },
     {
-      "scrambled": [
+      "hu": "Mikor kezdődik az óra?",
+      "id": "wo_040",
+      "scrambledWords": [
         "When",
         "does",
         "the",
         "lesson",
         "start"
       ],
-      "correct": "When does the lesson start?",
-      "hu": "Mikor kezdődik az óra?"
+      "correctAnswer": "When does the lesson start?"
     },
     {
-      "scrambled": [
+      "hu": "Mi a kedvenc dalod?",
+      "id": "wo_041",
+      "scrambledWords": [
         "What",
         "is",
         "your",
         "favorite",
         "song"
       ],
-      "correct": "What is your favorite song?",
-      "hu": "Mi a kedvenc dalod?"
+      "correctAnswer": "What is your favorite song?"
     },
     {
-      "scrambled": [
+      "hu": "Ki tud segíteni nekem?",
+      "id": "wo_042",
+      "scrambledWords": [
         "Who",
         "can",
         "help",
         "me"
       ],
-      "correct": "Who can help me?",
-      "hu": "Ki tud segíteni nekem?"
+      "correctAnswer": "Who can help me?"
     },
     {
-      "scrambled": [
+      "hu": "Miért hideg a számítógép?",
+      "id": "wo_043",
+      "scrambledWords": [
         "Why",
         "is",
         "the",
         "computer",
         "cold"
       ],
-      "correct": "Why is the computer cold?",
-      "hu": "Miért hideg a számítógép?"
+      "correctAnswer": "Why is the computer cold?"
     },
     {
-      "scrambled": [
+      "hu": "Hová vezetnek?",
+      "id": "wo_044",
+      "scrambledWords": [
         "Where",
         "do",
         "they",
         "drive"
       ],
-      "correct": "Where do they drive?",
-      "hu": "Hová vezetnek?"
+      "correctAnswer": "Where do they drive?"
     },
     {
-      "scrambled": [
+      "hu": "Honnan ismered őt?",
+      "id": "wo_045",
+      "scrambledWords": [
         "How",
         "do",
         "you",
         "know",
         "him"
       ],
-      "correct": "How do you know him?",
-      "hu": "Honnan ismered őt?"
+      "correctAnswer": "How do you know him?"
     },
     {
-      "scrambled": [
+      "hu": "Mi a probléma?",
+      "id": "wo_046",
+      "scrambledWords": [
         "What",
         "is",
         "the",
         "problem"
       ],
-      "correct": "What is the problem?",
-      "hu": "Mi a probléma?"
+      "correctAnswer": "What is the problem?"
     },
     {
-      "scrambled": [
+      "hu": "Mi van a táskájában?",
+      "id": "wo_047",
+      "scrambledWords": [
         "What",
         "is",
         "in",
         "her",
         "bag"
       ],
-      "correct": "What is in her bag?",
-      "hu": "Mi van a táskájában?"
+      "correctAnswer": "What is in her bag?"
     },
     {
-      "scrambled": [
+      "hu": "Mikor van a megbeszélésünk?",
+      "id": "wo_048",
+      "scrambledWords": [
         "When",
         "is",
         "our",
         "meeting"
       ],
-      "correct": "When is our meeting?",
-      "hu": "Mikor van a megbeszélésünk?"
+      "correctAnswer": "When is our meeting?"
     },
     {
-      "scrambled": [
+      "hu": "Hol van az ő házuk?",
+      "id": "wo_049",
+      "scrambledWords": [
         "Where",
         "is",
         "their",
         "house"
       ],
-      "correct": "Where is their house?",
-      "hu": "Hol van az ő házuk?"
+      "correctAnswer": "Where is their house?"
     },
     {
-      "scrambled": [
+      "hu": "Ki az új menedzser?",
+      "id": "wo_050",
+      "scrambledWords": [
         "Who",
         "is",
         "the",
         "new",
         "manager"
       ],
-      "correct": "Who is the new manager?",
-      "hu": "Ki az új menedzser?"
+      "correctAnswer": "Who is the new manager?"
     }
   ]
 }

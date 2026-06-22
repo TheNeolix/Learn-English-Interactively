@@ -2,155 +2,171 @@
   "description": "Rakd a szavakat a megfelelő sorrendbe, hogy egy helyes angol mondatot kapj! Kattints a szavakra a sorrend kialakításához!",
   "items": [
     {
-      "scrambled": [
+      "hu": "Van egy házunk.",
+      "id": "wo_001",
+      "scrambledWords": [
         "a",
         "have",
         "house.",
         "We"
       ],
-      "correct": "We have a house.",
-      "hu": "Van egy házunk."
+      "correctAnswer": "We have a house."
     },
     {
-      "scrambled": [
+      "hu": "Van nála egy kulcs?",
+      "id": "wo_002",
+      "scrambledWords": [
         "she",
         "a",
         "Does",
         "key?",
         "have"
       ],
-      "correct": "Does she have a key?",
-      "hu": "Van nála egy kulcs?"
+      "correctAnswer": "Does she have a key?"
     },
     {
-      "scrambled": [
+      "hu": "Nincs autóm.",
+      "id": "wo_003",
+      "scrambledWords": [
         "don't",
         "a",
         "car.",
         "I",
         "have"
       ],
-      "correct": "I don't have a car.",
-      "hu": "Nincs autóm."
+      "correctAnswer": "I don't have a car."
     },
     {
-      "scrambled": [
+      "hu": "Van egy tollja.",
+      "id": "wo_004",
+      "scrambledWords": [
         "has",
         "a",
         "He",
         "pen."
       ],
-      "correct": "He has a pen.",
-      "hu": "Van egy tollja."
+      "correctAnswer": "He has a pen."
     },
     {
-      "scrambled": [
+      "hu": "Van idejük?",
+      "id": "wo_005",
+      "scrambledWords": [
         "they",
         "Do",
         "time?",
         "have"
       ],
-      "correct": "Do they have time?",
-      "hu": "Van idejük?"
+      "correctAnswer": "Do they have time?"
     },
     {
-      "scrambled": [
+      "hu": "Nincs nővére.",
+      "id": "wo_006",
+      "scrambledWords": [
         "sister.",
         "doesn't",
         "She",
         "a",
         "have"
       ],
-      "correct": "She doesn't have a sister.",
-      "hu": "Nincs nővére."
+      "correctAnswer": "She doesn't have a sister."
     },
     {
-      "scrambled": [
+      "hu": "Van egy problémád.",
+      "id": "wo_007",
+      "scrambledWords": [
         "have",
         "a",
         "problem.",
         "You"
       ],
-      "correct": "You have a problem.",
-      "hu": "Van egy problémád."
+      "correctAnswer": "You have a problem."
     },
     {
-      "scrambled": [
+      "hu": "A laptopnak van egy képernyője.",
+      "id": "wo_008",
+      "scrambledWords": [
         "laptop",
         "a",
         "screen.",
         "has",
         "The"
       ],
-      "correct": "The laptop has a screen.",
-      "hu": "A laptopnak van egy képernyője."
+      "correctAnswer": "The laptop has a screen."
     },
     {
-      "scrambled": [
+      "hu": "Van egy telefonod?",
+      "id": "wo_009",
+      "scrambledWords": [
         "you",
         "a",
         "phone?",
         "Do",
         "have"
       ],
-      "correct": "Do you have a phone?",
-      "hu": "Van egy telefonod?"
+      "correctAnswer": "Do you have a phone?"
     },
     {
-      "scrambled": [
+      "hu": "Nincs pénzük.",
+      "id": "wo_010",
+      "scrambledWords": [
         "money.",
         "don't",
         "They",
         "have"
       ],
-      "correct": "They don't have money.",
-      "hu": "Nincs pénzük."
+      "correctAnswer": "They don't have money."
     },
     {
-      "scrambled": [
+      "hu": "Nagy kutyája van.",
+      "id": "wo_011",
+      "scrambledWords": [
         "big",
         "has",
         "dog.",
         "a",
         "He"
       ],
-      "correct": "He has a big dog.",
-      "hu": "Nagy kutyája van."
+      "correctAnswer": "He has a big dog."
     },
     {
-      "scrambled": [
+      "hu": "Megbeszélésünk van ma.",
+      "id": "wo_012",
+      "scrambledWords": [
         "meeting",
         "have",
         "a",
         "today.",
         "We"
       ],
-      "correct": "We have a meeting today.",
-      "hu": "Megbeszélésünk van ma."
+      "correctAnswer": "We have a meeting today."
     },
     {
-      "scrambled": [
+      "hu": "Kék szeme van.",
+      "id": "wo_013",
+      "scrambledWords": [
         "eyes.",
         "blue",
         "has",
         "She"
       ],
-      "correct": "She has blue eyes.",
-      "hu": "Kék szeme van."
+      "correctAnswer": "She has blue eyes."
     },
     {
-      "scrambled": [
+      "hu": "Van munkájuk?",
+      "id": "wo_014",
+      "scrambledWords": [
         "have",
         "job?",
         "a",
         "they",
         "Do"
       ],
-      "correct": "Do they have a job?",
-      "hu": "Van munkájuk?"
+      "correctAnswer": "Do they have a job?"
     },
     {
-      "scrambled": [
+      "hu": "Nincs jó akkumulátora.",
+      "id": "wo_015",
+      "scrambledWords": [
         "battery.",
         "good",
         "doesn't",
@@ -158,98 +174,107 @@
         "a",
         "have"
       ],
-      "correct": "It doesn't have a good battery.",
-      "hu": "Nincs jó akkumulátora."
+      "correctAnswer": "It doesn't have a good battery."
     },
     {
-      "scrambled": [
+      "hu": "Ennek az irodának van egy képernyője.",
+      "id": "wo_016",
+      "scrambledWords": [
         "office",
         "a",
         "has",
         "screen.",
         "This"
       ],
-      "correct": "This office has a screen.",
-      "hu": "Ennek az irodának van egy képernyője."
+      "correctAnswer": "This office has a screen."
     },
     {
-      "scrambled": [
+      "hu": "Nincs nálam kulcs.",
+      "id": "wo_017",
+      "scrambledWords": [
         "key.",
         "don't",
         "I",
         "a",
         "have"
       ],
-      "correct": "I don't have a key.",
-      "hu": "Nincs nálam kulcs."
+      "correctAnswer": "I don't have a key."
     },
     {
-      "scrambled": [
+      "hu": "A háznak sok szobája van.",
+      "id": "wo_018",
+      "scrambledWords": [
         "many",
         "rooms.",
         "house",
         "has",
         "The"
       ],
-      "correct": "The house has many rooms.",
-      "hu": "A háznak sok szobája van."
+      "correctAnswer": "The house has many rooms."
     },
     {
-      "scrambled": [
+      "hu": "Szép autód van.",
+      "id": "wo_019",
+      "scrambledWords": [
         "car.",
         "a",
         "nice",
         "have",
         "You"
       ],
-      "correct": "You have a nice car.",
-      "hu": "Szép autód van."
+      "correctAnswer": "You have a nice car."
     },
     {
-      "scrambled": [
+      "hu": "Tudja a választ?",
+      "id": "wo_020",
+      "scrambledWords": [
         "answer?",
         "have",
         "the",
         "Does",
         "he"
       ],
-      "correct": "Does he have the answer?",
-      "hu": "Tudja a választ?"
+      "correctAnswer": "Does he have the answer?"
     },
     {
-      "scrambled": [
+      "hu": "Nincs időnk.",
+      "id": "wo_021",
+      "scrambledWords": [
         "time.",
         "don't",
         "We",
         "have"
       ],
-      "correct": "We don't have time.",
-      "hu": "Nincs időnk."
+      "correctAnswer": "We don't have time."
     },
     {
-      "scrambled": [
+      "hu": "Van egy problémájuk?",
+      "id": "wo_022",
+      "scrambledWords": [
         "problem?",
         "a",
         "they",
         "have",
         "Do"
       ],
-      "correct": "Do they have a problem?",
-      "hu": "Van egy problémájuk?"
+      "correctAnswer": "Do they have a problem?"
     },
     {
-      "scrambled": [
+      "hu": "Nincs munkája.",
+      "id": "wo_023",
+      "scrambledWords": [
         "job.",
         "doesn't",
         "He",
         "a",
         "have"
       ],
-      "correct": "He doesn't have a job.",
-      "hu": "Nincs munkája."
+      "correctAnswer": "He doesn't have a job."
     },
     {
-      "scrambled": [
+      "hu": "Sok pénzem van.",
+      "id": "wo_024",
+      "scrambledWords": [
         "money.",
         "lot",
         "of",
@@ -257,76 +282,83 @@
         "a",
         "I"
       ],
-      "correct": "I have a lot of money.",
-      "hu": "Sok pénzem van."
+      "correctAnswer": "I have a lot of money."
     },
     {
-      "scrambled": [
+      "hu": "Van nővéred vagy húgod?",
+      "id": "wo_025",
+      "scrambledWords": [
         "sister?",
         "have",
         "a",
         "you",
         "Do"
       ],
-      "correct": "Do you have a sister?",
-      "hu": "Van nővéred vagy húgod?"
+      "correctAnswer": "Do you have a sister?"
     },
     {
-      "scrambled": [
+      "hu": "Van egy megbeszélése?",
+      "id": "wo_026",
+      "scrambledWords": [
         "meeting?",
         "she",
         "a",
         "Does",
         "have"
       ],
-      "correct": "Does she have a meeting?",
-      "hu": "Van egy megbeszélése?"
+      "correctAnswer": "Does she have a meeting?"
     },
     {
-      "scrambled": [
+      "hu": "Nincs ennivalójuk.",
+      "id": "wo_027",
+      "scrambledWords": [
         "food.",
         "don't",
         "They",
         "have"
       ],
-      "correct": "They don't have food.",
-      "hu": "Nincs ennivalójuk."
+      "correctAnswer": "They don't have food."
     },
     {
-      "scrambled": [
+      "hu": "Van egy fekete tollja.",
+      "id": "wo_028",
+      "scrambledWords": [
         "black",
         "has",
         "pen.",
         "a",
         "She"
       ],
-      "correct": "She has a black pen.",
-      "hu": "Van egy fekete tollja."
+      "correctAnswer": "She has a black pen."
     },
     {
-      "scrambled": [
+      "hu": "Új laptopunk van.",
+      "id": "wo_029",
+      "scrambledWords": [
         "laptop.",
         "new",
         "have",
         "a",
         "We"
       ],
-      "correct": "We have a new laptop.",
-      "hu": "Új laptopunk van."
+      "correctAnswer": "We have a new laptop."
     },
     {
-      "scrambled": [
+      "hu": "A számítógépnek problémája van.",
+      "id": "wo_030",
+      "scrambledWords": [
         "computer",
         "problem.",
         "a",
         "has",
         "The"
       ],
-      "correct": "The computer has a problem.",
-      "hu": "A számítógépnek problémája van."
+      "correctAnswer": "The computer has a problem."
     },
     {
-      "scrambled": [
+      "hu": "Van telefonszámuk?",
+      "id": "wo_031",
+      "scrambledWords": [
         "a",
         "phone",
         "number?",
@@ -334,22 +366,24 @@
         "have",
         "they"
       ],
-      "correct": "Do they have a phone number?",
-      "hu": "Van telefonszámuk?"
+      "correctAnswer": "Do they have a phone number?"
     },
     {
-      "scrambled": [
+      "hu": "Van a menedzsernek ideje?",
+      "id": "wo_032",
+      "scrambledWords": [
         "time?",
         "manager",
         "the",
         "Does",
         "have"
       ],
-      "correct": "Does the manager have time?",
-      "hu": "Van a menedzsernek ideje?"
+      "correctAnswer": "Does the manager have time?"
     },
     {
-      "scrambled": [
+      "hu": "Van egy kulcs a táskájában.",
+      "id": "wo_033",
+      "scrambledWords": [
         "bag.",
         "a",
         "key",
@@ -358,22 +392,24 @@
         "has",
         "She"
       ],
-      "correct": "She has a key in her bag.",
-      "hu": "Van egy kulcs a táskájában."
+      "correctAnswer": "She has a key in her bag."
     },
     {
-      "scrambled": [
+      "hu": "Nincs kérdésem.",
+      "id": "wo_034",
+      "scrambledWords": [
         "don't",
         "question.",
         "a",
         "I",
         "have"
       ],
-      "correct": "I don't have a question.",
-      "hu": "Nincs kérdésem."
+      "correctAnswer": "I don't have a question."
     },
     {
-      "scrambled": [
+      "hu": "Ennek a háznak gyönyörű kertje van.",
+      "id": "wo_035",
+      "scrambledWords": [
         "beautiful",
         "garden.",
         "a",
@@ -381,55 +417,60 @@
         "house",
         "This"
       ],
-      "correct": "This house has a beautiful garden.",
-      "hu": "Ennek a háznak gyönyörű kertje van."
+      "correctAnswer": "This house has a beautiful garden."
     },
     {
-      "scrambled": [
+      "hu": "Nincsenek barátai.",
+      "id": "wo_036",
+      "scrambledWords": [
         "friends.",
         "any",
         "doesn't",
         "He",
         "have"
       ],
-      "correct": "He doesn't have any friends.",
-      "hu": "Nincsenek barátai."
+      "correctAnswer": "He doesn't have any friends."
     },
     {
-      "scrambled": [
+      "hu": "Van kávénk?",
+      "id": "wo_037",
+      "scrambledWords": [
         "coffee?",
         "have",
         "a",
         "we",
         "Do"
       ],
-      "correct": "Do we have a coffee?",
-      "hu": "Van kávénk?"
+      "correctAnswer": "Do we have a coffee?"
     },
     {
-      "scrambled": [
+      "hu": "Nagy családjuk van.",
+      "id": "wo_038",
+      "scrambledWords": [
         "big",
         "family.",
         "have",
         "a",
         "They"
       ],
-      "correct": "They have a big family.",
-      "hu": "Nagy családjuk van."
+      "correctAnswer": "They have a big family."
     },
     {
-      "scrambled": [
+      "hu": "Tiszta irodánk van.",
+      "id": "wo_039",
+      "scrambledWords": [
         "clean",
         "we",
         "office.",
         "a",
         "have"
       ],
-      "correct": "We have a clean office.",
-      "hu": "Tiszta irodánk van."
+      "correctAnswer": "We have a clean office."
     },
     {
-      "scrambled": [
+      "hu": "A telefonom képernyőjének problémája van.",
+      "id": "wo_040",
+      "scrambledWords": [
         "screen",
         "telephone",
         "my",
@@ -437,22 +478,24 @@
         "has",
         "problem."
       ],
-      "correct": "My telephone screen has a problem.",
-      "hu": "A telefonom képernyőjének problémája van."
+      "correctAnswer": "My telephone screen has a problem."
     },
     {
-      "scrambled": [
+      "hu": "Megvan a kód?",
+      "id": "wo_041",
+      "scrambledWords": [
         "you",
         "code?",
         "the",
         "Do",
         "have"
       ],
-      "correct": "Do you have the code?",
-      "hu": "Megvan a kód?"
+      "correctAnswer": "Do you have the code?"
     },
     {
-      "scrambled": [
+      "hu": "Nincs ideje focizni.",
+      "id": "wo_042",
+      "scrambledWords": [
         "time",
         "for",
         "football.",
@@ -460,22 +503,24 @@
         "She",
         "have"
       ],
-      "correct": "She doesn't have time for football.",
-      "hu": "Nincs ideje focizni."
+      "correctAnswer": "She doesn't have time for football."
     },
     {
-      "scrambled": [
+      "hu": "Ma dolgozatuk van.",
+      "id": "wo_043",
+      "scrambledWords": [
         "test",
         "today.",
         "have",
         "a",
         "They"
       ],
-      "correct": "They have a test today.",
-      "hu": "Ma dolgozatuk van."
+      "correctAnswer": "They have a test today."
     },
     {
-      "scrambled": [
+      "hu": "Van egy háza Magyarországon.",
+      "id": "wo_044",
+      "scrambledWords": [
         "house",
         "in",
         "Hungary.",
@@ -483,22 +528,24 @@
         "has",
         "He"
       ],
-      "correct": "He has a house in Hungary.",
-      "hu": "Van egy háza Magyarországon."
+      "correctAnswer": "He has a house in Hungary."
     },
     {
-      "scrambled": [
+      "hu": "Nincs képernyőnk.",
+      "id": "wo_045",
+      "scrambledWords": [
         "don't",
         "screen.",
         "a",
         "have",
         "We"
       ],
-      "correct": "We don't have a screen.",
-      "hu": "Nincs képernyőnk."
+      "correctAnswer": "We don't have a screen."
     },
     {
-      "scrambled": [
+      "hu": "Van ablaka ennek a szobának?",
+      "id": "wo_046",
+      "scrambledWords": [
         "window?",
         "room",
         "this",
@@ -506,33 +553,36 @@
         "have",
         "a"
       ],
-      "correct": "Does this room have a window?",
-      "hu": "Van ablaka ennek a szobának?"
+      "correctAnswer": "Does this room have a window?"
     },
     {
-      "scrambled": [
+      "hu": "Új munkám van.",
+      "id": "wo_047",
+      "scrambledWords": [
         "new",
         "job.",
         "a",
         "have",
         "I"
       ],
-      "correct": "I have a new job.",
-      "hu": "Új munkám van."
+      "correctAnswer": "I have a new job."
     },
     {
-      "scrambled": [
+      "hu": "Jó főnököd van.",
+      "id": "wo_048",
+      "scrambledWords": [
         "good",
         "boss.",
         "a",
         "have",
         "You"
       ],
-      "correct": "You have a good boss.",
-      "hu": "Jó főnököd van."
+      "correctAnswer": "You have a good boss."
     },
     {
-      "scrambled": [
+      "hu": "A telefonomnak jó az akkumulátora.",
+      "id": "wo_049",
+      "scrambledWords": [
         "battery.",
         "phone",
         "has",
@@ -540,19 +590,19 @@
         "My",
         "good"
       ],
-      "correct": "My phone has a good battery",
-      "hu": "A telefonomnak jó az akkumulátora."
+      "correctAnswer": "My phone has a good battery"
     },
     {
-      "scrambled": [
+      "hu": "Nincsenek gyerekei.",
+      "id": "wo_050",
+      "scrambledWords": [
         "children.",
         "any",
         "doesn't",
         "She",
         "have"
       ],
-      "correct": "She doesn't have any children.",
-      "hu": "Nincsenek gyerekei."
+      "correctAnswer": "She doesn't have any children."
     }
   ]
 }

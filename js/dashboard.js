@@ -3031,26 +3031,16 @@ function convertItemsToQuizQuestions(type, items) {
         });
     } else if (type === 'word_order') {
         return items.map(item => {
-            const correct = item.correct;
-            const words = item.scrambled;
-            let opts = [correct];
-            for(let i=0; i<3; i++) {
-                let scrambled = [...words].sort(() => 0.5 - Math.random()).join(" ");
-                if (correct.endsWith(".")) scrambled += ".";
-                else if (correct.endsWith("?")) scrambled += "?";
-                
-                if (scrambled !== correct && !opts.includes(scrambled)) {
-                    opts.push(scrambled);
-                } else {
-                    scrambled = [...words].sort(() => 0.5 - Math.random()).join(" ") + (correct.endsWith("?") ? "?" : ".");
-                    opts.push(scrambled);
-                }
+            if (item.scrambled !== undefined || item.correct !== undefined) {
+                console.warn(`[Schema Validation Warning] Legacy word-order format detected for item ID: ${item.id || 'unknown'}`);
             }
-            opts = opts.sort(() => 0.5 - Math.random());
+            const correct = item.correctAnswer || item.correct || "";
+            const scrambled = item.scrambledWords || item.scrambled || [];
             return {
-                q: 'Rakd sorba: <strong style="color: var(--color-accent-in)">' + item.hu + '</strong>',
-                opts: opts,
-                correctIdx: opts.indexOf(correct),
+                id: item.id || "",
+                hu: item.hu || "",
+                scrambledWords: scrambled,
+                correctAnswer: correct,
                 explain: 'A helyes szórend: ' + correct
             };
         });
@@ -3193,6 +3183,45 @@ function renderQuizCardQuestion() {
         return;
     }
 
+    if (quizState.type === 'word_order') {
+        const shuffled = [...qData.scrambledWords].sort(() => Math.random() - 0.5);
+        const chipsHtml = shuffled.map(word =>
+            `<button class="word-chip" onclick="selectQuizWordChip(this, '${escapeHTML(word)}')">${escapeHTML(word)}</button>`
+        ).join("");
+
+        container.innerHTML = `
+            <div class="quiz-question-box">
+                Rakd sorba a mondatot: ${qData.hu ? `<strong style="color: var(--color-accent-in)">${escapeHTML(qData.hu)}</strong>` : ''}
+            </div>
+            
+            <div class="word-order-container" style="margin: 1.5rem 0;">
+                <div class="word-order-answer" id="quiz-answer-zone" style="min-height: 50px; padding: 0.8rem; border-radius: 12px; border: 2px dashed rgba(255,255,255,0.1); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background: rgba(0,0,0,0.2); margin-bottom: 1rem; position: relative;">
+                    <span class="answer-placeholder" style="color: var(--color-text-muted); font-size: 0.9rem;">Kattints a szavakra a helyes sorrendben...</span>
+                </div>
+                
+                <div style="text-align: right; margin-bottom: 1rem;">
+                    <a href="#" onclick="resetQuizWordOrder(event)" style="color: var(--color-accent-in); font-size: 0.85rem; text-decoration: none; font-weight: 600;">🔄 Visszaállítás / Reset</a>
+                </div>
+
+                <div class="word-chips-source" id="quiz-chips-source" style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 12px; min-height: 50px; align-items: center;">
+                    ${chipsHtml}
+                </div>
+            </div>
+
+            <div style="margin-top: 1.5rem; text-align: center;">
+                <button class="btn btn-primary" id="btn-check-word-order" onclick="checkQuizWordOrder()" style="width: 100%; justify-content: center; padding: 1rem; font-size: 1.1rem;">Ellenőrzés</button>
+            </div>
+
+            <div id="quiz-explanation" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border-radius: 12px; font-size: 1rem; line-height: 1.5; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <strong style="color: var(--color-accent-in);" id="quiz-feedback-title">💡 Magyarázat:</strong> <span id="quiz-explanation-text"></span>
+                <div style="margin-top: 1.5rem; text-align: right;">
+                    <button class="btn btn-primary" onclick="nextQuizQuestion()">Tovább →</button>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
     const optsHtml = qData.opts.map((opt, i) => `
         <button class="quiz-opt-btn" onclick="submitQuizAnswer(this, ${i})">
             <span class="quiz-opt-badge">${String.fromCharCode(65 + i)}</span>
@@ -3315,16 +3344,20 @@ async function renderSectionExamTemplate(workspace, data) {
                                         explanation: item.explanation || item.correction
                                     };
                                 } else if (sourceConfig.type === "word_order") {
-                                    let scrambledArr = item.scrambled || item.shuffled || [];
+                                    if (item.scrambled !== undefined || item.correct !== undefined) {
+                                        console.warn(`[Schema Validation Warning] Legacy word-order format detected for item ID: ${item.id || 'unknown'}`);
+                                    }
+                                    let scrambledArr = item.scrambledWords || item.scrambled || item.shuffled || [];
                                     // Handle cases where words are mistakenly put into a single comma-separated string
                                     if (scrambledArr.length === 1 && scrambledArr[0].includes(',')) {
                                         scrambledArr = scrambledArr[0].split(',').map(s => s.trim());
                                     }
                                     return {
+                                        id: item.id || "",
                                         question: `Rakd sorrendbe a mondatot: <strong style="color:var(--color-accent-in);">${item.hu || scrambledArr.join(" / ")}</strong>`,
                                         type: "order",
-                                        correct: item.correct || item.sentence,
-                                        scrambled: scrambledArr
+                                        correctAnswer: item.correctAnswer || item.correct || item.sentence,
+                                        scrambledWords: scrambledArr
                                     };
                                 }
                                 return item;
@@ -3394,7 +3427,11 @@ async function renderSectionExamTemplate(workspace, data) {
                 </div>
             `;
         } else if (item.type === "order") {
-            const scrambledArray = item.scrambled || [];
+            if (item.scrambled !== undefined || item.correct !== undefined) {
+                console.warn(`[Schema Validation Warning] Legacy word-order format detected for item ID: ${item.id || 'unknown'}`);
+            }
+            const scrambledArray = item.scrambledWords || item.scrambled || [];
+            const correctAnswer = item.correctAnswer || item.correct || "";
             const shuffled = [...scrambledArray].sort(() => Math.random() - 0.5);
             const chipsHtml = shuffled.map(word =>
                 `<button class="word-chip" onclick="selectWordChip(this, ${i}, true)" ${disabledAttr}>${word}</button>`
@@ -3402,7 +3439,7 @@ async function renderSectionExamTemplate(workspace, data) {
             questionContentHtml = `
                 <p class="exam-question"><span class="question-number">${i + 1}.</span> ${item.question}</p>
                 <div class="word-chips-source" id="chips-source-${i}">${chipsHtml}</div>
-                <div class="word-order-answer" id="answer-zone-${i}" data-correct="${item.correct}">
+                <div class="word-order-answer" id="answer-zone-${i}" data-correct="${correctAnswer}">
                     <span class="answer-placeholder">Kattints a szavakra...</span>
                 </div>
             `;
@@ -3666,6 +3703,106 @@ function checkWordOrder(index) {
 }
 
 // Reset word order question
+window.selectQuizWordChip = function(chipEl, word) {
+    const checkBtn = document.getElementById("btn-check-word-order");
+    if (checkBtn && checkBtn.disabled) return;
+
+    const answerZone = document.getElementById("quiz-answer-zone");
+    if (!answerZone) return;
+
+    const placeholder = answerZone.querySelector(".answer-placeholder");
+    if (placeholder) placeholder.remove();
+
+    const clone = document.createElement("button");
+    clone.className = "word-chip placed";
+    clone.textContent = word;
+    clone.onclick = function() {
+        if (checkBtn && checkBtn.disabled) return;
+        clone.remove();
+        chipEl.style.display = "";
+        chipEl.disabled = false;
+        chipEl.classList.remove("used");
+
+        if (answerZone.querySelectorAll(".word-chip.placed").length === 0) {
+            answerZone.innerHTML = `<span class="answer-placeholder" style="color: var(--color-text-muted); font-size: 0.9rem;">Kattints a szavakra a helyes sorrendben...</span>`;
+        }
+    };
+
+    answerZone.appendChild(clone);
+    chipEl.classList.add("used");
+    chipEl.disabled = true;
+};
+
+window.resetQuizWordOrder = function(event) {
+    if (event) event.preventDefault();
+    
+    const checkBtn = document.getElementById("btn-check-word-order");
+    if (checkBtn && checkBtn.disabled) return;
+
+    const source = document.getElementById("quiz-chips-source");
+    const answerZone = document.getElementById("quiz-answer-zone");
+    if (!source || !answerZone) return;
+
+    source.querySelectorAll(".word-chip").forEach(chip => {
+        chip.classList.remove("used");
+        chip.disabled = false;
+        chip.style.display = "";
+    });
+
+    answerZone.innerHTML = `<span class="answer-placeholder" style="color: var(--color-text-muted); font-size: 0.9rem;">Kattints a szavakra a helyes sorrendben...</span>`;
+};
+
+window.checkQuizWordOrder = function() {
+    const qData = quizState.questions[quizState.currentIdx];
+    const answerZone = document.getElementById("quiz-answer-zone");
+    const checkBtn = document.getElementById("btn-check-word-order");
+    if (!answerZone || !checkBtn) return;
+
+    const placedChips = answerZone.querySelectorAll(".word-chip.placed");
+    const userAnswer = Array.from(placedChips).map(c => c.textContent).join(" ");
+
+    // Verification Execution: matches joined selected words strictly against correctAnswer
+    const cleanUser = userAnswer.trim().toLowerCase().replace(/[.?!,]/g, "").replace(/\s+/g, " ");
+    const cleanCorrect = qData.correctAnswer.trim().toLowerCase().replace(/[.?!,]/g, "").replace(/\s+/g, " ");
+
+    const isCorrect = cleanUser === cleanCorrect;
+
+    quizState.answers.push({ questionIdx: quizState.currentIdx, correct: isCorrect });
+    exerciseAttempts[quizState.currentIdx] = isCorrect;
+    updateSuccessRateDisplay(true);
+
+    checkBtn.disabled = true;
+    
+    document.querySelectorAll("#quiz-chips-source .word-chip, #quiz-answer-zone .word-chip").forEach(btn => {
+        btn.disabled = true;
+    });
+
+    const explanationBox = document.getElementById('quiz-explanation');
+    const explanationText = document.getElementById('quiz-explanation-text');
+    const feedbackTitle = document.getElementById('quiz-feedback-title');
+
+    if (isCorrect) {
+        answerZone.style.borderColor = "var(--color-success)";
+        answerZone.style.background = "oklch(0.7 0.2 150 / 0.1)";
+        AudioSynth.playCorrect();
+        addXP(1, checkBtn, quizState.type);
+        
+        feedbackTitle.textContent = "✓ Helyes!";
+        feedbackTitle.style.color = "var(--color-success)";
+        explanationText.textContent = `A mondat: "${qData.correctAnswer}"`;
+    } else {
+        answerZone.style.borderColor = "var(--color-error)";
+        answerZone.style.background = "oklch(0.6 0.15 20 / 0.1)";
+        AudioSynth.playIncorrect();
+        
+        feedbackTitle.textContent = "✗ Helytelen!";
+        feedbackTitle.style.color = "var(--color-error)";
+        explanationText.textContent = `A helyes mondat: "${qData.correctAnswer}"`;
+    }
+    
+    explanationBox.style.display = 'block';
+};
+
 function resetWordOrder(index) {
     const source = document.getElementById(`chips-source-${index}`);
     const answerZone = document.getElementById(`answer-zone-${index}`);

@@ -2,237 +2,262 @@
   "description": "Rakd a szavakat helyes sorrendbe, hogy nyelvtanilag helyes mondatot vagy kérdést kapj.",
   "items": [
     {
-      "scrambled": [
+      "hu": "Ő a nővérem/húgom.",
+      "id": "wo_001",
+      "scrambledWords": [
         "She",
         "is",
         "my",
         "sister"
       ],
-      "correct": "She is my sister.",
-      "hu": "Ő a nővérem/húgom."
+      "correctAnswer": "She is my sister."
     },
     {
-      "scrambled": [
+      "hu": "Hol van a telefonom?",
+      "id": "wo_002",
+      "scrambledWords": [
         "Where",
         "is",
         "my",
         "phone"
       ],
-      "correct": "Where is my phone?",
-      "hu": "Hol van a telefonom?"
+      "correctAnswer": "Where is my phone?"
     },
     {
-      "scrambled": [
+      "hu": "Nem ismerem őt.",
+      "id": "wo_003",
+      "scrambledWords": [
         "I",
         "don't",
         "know",
         "him"
       ],
-      "correct": "I don't know him.",
-      "hu": "Nem ismerem őt."
+      "correctAnswer": "I don't know him."
     },
     {
-      "scrambled": [
+      "hu": "Az ő házuk nagy.",
+      "id": "wo_004",
+      "scrambledWords": [
         "Their",
         "house",
         "is",
         "big"
       ],
-      "correct": "Their house is big.",
-      "hu": "Az ő házuk nagy."
+      "correctAnswer": "Their house is big."
     },
     {
-      "scrambled": [
+      "hu": "Tudsz nekünk segíteni?",
+      "id": "wo_005",
+      "scrambledWords": [
         "Can",
         "you",
         "help",
         "us"
       ],
-      "correct": "Can you help us?",
-      "hu": "Tudsz nekünk segíteni?"
+      "correctAnswer": "Can you help us?"
     },
     {
-      "scrambled": [
+      "hu": "Az ő szeme kék.",
+      "id": "wo_006",
+      "scrambledWords": [
         "Her",
         "eyes",
         "are",
         "blue"
       ],
-      "correct": "Her eyes are blue.",
-      "hu": "Az ő szeme kék."
+      "correctAnswer": "Her eyes are blue."
     },
     {
-      "scrambled": [
+      "hu": "Gyere velem.",
+      "id": "wo_007",
+      "scrambledWords": [
         "Come",
         "with",
         "me"
       ],
-      "correct": "Come with me.",
-      "hu": "Gyere velem."
+      "correctAnswer": "Come with me."
     },
     {
-      "scrambled": [
+      "hu": "Mi az ő problémájuk?",
+      "id": "wo_008",
+      "scrambledWords": [
         "What",
         "is",
         "their",
         "problem"
       ],
-      "correct": "What is their problem?",
-      "hu": "Mi az ő problémájuk?"
+      "correctAnswer": "What is their problem?"
     },
     {
-      "scrambled": [
+      "hu": "Szereti a munkáját.",
+      "id": "wo_009",
+      "scrambledWords": [
         "He",
         "likes",
         "his",
         "job"
       ],
-      "correct": "He likes his job.",
-      "hu": "Szereti a munkáját."
+      "correctAnswer": "He likes his job."
     },
     {
-      "scrambled": [
+      "hu": "Mindenképp hívd fel őket ma.",
+      "id": "wo_010",
+      "scrambledWords": [
         "Do",
         "call",
         "them",
         "today"
       ],
-      "correct": "Do call them today.",
-      "hu": "Mindenképp hívd fel őket ma."
+      "correctAnswer": "Do call them today."
     },
     {
-      "scrambled": [
+      "hu": "Az autóm szép.",
+      "id": "wo_011",
+      "scrambledWords": [
         "My",
         "car",
         "is",
         "nice"
       ],
-      "correct": "My car is nice.",
-      "hu": "Az autóm szép."
+      "correctAnswer": "My car is nice."
     },
     {
-      "scrambled": [
+      "hu": "Ismered őt?",
+      "id": "wo_012",
+      "scrambledWords": [
         "Do",
         "you",
         "know",
         "her"
       ],
-      "correct": "Do you know her?",
-      "hu": "Ismered őt?"
+      "correctAnswer": "Do you know her?"
     },
     {
-      "scrambled": [
+      "hu": "Az ő kutyája nagy.",
+      "id": "wo_013",
+      "scrambledWords": [
         "His",
         "dog",
         "is",
         "big"
       ],
-      "correct": "His dog is big.",
-      "hu": "Az ő kutyája nagy."
+      "correctAnswer": "His dog is big."
     },
     {
-      "scrambled": [
+      "hu": "A számítógépünk nem működik.",
+      "id": "wo_014",
+      "scrambledWords": [
         "Our",
         "computer",
         "doesn't",
         "work"
       ],
-      "correct": "Our computer doesn't work.",
-      "hu": "A számítógépünk nem működik."
+      "correctAnswer": "Our computer doesn't work."
     },
     {
-      "scrambled": [
+      "hu": "Kérlek, nézz rá.",
+      "id": "wo_015",
+      "scrambledWords": [
         "Please",
         "look",
         "at",
         "him"
       ],
-      "correct": "Please look at him.",
-      "hu": "Kérlek, nézz rá."
+      "correctAnswer": "Please look at him."
     },
     {
-      "scrambled": [
+      "hu": "A képernyője elromlott.",
+      "id": "wo_016",
+      "scrambledWords": [
         "Its",
         "screen",
         "is",
         "broken"
       ],
-      "correct": "Its screen is broken.",
-      "hu": "A képernyője elromlott."
+      "correctAnswer": "Its screen is broken."
     },
     {
-      "scrambled": [
+      "hu": "Hol vannak a kulcsaid?",
+      "id": "wo_017",
+      "scrambledWords": [
         "Where",
         "are",
         "your",
         "keys"
       ],
-      "correct": "Where are your keys?",
-      "hu": "Hol vannak a kulcsaid?"
+      "correctAnswer": "Where are your keys?"
     },
     {
-      "scrambled": [
+      "hu": "Ki tudom nyitni.",
+      "id": "wo_018",
+      "scrambledWords": [
         "I",
         "can",
         "open",
         "it"
       ],
-      "correct": "I can open it.",
-      "hu": "Ki tudom nyitni."
+      "correctAnswer": "I can open it."
     },
     {
-      "scrambled": [
+      "hu": "Az ő megbeszélésük ma van.",
+      "id": "wo_019",
+      "scrambledWords": [
         "Their",
         "meeting",
         "is",
         "today"
       ],
-      "correct": "Their meeting is today.",
-      "hu": "Az ő megbeszélésük ma van."
+      "correctAnswer": "Their meeting is today."
     },
     {
-      "scrambled": [
+      "hu": "Tudsz nekem segíteni?",
+      "id": "wo_020",
+      "scrambledWords": [
         "Can",
         "you",
         "help",
         "me"
       ],
-      "correct": "Can you help me?",
-      "hu": "Tudsz nekem segíteni?"
+      "correctAnswer": "Can you help me?"
     },
     {
-      "scrambled": [
+      "hu": "Ez az új telefonom.",
+      "id": "wo_021",
+      "scrambledWords": [
         "This",
         "is",
         "my",
         "new",
         "phone"
       ],
-      "correct": "This is my new phone.",
-      "hu": "Ez az új telefonom."
+      "correctAnswer": "This is my new phone."
     },
     {
-      "scrambled": [
+      "hu": "Szeretem a nővérét/húgát.",
+      "id": "wo_022",
+      "scrambledWords": [
         "I",
         "love",
         "her",
         "sister"
       ],
-      "correct": "I love her sister.",
-      "hu": "Szeretem a nővérét/húgát."
+      "correctAnswer": "I love her sister."
     },
     {
-      "scrambled": [
+      "hu": "Az irodája tiszta.",
+      "id": "wo_023",
+      "scrambledWords": [
         "His",
         "office",
         "is",
         "clean"
       ],
-      "correct": "His office is clean.",
-      "hu": "Az irodája tiszta."
+      "correctAnswer": "His office is clean."
     },
     {
-      "scrambled": [
+      "hu": "Kávézni szeretnénk velük.",
+      "id": "wo_024",
+      "scrambledWords": [
         "We",
         "want",
         "a",
@@ -240,32 +265,35 @@
         "with",
         "them"
       ],
-      "correct": "We want a coffee with them.",
-      "hu": "Kávézni szeretnénk velük."
+      "correctAnswer": "We want a coffee with them."
     },
     {
-      "scrambled": [
+      "hu": "Mi a neved?",
+      "id": "wo_025",
+      "scrambledWords": [
         "What",
         "is",
         "your",
         "name"
       ],
-      "correct": "What is your name?",
-      "hu": "Mi a neved?"
+      "correctAnswer": "What is your name?"
     },
     {
-      "scrambled": [
+      "hu": "A mi házunkban laknak.",
+      "id": "wo_026",
+      "scrambledWords": [
         "They",
         "live",
         "in",
         "our",
         "house"
       ],
-      "correct": "They live in our house.",
-      "hu": "A mi házunkban laknak."
+      "correctAnswer": "They live in our house."
     },
     {
-      "scrambled": [
+      "hu": "A laptopjának jó akkumulátora van.",
+      "id": "wo_027",
+      "scrambledWords": [
         "Its",
         "laptop",
         "has",
@@ -273,32 +301,35 @@
         "good",
         "battery"
       ],
-      "correct": "Its laptop has a good battery.",
-      "hu": "A laptopjának jó akkumulátora van."
+      "correctAnswer": "Its laptop has a good battery."
     },
     {
-      "scrambled": [
+      "hu": "Nem tudom azt.",
+      "id": "wo_028",
+      "scrambledWords": [
         "I",
         "don't",
         "know",
         "it"
       ],
-      "correct": "I don't know it.",
-      "hu": "Nem tudom azt."
+      "correctAnswer": "I don't know it."
     },
     {
-      "scrambled": [
+      "hu": "A főnökünk nagyon kedves.",
+      "id": "wo_029",
+      "scrambledWords": [
         "Our",
         "boss",
         "is",
         "very",
         "nice"
       ],
-      "correct": "Our boss is very nice.",
-      "hu": "A főnökünk nagyon kedves."
+      "correctAnswer": "Our boss is very nice."
     },
     {
-      "scrambled": [
+      "hu": "Minden nap hívsz minket?",
+      "id": "wo_030",
+      "scrambledWords": [
         "Do",
         "you",
         "call",
@@ -306,54 +337,59 @@
         "every",
         "day"
       ],
-      "correct": "Do you call us every day?",
-      "hu": "Minden nap hívsz minket?"
+      "correctAnswer": "Do you call us every day?"
     },
     {
-      "scrambled": [
+      "hu": "Ő a barátom.",
+      "id": "wo_031",
+      "scrambledWords": [
         "He",
         "is",
         "my",
         "friend"
       ],
-      "correct": "He is my friend.",
-      "hu": "Ő a barátom."
+      "correctAnswer": "He is my friend."
     },
     {
-      "scrambled": [
+      "hu": "Milyen színű a szeme?",
+      "id": "wo_032",
+      "scrambledWords": [
         "What",
         "color",
         "are",
         "her",
         "eyes"
       ],
-      "correct": "What color are her eyes?",
-      "hu": "Milyen színű a szeme?"
+      "correctAnswer": "What color are her eyes?"
     },
     {
-      "scrambled": [
+      "hu": "Nem szeretik a munkájukat.",
+      "id": "wo_033",
+      "scrambledWords": [
         "They",
         "don't",
         "like",
         "their",
         "job"
       ],
-      "correct": "They don't like their job.",
-      "hu": "Nem szeretik a munkájukat."
+      "correctAnswer": "They don't like their job."
     },
     {
-      "scrambled": [
+      "hu": "Beszél hozzám?",
+      "id": "wo_034",
+      "scrambledWords": [
         "Does",
         "he",
         "speak",
         "to",
         "me"
       ],
-      "correct": "Does he speak to me?",
-      "hu": "Beszél hozzám?"
+      "correctAnswer": "Does he speak to me?"
     },
     {
-      "scrambled": [
+      "hu": "A kulcsaid az asztalon vannak.",
+      "id": "wo_035",
+      "scrambledWords": [
         "Your",
         "keys",
         "are",
@@ -361,11 +397,12 @@
         "the",
         "table"
       ],
-      "correct": "Your keys are on the table.",
-      "hu": "A kulcsaid az asztalon vannak."
+      "correctAnswer": "Your keys are on the table."
     },
     {
-      "scrambled": [
+      "hu": "Problémánk van vele.",
+      "id": "wo_036",
+      "scrambledWords": [
         "We",
         "have",
         "a",
@@ -373,22 +410,24 @@
         "with",
         "it"
       ],
-      "correct": "We have a problem with it.",
-      "hu": "Problémánk van vele."
+      "correctAnswer": "We have a problem with it."
     },
     {
-      "scrambled": [
+      "hu": "Az ő házuk Nyitrán van.",
+      "id": "wo_037",
+      "scrambledWords": [
         "Their",
         "house",
         "is",
         "in",
         "Nitra"
       ],
-      "correct": "Their house is in Nitra.",
-      "hu": "Az ő házuk Nyitrán van."
+      "correctAnswer": "Their house is in Nitra."
     },
     {
-      "scrambled": [
+      "hu": "Veszel neki ételt?",
+      "id": "wo_038",
+      "scrambledWords": [
         "Do",
         "you",
         "buy",
@@ -396,11 +435,12 @@
         "for",
         "him"
       ],
-      "correct": "Do you buy food for him?",
-      "hu": "Veszel neki ételt?"
+      "correctAnswer": "Do you buy food for him?"
     },
     {
-      "scrambled": [
+      "hu": "A kulcsom az ő táskájában van.",
+      "id": "wo_039",
+      "scrambledWords": [
         "My",
         "key",
         "is",
@@ -408,74 +448,81 @@
         "her",
         "bag"
       ],
-      "correct": "My key is in her bag.",
-      "hu": "A kulcsom az ő táskájában van."
+      "correctAnswer": "My key is in her bag."
     },
     {
-      "scrambled": [
+      "hu": "Mikor kezdődik a megbeszélésünk?",
+      "id": "wo_040",
+      "scrambledWords": [
         "When",
         "does",
         "our",
         "meeting",
         "start"
       ],
-      "correct": "When does our meeting start?",
-      "hu": "Mikor kezdődik a megbeszélésünk?"
+      "correctAnswer": "When does our meeting start?"
     },
     {
-      "scrambled": [
+      "hu": "Ma van a tesztjük.",
+      "id": "wo_041",
+      "scrambledWords": [
         "They",
         "have",
         "their",
         "test",
         "today"
       ],
-      "correct": "They have their test today.",
-      "hu": "Ma van a tesztjük."
+      "correctAnswer": "They have their test today."
     },
     {
-      "scrambled": [
+      "hu": "Nem látom őket itt.",
+      "id": "wo_042",
+      "scrambledWords": [
         "I",
         "don't",
         "see",
         "them",
         "here"
       ],
-      "correct": "I don't see them here.",
-      "hu": "Nem látom őket itt."
+      "correctAnswer": "I don't see them here."
     },
     {
-      "scrambled": [
+      "hu": "A telefonja régi.",
+      "id": "wo_043",
+      "scrambledWords": [
         "His",
         "telephone",
         "is",
         "old"
       ],
-      "correct": "His telephone is old.",
-      "hu": "A telefonja régi."
+      "correctAnswer": "His telephone is old."
     },
     {
-      "scrambled": [
+      "hu": "Érted?",
+      "id": "wo_044",
+      "scrambledWords": [
         "Do",
         "you",
         "understand",
         "it"
       ],
-      "correct": "Do you understand it?",
-      "hu": "Érted?"
+      "correctAnswer": "Do you understand it?"
     },
     {
-      "scrambled": [
+      "hu": "A babája kicsi.",
+      "id": "wo_045",
+      "scrambledWords": [
         "Her",
         "baby",
         "is",
         "small"
       ],
-      "correct": "Her baby is small.",
-      "hu": "A babája kicsi."
+      "correctAnswer": "Her baby is small."
     },
     {
-      "scrambled": [
+      "hu": "Szeretnénk magunknak egy kis vizet.",
+      "id": "wo_046",
+      "scrambledWords": [
         "We",
         "want",
         "some",
@@ -483,50 +530,53 @@
         "for",
         "us"
       ],
-      "correct": "We want some water for us.",
-      "hu": "Szeretnénk magunknak egy kis vizet."
+      "correctAnswer": "We want some water for us."
     },
     {
-      "scrambled": [
+      "hu": "Ez a laptop képernyője.",
+      "id": "wo_047",
+      "scrambledWords": [
         "This",
         "is",
         "its",
         "laptop",
         "screen"
       ],
-      "correct": "This is its laptop screen.",
-      "hu": "Ez a laptop képernyője."
+      "correctAnswer": "This is its laptop screen."
     },
     {
-      "scrambled": [
+      "hu": "Beszélsz vele?",
+      "id": "wo_048",
+      "scrambledWords": [
         "Do",
         "you",
         "speak",
         "with",
         "her"
       ],
-      "correct": "Do you speak with her?",
-      "hu": "Beszélsz vele?"
+      "correctAnswer": "Do you speak with her?"
     },
     {
-      "scrambled": [
+      "hu": "A családom nagy.",
+      "id": "wo_049",
+      "scrambledWords": [
         "My",
         "family",
         "is",
         "big"
       ],
-      "correct": "My family is big.",
-      "hu": "A családom nagy."
+      "correctAnswer": "My family is big."
     },
     {
-      "scrambled": [
+      "hu": "Ki tud nekik segíteni?",
+      "id": "wo_050",
+      "scrambledWords": [
         "Who",
         "can",
         "help",
         "them"
       ],
-      "correct": "Who can help them?",
-      "hu": "Ki tud nekik segíteni?"
+      "correctAnswer": "Who can help them?"
     }
   ]
 }

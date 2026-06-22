@@ -2,210 +2,231 @@
   "description": "Rakd a szavakat helyes sorrendbe, hogy nyelvtanilag helyes mondatot vagy kérdést kapj.",
   "items": [
     {
-      "scrambled": [
+      "hu": "Tudsz nekem segíteni?",
+      "id": "wo_001",
+      "scrambledWords": [
         "Can",
         "you",
         "help",
         "me"
       ],
-      "correct": "Can you help me?",
-      "hu": "Tudsz nekem segíteni?"
+      "correctAnswer": "Can you help me?"
     },
     {
-      "scrambled": [
+      "hu": "Tud autót vezetni.",
+      "id": "wo_002",
+      "scrambledWords": [
         "He",
         "can",
         "drive",
         "a",
         "car"
       ],
-      "correct": "He can drive a car.",
-      "hu": "Tud autót vezetni."
+      "correctAnswer": "He can drive a car."
     },
     {
-      "scrambled": [
+      "hu": "Kaphatok egy kávét?",
+      "id": "wo_003",
+      "scrambledWords": [
         "Can",
         "I",
         "have",
         "a",
         "coffee"
       ],
-      "correct": "Can I have a coffee?",
-      "hu": "Kaphatok egy kávét?"
+      "correctAnswer": "Can I have a coffee?"
     },
     {
-      "scrambled": [
+      "hu": "Nem tudnak angolul beszélni.",
+      "id": "wo_004",
+      "scrambledWords": [
         "They",
         "can't",
         "speak",
         "English"
       ],
-      "correct": "They can't speak English.",
-      "hu": "Nem tudnak angolul beszélni."
+      "correctAnswer": "They can't speak English."
     },
     {
-      "scrambled": [
+      "hu": "Le tudod betűzni a neved?",
+      "id": "wo_005",
+      "scrambledWords": [
         "Can",
         "you",
         "spell",
         "your",
         "name"
       ],
-      "correct": "Can you spell your name?",
-      "hu": "Le tudod betűzni a neved?"
+      "correctAnswer": "Can you spell your name?"
     },
     {
-      "scrambled": [
+      "hu": "Ma nem tud jönni.",
+      "id": "wo_006",
+      "scrambledWords": [
         "She",
         "can't",
         "come",
         "today"
       ],
-      "correct": "She can't come today.",
-      "hu": "Ma nem tud jönni."
+      "correctAnswer": "She can't come today."
     },
     {
-      "scrambled": [
+      "hu": "Ki tudom nyitni ezt az ajtót.",
+      "id": "wo_007",
+      "scrambledWords": [
         "I",
         "can",
         "open",
         "this",
         "door"
       ],
-      "correct": "I can open this door.",
-      "hu": "Ki tudom nyitni ezt az ajtót."
+      "correctAnswer": "I can open this door."
     },
     {
-      "scrambled": [
+      "hu": "Használhatom a telefonodat?",
+      "id": "wo_008",
+      "scrambledWords": [
         "Can",
         "I",
         "use",
         "your",
         "phone"
       ],
-      "correct": "Can I use your phone?",
-      "hu": "Használhatom a telefonodat?"
+      "correctAnswer": "Can I use your phone?"
     },
     {
-      "scrambled": [
+      "hu": "Tudunk teniszezni.",
+      "id": "wo_009",
+      "scrambledWords": [
         "We",
         "can",
         "play",
         "tennis"
       ],
-      "correct": "We can play tennis.",
-      "hu": "Tudunk teniszezni."
+      "correctAnswer": "We can play tennis."
     },
     {
-      "scrambled": [
+      "hu": "Nem találom a kulcsaimat.",
+      "id": "wo_010",
+      "scrambledWords": [
         "I",
         "can't",
         "find",
         "my",
         "keys"
       ],
-      "correct": "I can't find my keys.",
-      "hu": "Nem találom a kulcsaimat."
+      "correctAnswer": "I can't find my keys."
     },
     {
-      "scrambled": [
+      "hu": "Gyorsan tud kódot írni.",
+      "id": "wo_011",
+      "scrambledWords": [
         "He",
         "can",
         "write",
         "code",
         "fast"
       ],
-      "correct": "He can write code fast.",
-      "hu": "Gyorsan tud kódot írni."
+      "correctAnswer": "He can write code fast."
     },
     {
-      "scrambled": [
+      "hu": "Nem látok szemüveg nélkül.",
+      "id": "wo_012",
+      "scrambledWords": [
         "I",
         "can't",
         "see",
         "without",
         "glasses"
       ],
-      "correct": "I can't see without glasses.",
-      "hu": "Nem látok szemüveg nélkül."
+      "correctAnswer": "I can't see without glasses."
     },
     {
-      "scrambled": [
+      "hu": "A számítógép nem tud elindulni.",
+      "id": "wo_013",
+      "scrambledWords": [
         "The",
         "computer",
         "can't",
         "start"
       ],
-      "correct": "The computer can't start.",
-      "hu": "A számítógép nem tud elindulni."
+      "correctAnswer": "The computer can't start."
     },
     {
-      "scrambled": [
+      "hu": "Meg tudod ismételni?",
+      "id": "wo_014",
+      "scrambledWords": [
         "Can",
         "you",
         "say",
         "that",
         "again"
       ],
-      "correct": "Can you say that again?",
-      "hu": "Meg tudod ismételni?"
+      "correctAnswer": "Can you say that again?"
     },
     {
-      "scrambled": [
+      "hu": "Meg tudják venni ezt a házat.",
+      "id": "wo_015",
+      "scrambledWords": [
         "They",
         "can",
         "buy",
         "this",
         "house"
       ],
-      "correct": "They can buy this house.",
-      "hu": "Meg tudják venni ezt a házat."
+      "correctAnswer": "They can buy this house."
     },
     {
-      "scrambled": [
+      "hu": "A baba nem tud úszni.",
+      "id": "wo_016",
+      "scrambledWords": [
         "The",
         "baby",
         "can't",
         "swim"
       ],
-      "correct": "The baby can't swim.",
-      "hu": "A baba nem tud úszni."
+      "correctAnswer": "The baby can't swim."
     },
     {
-      "scrambled": [
+      "hu": "Kinyithatom az ablakot?",
+      "id": "wo_017",
+      "scrambledWords": [
         "Can",
         "I",
         "open",
         "the",
         "window"
       ],
-      "correct": "Can I open the window?",
-      "hu": "Kinyithatom az ablakot?"
+      "correctAnswer": "Can I open the window?"
     },
     {
-      "scrambled": [
+      "hu": "Nem találjuk az irodát.",
+      "id": "wo_018",
+      "scrambledWords": [
         "We",
         "can't",
         "find",
         "the",
         "office"
       ],
-      "correct": "We can't find the office.",
-      "hu": "Nem találjuk az irodát."
+      "correctAnswer": "We can't find the office."
     },
     {
-      "scrambled": [
+      "hu": "Szép dalokat tud énekelni.",
+      "id": "wo_019",
+      "scrambledWords": [
         "She",
         "can",
         "sing",
         "beautiful",
         "songs"
       ],
-      "correct": "She can sing beautiful songs.",
-      "hu": "Szép dalokat tud énekelni."
+      "correctAnswer": "She can sing beautiful songs."
     },
     {
-      "scrambled": [
+      "hu": "Kaphatok egy pohár vizet?",
+      "id": "wo_020",
+      "scrambledWords": [
         "Can",
         "I",
         "have",
@@ -214,44 +235,48 @@
         "of",
         "water"
       ],
-      "correct": "Can I have a glass of water?",
-      "hu": "Kaphatok egy pohár vizet?"
+      "correctAnswer": "Can I have a glass of water?"
     },
     {
-      "scrambled": [
+      "hu": "Tud traktort vezetni?",
+      "id": "wo_021",
+      "scrambledWords": [
         "Can",
         "she",
         "drive",
         "a",
         "tractor"
       ],
-      "correct": "Can she drive a tractor?",
-      "hu": "Tud traktort vezetni?"
+      "correctAnswer": "Can she drive a tractor?"
     },
     {
-      "scrambled": [
+      "hu": "Nem értem a kérdést.",
+      "id": "wo_022",
+      "scrambledWords": [
         "I",
         "can't",
         "understand",
         "the",
         "question"
       ],
-      "correct": "I can't understand the question.",
-      "hu": "Nem értem a kérdést."
+      "correctAnswer": "I can't understand the question."
     },
     {
-      "scrambled": [
+      "hu": "Nagyon gyorsan tudnak futni.",
+      "id": "wo_023",
+      "scrambledWords": [
         "They",
         "can",
         "run",
         "very",
         "fast"
       ],
-      "correct": "They can run very fast.",
-      "hu": "Nagyon gyorsan tudnak futni."
+      "correctAnswer": "They can run very fast."
     },
     {
-      "scrambled": [
+      "hu": "Használhatom a bankkártyámat?",
+      "id": "wo_024",
+      "scrambledWords": [
         "Can",
         "I",
         "use",
@@ -259,11 +284,12 @@
         "credit",
         "card"
       ],
-      "correct": "Can I use my credit card?",
-      "hu": "Használhatom a bankkártyámat?"
+      "correctAnswer": "Can I use my credit card?"
     },
     {
-      "scrambled": [
+      "hu": "Nem tud eljönni a megbeszélésre.",
+      "id": "wo_025",
+      "scrambledWords": [
         "He",
         "can't",
         "come",
@@ -271,11 +297,12 @@
         "the",
         "meeting"
       ],
-      "correct": "He can't come to the meeting.",
-      "hu": "Nem tud eljönni a megbeszélésre."
+      "correctAnswer": "He can't come to the meeting."
     },
     {
-      "scrambled": [
+      "hu": "Meg tudod mondani az időt?",
+      "id": "wo_026",
+      "scrambledWords": [
         "Can",
         "you",
         "tell",
@@ -283,11 +310,12 @@
         "the",
         "time"
       ],
-      "correct": "Can you tell me the time?",
-      "hu": "Meg tudod mondani az időt?"
+      "correctAnswer": "Can you tell me the time?"
     },
     {
-      "scrambled": [
+      "hu": "Látjuk a nagy házat.",
+      "id": "wo_027",
+      "scrambledWords": [
         "We",
         "can",
         "see",
@@ -295,75 +323,82 @@
         "big",
         "house"
       ],
-      "correct": "We can see the big house.",
-      "hu": "Látjuk a nagy házat."
+      "correctAnswer": "We can see the big house."
     },
     {
-      "scrambled": [
+      "hu": "Nem találják a választ.",
+      "id": "wo_028",
+      "scrambledWords": [
         "They",
         "can't",
         "find",
         "the",
         "answer"
       ],
-      "correct": "They can't find the answer.",
-      "hu": "Nem találják a választ."
+      "correctAnswer": "They can't find the answer."
     },
     {
-      "scrambled": [
+      "hu": "Tudsz segíteni a testvéremnek.",
+      "id": "wo_029",
+      "scrambledWords": [
         "You",
         "can",
         "help",
         "my",
         "brother"
       ],
-      "correct": "You can help my brother.",
-      "hu": "Tudsz segíteni a testvéremnek."
+      "correctAnswer": "You can help my brother."
     },
     {
-      "scrambled": [
+      "hu": "Ki tudja nyitni az ajtót?",
+      "id": "wo_030",
+      "scrambledWords": [
         "Can",
         "she",
         "open",
         "the",
         "door"
       ],
-      "correct": "Can she open the door?",
-      "hu": "Ki tudja nyitni az ajtót?"
+      "correctAnswer": "Can she open the door?"
     },
     {
-      "scrambled": [
+      "hu": "Ma nem tud járni.",
+      "id": "wo_031",
+      "scrambledWords": [
         "He",
         "can't",
         "walk",
         "today"
       ],
-      "correct": "He can't walk today.",
-      "hu": "Ma nem tud járni."
+      "correctAnswer": "He can't walk today."
     },
     {
-      "scrambled": [
+      "hu": "Megkaphatjuk az étlapot?",
+      "id": "wo_032",
+      "scrambledWords": [
         "Can",
         "we",
         "have",
         "the",
         "menu"
       ],
-      "correct": "Can we have the menu?",
-      "hu": "Megkaphatjuk az étlapot?"
+      "correctAnswer": "Can we have the menu?"
     },
     {
-      "scrambled": [
+      "hu": "A telefonom nem tud elindulni.",
+      "id": "wo_033",
+      "scrambledWords": [
         "My",
         "phone",
         "can't",
         "start"
       ],
-      "correct": "My phone can't start.",
-      "hu": "A telefonom nem tud elindulni."
+      "correctAnswer": "My phone can't start."
     },
     {
-      "scrambled": [
+      "hu": "Tud beszélni egy új nyelven.",
+      "id": "wo_034",
+      "scrambledWords": [
         "She",
         "can",
         "speak",
@@ -371,65 +406,71 @@
         "new",
         "language"
       ],
-      "correct": "She can speak a new language.",
-      "hu": "Tud beszélni egy új nyelven."
+      "correctAnswer": "She can speak a new language."
     },
     {
-      "scrambled": [
+      "hu": "Megtalálod a kulcsaidat?",
+      "id": "wo_035",
+      "scrambledWords": [
         "Can",
         "you",
         "find",
         "your",
         "keys"
       ],
-      "correct": "Can you find your keys?",
-      "hu": "Megtalálod a kulcsaidat?"
+      "correctAnswer": "Can you find your keys?"
     },
     {
-      "scrambled": [
+      "hu": "Ma este nem tudok dolgozni.",
+      "id": "wo_036",
+      "scrambledWords": [
         "I",
         "can't",
         "work",
         "tonight"
       ],
-      "correct": "I can't work tonight.",
-      "hu": "Ma este nem tudok dolgozni."
+      "correctAnswer": "I can't work tonight."
     },
     {
-      "scrambled": [
+      "hu": "Tudunk együtt focizni.",
+      "id": "wo_037",
+      "scrambledWords": [
         "We",
         "can",
         "play",
         "football",
         "together"
       ],
-      "correct": "We can play football together.",
-      "hu": "Tudunk együtt focizni."
+      "correctAnswer": "We can play football together."
     },
     {
-      "scrambled": [
+      "hu": "Megnézhetem az útleveledet?",
+      "id": "wo_038",
+      "scrambledWords": [
         "Can",
         "I",
         "see",
         "your",
         "passport"
       ],
-      "correct": "Can I see your passport?",
-      "hu": "Megnézhetem az útleveledet?"
+      "correctAnswer": "Can I see your passport?"
     },
     {
-      "scrambled": [
+      "hu": "Nem tudják elolvasni ezt a könyvet.",
+      "id": "wo_039",
+      "scrambledWords": [
         "They",
         "can't",
         "read",
         "this",
         "book"
       ],
-      "correct": "They can't read this book.",
-      "hu": "Nem tudják elolvasni ezt a könyvet."
+      "correctAnswer": "They can't read this book."
     },
     {
-      "scrambled": [
+      "hu": "Tudja vezetni azt a fekete autót.",
+      "id": "wo_040",
+      "scrambledWords": [
         "He",
         "can",
         "drive",
@@ -437,22 +478,24 @@
         "black",
         "car"
       ],
-      "correct": "He can drive that black car.",
-      "hu": "Tudja vezetni azt a fekete autót."
+      "correctAnswer": "He can drive that black car."
     },
     {
-      "scrambled": [
+      "hu": "Le tudod betűzni ezt a szót?",
+      "id": "wo_041",
+      "scrambledWords": [
         "Can",
         "you",
         "spell",
         "this",
         "word"
       ],
-      "correct": "Can you spell this word?",
-      "hu": "Le tudod betűzni ezt a szót?"
+      "correctAnswer": "Can you spell this word?"
     },
     {
-      "scrambled": [
+      "hu": "Nem tudom felemelni ezt a nehéz dobozt.",
+      "id": "wo_042",
+      "scrambledWords": [
         "I",
         "can't",
         "lift",
@@ -460,44 +503,48 @@
         "heavy",
         "box"
       ],
-      "correct": "I can't lift this heavy box.",
-      "hu": "Nem tudom felemelni ezt a nehéz dobozt."
+      "correctAnswer": "I can't lift this heavy box."
     },
     {
-      "scrambled": [
+      "hu": "Elkezdődhet most az óra?",
+      "id": "wo_043",
+      "scrambledWords": [
         "Can",
         "the",
         "lesson",
         "start",
         "now"
       ],
-      "correct": "Can the lesson start now?",
-      "hu": "Elkezdődhet most az óra?"
+      "correctAnswer": "Can the lesson start now?"
     },
     {
-      "scrambled": [
+      "hu": "A madarak nagyon gyorsan tudnak repülni.",
+      "id": "wo_044",
+      "scrambledWords": [
         "Birds",
         "can",
         "fly",
         "very",
         "fast"
       ],
-      "correct": "Birds can fly very fast.",
-      "hu": "A madarak nagyon gyorsan tudnak repülni."
+      "correctAnswer": "Birds can fly very fast."
     },
     {
-      "scrambled": [
+      "hu": "Nem éri el az ablakot.",
+      "id": "wo_045",
+      "scrambledWords": [
         "She",
         "can't",
         "reach",
         "the",
         "window"
       ],
-      "correct": "She can't reach the window.",
-      "hu": "Nem éri el az ablakot."
+      "correctAnswer": "She can't reach the window."
     },
     {
-      "scrambled": [
+      "hu": "Kérhetjük a kávénkat cukorral?",
+      "id": "wo_046",
+      "scrambledWords": [
         "Can",
         "we",
         "have",
@@ -506,32 +553,35 @@
         "with",
         "sugar"
       ],
-      "correct": "Can we have our coffee with sugar?",
-      "hu": "Kérhetjük a kávénkat cukorral?"
+      "correctAnswer": "Can we have our coffee with sugar?"
     },
     {
-      "scrambled": [
+      "hu": "Nem emlékszem a nevére.",
+      "id": "wo_047",
+      "scrambledWords": [
         "I",
         "can't",
         "remember",
         "his",
         "name"
       ],
-      "correct": "I can't remember his name.",
-      "hu": "Nem emlékszem a nevére."
+      "correctAnswer": "I can't remember his name."
     },
     {
-      "scrambled": [
+      "hu": "Tudsz lassan beszélni?",
+      "id": "wo_048",
+      "scrambledWords": [
         "Can",
         "you",
         "speak",
         "slowly"
       ],
-      "correct": "Can you speak slowly?",
-      "hu": "Tudsz lassan beszélni?"
+      "correctAnswer": "Can you speak slowly?"
     },
     {
-      "scrambled": [
+      "hu": "Azok a gazdag emberek tudnak autót venni.",
+      "id": "wo_049",
+      "scrambledWords": [
         "Those",
         "rich",
         "people",
@@ -540,18 +590,18 @@
         "a",
         "car"
       ],
-      "correct": "Those rich people can buy a car.",
-      "hu": "Azok a gazdag emberek tudnak autót venni."
+      "correctAnswer": "Those rich people can buy a car."
     },
     {
-      "scrambled": [
+      "hu": "Leülhetünk ide?",
+      "id": "wo_050",
+      "scrambledWords": [
         "Can",
         "we",
         "sit",
         "here"
       ],
-      "correct": "Can we sit here?",
-      "hu": "Leülhetünk ide?"
+      "correctAnswer": "Can we sit here?"
     }
   ]
 }

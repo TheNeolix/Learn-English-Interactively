@@ -1,15 +1,118 @@
 {
   "description": "Rakd a szavakat a megfelelő sorrendbe, hogy helyes angol mondatokat kapj. Kattints a szavakra a sorrend kialakításához!",
   "items": [
-    { "scrambled": ["I", "am", "a", "student"], "correct": "I am a student.", "hu": "Én diák vagyok." },
-    { "scrambled": ["They", "are", "not", "tired"], "correct": "They are not tired.", "hu": "Ők nem fáradtak." },
-    { "scrambled": ["He", "is", "my", "father"], "correct": "He is my father.", "hu": "Ő az apám." },
-    { "scrambled": ["We", "are", "in", "the", "room"], "correct": "We are in the room.", "hu": "A szobában vagyunk." },
-    { "scrambled": ["She", "wants", "an", "apple"], "correct": "She wants an apple.", "hu": "Ő egy almát kér." },
-    { "scrambled": ["This", "car", "is", "green"], "correct": "This car is green.", "hu": "Ez az autó zöld." },
-    { "scrambled": ["Where", "is", "the", "teacher"], "correct": "Where is the teacher?", "hu": "Hol van a tanár?" },
-    { "scrambled": ["I", "like", "cold", "milk"], "correct": "I like cold milk.", "hu": "Szeretem a hideg tejet." },
-    { "scrambled": ["Is", "that", "house", "big"], "correct": "Is that house big?", "hu": "Nagy az a ház?" },
-    { "scrambled": ["The", "cat", "is", "on", "the", "bed"], "correct": "The cat is on the bed.", "hu": "A macska az ágyon van." }
+    {
+      "hu": "Én diák vagyok.",
+      "id": "wo_001",
+      "scrambledWords": [
+        "I",
+        "am",
+        "a",
+        "student"
+      ],
+      "correctAnswer": "I am a student."
+    },
+    {
+      "hu": "Ők nem fáradtak.",
+      "id": "wo_002",
+      "scrambledWords": [
+        "They",
+        "are",
+        "not",
+        "tired"
+      ],
+      "correctAnswer": "They are not tired."
+    },
+    {
+      "hu": "Ő az apám.",
+      "id": "wo_003",
+      "scrambledWords": [
+        "He",
+        "is",
+        "my",
+        "father"
+      ],
+      "correctAnswer": "He is my father."
+    },
+    {
+      "hu": "A szobában vagyunk.",
+      "id": "wo_004",
+      "scrambledWords": [
+        "We",
+        "are",
+        "in",
+        "the",
+        "room"
+      ],
+      "correctAnswer": "We are in the room."
+    },
+    {
+      "hu": "Ő egy almát kér.",
+      "id": "wo_005",
+      "scrambledWords": [
+        "She",
+        "wants",
+        "an",
+        "apple"
+      ],
+      "correctAnswer": "She wants an apple."
+    },
+    {
+      "hu": "Ez az autó zöld.",
+      "id": "wo_006",
+      "scrambledWords": [
+        "This",
+        "car",
+        "is",
+        "green"
+      ],
+      "correctAnswer": "This car is green."
+    },
+    {
+      "hu": "Hol van a tanár?",
+      "id": "wo_007",
+      "scrambledWords": [
+        "Where",
+        "is",
+        "the",
+        "teacher"
+      ],
+      "correctAnswer": "Where is the teacher?"
+    },
+    {
+      "hu": "Szeretem a hideg tejet.",
+      "id": "wo_008",
+      "scrambledWords": [
+        "I",
+        "like",
+        "cold",
+        "milk"
+      ],
+      "correctAnswer": "I like cold milk."
+    },
+    {
+      "hu": "Nagy az a ház?",
+      "id": "wo_009",
+      "scrambledWords": [
+        "Is",
+        "that",
+        "house",
+        "big"
+      ],
+      "correctAnswer": "Is that house big?"
+    },
+    {
+      "hu": "A macska az ágyon van.",
+      "id": "wo_010",
+      "scrambledWords": [
+        "The",
+        "cat",
+        "is",
+        "on",
+        "the",
+        "bed"
+      ],
+      "correctAnswer": "The cat is on the bed."
+    }
   ]
 }

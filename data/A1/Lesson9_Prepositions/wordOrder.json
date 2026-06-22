@@ -2,7 +2,9 @@
   "description": "Rakd a szavakat helyes sorrendbe, hogy nyelvtanilag helyes mondatot vagy kérdést kapj.",
   "items": [
     {
-      "scrambled": [
+      "hu": "A számítógépem az asztalon van.",
+      "id": "wo_001",
+      "scrambledWords": [
         "My",
         "computer",
         "is",
@@ -10,11 +12,12 @@
         "the",
         "desk"
       ],
-      "correct": "My computer is on the desk.",
-      "hu": "A számítógépem az asztalon van."
+      "correctAnswer": "My computer is on the desk."
     },
     {
-      "scrambled": [
+      "hu": "A megbeszélés 9 órakor kezdődik.",
+      "id": "wo_002",
+      "scrambledWords": [
         "The",
         "meeting",
         "starts",
@@ -22,11 +25,12 @@
         "9",
         "o'clock"
       ],
-      "correct": "The meeting starts at 9 o'clock.",
-      "hu": "A megbeszélés 9 órakor kezdődik."
+      "correctAnswer": "The meeting starts at 9 o'clock."
     },
     {
-      "scrambled": [
+      "hu": "A kutya az asztal alatt van.",
+      "id": "wo_003",
+      "scrambledWords": [
         "The",
         "dog",
         "is",
@@ -34,11 +38,12 @@
         "the",
         "table"
       ],
-      "correct": "The dog is under the table.",
-      "hu": "A kutya az asztal alatt van."
+      "correctAnswer": "The dog is under the table."
     },
     {
-      "scrambled": [
+      "hu": "Reggel kávét iszom.",
+      "id": "wo_004",
+      "scrambledWords": [
         "I",
         "drink",
         "coffee",
@@ -46,22 +51,24 @@
         "the",
         "morning"
       ],
-      "correct": "I drink coffee in the morning.",
-      "hu": "Reggel kávét iszom."
+      "correctAnswer": "I drink coffee in the morning."
     },
     {
-      "scrambled": [
+      "hu": "Vasárnaponként nem dolgozunk.",
+      "id": "wo_005",
+      "scrambledWords": [
         "We",
         "don't",
         "work",
         "on",
         "Sundays"
       ],
-      "correct": "We don't work on Sundays.",
-      "hu": "Vasárnaponként nem dolgozunk."
+      "correctAnswer": "We don't work on Sundays."
     },
     {
-      "scrambled": [
+      "hu": "A kulcsok a zsebemben vannak.",
+      "id": "wo_006",
+      "scrambledWords": [
         "The",
         "keys",
         "are",
@@ -69,11 +76,12 @@
         "my",
         "pocket"
       ],
-      "correct": "The keys are in my pocket.",
-      "hu": "A kulcsok a zsebemben vannak."
+      "correctAnswer": "The keys are in my pocket."
     },
     {
-      "scrambled": [
+      "hu": "Júliusban megyünk nyaralni.",
+      "id": "wo_007",
+      "scrambledWords": [
         "We",
         "go",
         "on",
@@ -81,11 +89,12 @@
         "in",
         "July"
       ],
-      "correct": "We go on holiday in July.",
-      "hu": "Júliusban megyünk nyaralni."
+      "correctAnswer": "We go on holiday in July."
     },
     {
-      "scrambled": [
+      "hu": "A kép a falon van.",
+      "id": "wo_008",
+      "scrambledWords": [
         "The",
         "picture",
         "is",
@@ -93,22 +102,24 @@
         "the",
         "wall"
       ],
-      "correct": "The picture is on the wall.",
-      "hu": "A kép a falon van."
+      "correctAnswer": "The picture is on the wall."
     },
     {
-      "scrambled": [
+      "hu": "Éjszaka tévét néznek.",
+      "id": "wo_009",
+      "scrambledWords": [
         "They",
         "watch",
         "TV",
         "at",
         "night"
       ],
-      "correct": "They watch TV at night.",
-      "hu": "Éjszaka tévét néznek."
+      "correctAnswer": "They watch TV at night."
     },
     {
-      "scrambled": [
+      "hu": "A kulcs a könyv alatt van.",
+      "id": "wo_010",
+      "scrambledWords": [
         "The",
         "key",
         "is",
@@ -116,22 +127,24 @@
         "the",
         "book"
       ],
-      "correct": "The key is under the book.",
-      "hu": "A kulcs a könyv alatt van."
+      "correctAnswer": "The key is under the book."
     },
     {
-      "scrambled": [
+      "hu": "A vállalkozás 2024-ben indult.",
+      "id": "wo_011",
+      "scrambledWords": [
         "The",
         "business",
         "started",
         "in",
         "2024"
       ],
-      "correct": "The business started in 2024.",
-      "hu": "A vállalkozás 2024-ben indult."
+      "correctAnswer": "The business started in 2024."
     },
     {
-      "scrambled": [
+      "hu": "A telefonod az asztalon van.",
+      "id": "wo_012",
+      "scrambledWords": [
         "Your",
         "phone",
         "is",
@@ -139,22 +152,24 @@
         "the",
         "table"
       ],
-      "correct": "Your phone is on the table.",
-      "hu": "A telefonod az asztalon van."
+      "correctAnswer": "Your phone is on the table."
     },
     {
-      "scrambled": [
+      "hu": "Délután dolgozik.",
+      "id": "wo_013",
+      "scrambledWords": [
         "She",
         "works",
         "in",
         "the",
         "afternoon"
       ],
-      "correct": "She works in the afternoon.",
-      "hu": "Délután dolgozik."
+      "correctAnswer": "She works in the afternoon."
     },
     {
-      "scrambled": [
+      "hu": "A macska a szék alatt van.",
+      "id": "wo_014",
+      "scrambledWords": [
         "The",
         "cat",
         "is",
@@ -162,11 +177,12 @@
         "the",
         "chair"
       ],
-      "correct": "The cat is under the chair.",
-      "hu": "A macska a szék alatt van."
+      "correctAnswer": "The cat is under the chair."
     },
     {
-      "scrambled": [
+      "hu": "A teszt hétfő reggel van.",
+      "id": "wo_015",
+      "scrambledWords": [
         "The",
         "test",
         "is",
@@ -174,11 +190,12 @@
         "Monday",
         "morning"
       ],
-      "correct": "The test is on Monday morning.",
-      "hu": "A teszt hétfő reggel van."
+      "correctAnswer": "The test is on Monday morning."
     },
     {
-      "scrambled": [
+      "hu": "Egy nagy házban lakunk.",
+      "id": "wo_016",
+      "scrambledWords": [
         "We",
         "live",
         "in",
@@ -186,11 +203,12 @@
         "big",
         "house"
       ],
-      "correct": "We live in a big house.",
-      "hu": "Egy nagy házban lakunk."
+      "correctAnswer": "We live in a big house."
     },
     {
-      "scrambled": [
+      "hu": "Éjfélkor megyek aludni.",
+      "id": "wo_017",
+      "scrambledWords": [
         "I",
         "go",
         "to",
@@ -198,11 +216,12 @@
         "at",
         "midnight"
       ],
-      "correct": "I go to sleep at midnight.",
-      "hu": "Éjfélkor megyek aludni."
+      "correctAnswer": "I go to sleep at midnight."
     },
     {
-      "scrambled": [
+      "hu": "A papírok a padlón vannak.",
+      "id": "wo_018",
+      "scrambledWords": [
         "The",
         "papers",
         "are",
@@ -210,22 +229,24 @@
         "the",
         "floor"
       ],
-      "correct": "The papers are on the floor.",
-      "hu": "A papírok a padlón vannak."
+      "correctAnswer": "The papers are on the floor."
     },
     {
-      "scrambled": [
+      "hu": "Télen hideg van.",
+      "id": "wo_019",
+      "scrambledWords": [
         "It",
         "is",
         "cold",
         "in",
         "winter"
       ],
-      "correct": "It is cold in winter.",
-      "hu": "Télen hideg van."
+      "correctAnswer": "It is cold in winter."
     },
     {
-      "scrambled": [
+      "hu": "A menedzser az irodájában van.",
+      "id": "wo_020",
+      "scrambledWords": [
         "The",
         "manager",
         "is",
@@ -233,11 +254,12 @@
         "his",
         "office"
       ],
-      "correct": "The manager is in his office.",
-      "hu": "A menedzser az irodájában van."
+      "correctAnswer": "The manager is in his office."
     },
     {
-      "scrambled": [
+      "hu": "A születésnapom május 1-jén van.",
+      "id": "wo_021",
+      "scrambledWords": [
         "My",
         "birthday",
         "is",
@@ -245,11 +267,12 @@
         "May",
         "1st"
       ],
-      "correct": "My birthday is on May 1st.",
-      "hu": "A születésnapom május 1-jén van."
+      "correctAnswer": "My birthday is on May 1st."
     },
     {
-      "scrambled": [
+      "hu": "A toll az asztal alatt van.",
+      "id": "wo_022",
+      "scrambledWords": [
         "The",
         "pen",
         "is",
@@ -257,11 +280,12 @@
         "the",
         "desk"
       ],
-      "correct": "The pen is under the desk.",
-      "hu": "A toll az asztal alatt van."
+      "correctAnswer": "The pen is under the desk."
     },
     {
-      "scrambled": [
+      "hu": "Kedden megbeszélésünk van.",
+      "id": "wo_023",
+      "scrambledWords": [
         "We",
         "have",
         "a",
@@ -269,11 +293,12 @@
         "on",
         "Tuesday"
       ],
-      "correct": "We have a meeting on Tuesday.",
-      "hu": "Kedden megbeszélésünk van."
+      "correctAnswer": "We have a meeting on Tuesday."
     },
     {
-      "scrambled": [
+      "hu": "Van étel a konyhában.",
+      "id": "wo_024",
+      "scrambledWords": [
         "There",
         "is",
         "food",
@@ -281,33 +306,36 @@
         "the",
         "kitchen"
       ],
-      "correct": "There is food in the kitchen.",
-      "hu": "Van étel a konyhában."
+      "correctAnswer": "There is food in the kitchen."
     },
     {
-      "scrambled": [
+      "hu": "Az óra 10:30-kor ér véget.",
+      "id": "wo_025",
+      "scrambledWords": [
         "The",
         "lesson",
         "finishes",
         "at",
         "10:30"
       ],
-      "correct": "The lesson finishes at 10:30.",
-      "hu": "Az óra 10:30-kor ér véget."
+      "correctAnswer": "The lesson finishes at 10:30."
     },
     {
-      "scrambled": [
+      "hu": "Hétvégén fociznak.",
+      "id": "wo_026",
+      "scrambledWords": [
         "They",
         "play",
         "football",
         "on",
         "weekends"
       ],
-      "correct": "They play football on weekends.",
-      "hu": "Hétvégén fociznak."
+      "correctAnswer": "They play football on weekends."
     },
     {
-      "scrambled": [
+      "hu": "Hiba van a képernyőn.",
+      "id": "wo_027",
+      "scrambledWords": [
         "There",
         "is",
         "an",
@@ -316,22 +344,24 @@
         "the",
         "screen"
       ],
-      "correct": "There is an error on the screen.",
-      "hu": "Hiba van a képernyőn."
+      "correctAnswer": "There is an error on the screen."
     },
     {
-      "scrambled": [
+      "hu": "Este olvas.",
+      "id": "wo_028",
+      "scrambledWords": [
         "She",
         "reads",
         "in",
         "the",
         "evening"
       ],
-      "correct": "She reads in the evening.",
-      "hu": "Este olvas."
+      "correctAnswer": "She reads in the evening."
     },
     {
-      "scrambled": [
+      "hu": "A labda az autó alatt van.",
+      "id": "wo_029",
+      "scrambledWords": [
         "The",
         "ball",
         "is",
@@ -339,22 +369,24 @@
         "the",
         "car"
       ],
-      "correct": "The ball is under the car.",
-      "hu": "A labda az autó alatt van."
+      "correctAnswer": "The ball is under the car."
     },
     {
-      "scrambled": [
+      "hu": "Szombatonként ételt vásárolunk.",
+      "id": "wo_030",
+      "scrambledWords": [
         "We",
         "buy",
         "food",
         "on",
         "Saturdays"
       ],
-      "correct": "We buy food on Saturdays.",
-      "hu": "Szombatonként ételt vásárolunk."
+      "correctAnswer": "We buy food on Saturdays."
     },
     {
-      "scrambled": [
+      "hu": "A fájlok a mappában vannak.",
+      "id": "wo_031",
+      "scrambledWords": [
         "The",
         "files",
         "are",
@@ -362,33 +394,36 @@
         "the",
         "folder"
       ],
-      "correct": "The files are in the folder.",
-      "hu": "A fájlok a mappában vannak."
+      "correctAnswer": "The files are in the folder."
     },
     {
-      "scrambled": [
+      "hu": "Délben érkeznek?",
+      "id": "wo_032",
+      "scrambledWords": [
         "Do",
         "they",
         "arrive",
         "at",
         "noon"
       ],
-      "correct": "Do they arrive at noon?",
-      "hu": "Délben érkeznek?"
+      "correctAnswer": "Do they arrive at noon?"
     },
     {
-      "scrambled": [
+      "hu": "Nyáron meleg van.",
+      "id": "wo_033",
+      "scrambledWords": [
         "It",
         "is",
         "hot",
         "in",
         "summer"
       ],
-      "correct": "It is hot in summer.",
-      "hu": "Nyáron meleg van."
+      "correctAnswer": "It is hot in summer."
     },
     {
-      "scrambled": [
+      "hu": "A laptop az asztalon van.",
+      "id": "wo_034",
+      "scrambledWords": [
         "The",
         "laptop",
         "is",
@@ -396,11 +431,12 @@
         "the",
         "desk"
       ],
-      "correct": "The laptop is on the desk.",
-      "hu": "A laptop az asztalon van."
+      "correctAnswer": "The laptop is on the desk."
     },
     {
-      "scrambled": [
+      "hu": "A cipőim az ágy alatt vannak.",
+      "id": "wo_035",
+      "scrambledWords": [
         "My",
         "shoes",
         "are",
@@ -408,11 +444,12 @@
         "the",
         "bed"
       ],
-      "correct": "My shoes are under the bed.",
-      "hu": "A cipőim az ágy alatt vannak."
+      "correctAnswer": "My shoes are under the bed."
     },
     {
-      "scrambled": [
+      "hu": "Az iroda 17:00-kor zár.",
+      "id": "wo_036",
+      "scrambledWords": [
         "The",
         "office",
         "closes",
@@ -420,11 +457,12 @@
         "5",
         "PM"
       ],
-      "correct": "The office closes at 5 PM.",
-      "hu": "Az iroda 17:00-kor zár."
+      "correctAnswer": "The office closes at 5 PM."
     },
     {
-      "scrambled": [
+      "hu": "Reggel megbeszélésünk van.",
+      "id": "wo_037",
+      "scrambledWords": [
         "We",
         "have",
         "a",
@@ -433,22 +471,24 @@
         "the",
         "morning"
       ],
-      "correct": "We have a meeting in the morning.",
-      "hu": "Reggel megbeszélésünk van."
+      "correctAnswer": "We have a meeting in the morning."
     },
     {
-      "scrambled": [
+      "hu": "Szlovákiában élnek?",
+      "id": "wo_038",
+      "scrambledWords": [
         "Do",
         "they",
         "live",
         "in",
         "Slovakia"
       ],
-      "correct": "Do they live in Slovakia?",
-      "hu": "Szlovákiában élnek?"
+      "correctAnswer": "Do they live in Slovakia?"
     },
     {
-      "scrambled": [
+      "hu": "A nyomtató az asztalon van.",
+      "id": "wo_039",
+      "scrambledWords": [
         "The",
         "printer",
         "is",
@@ -456,22 +496,24 @@
         "the",
         "table"
       ],
-      "correct": "The printer is on the table.",
-      "hu": "A nyomtató az asztalon van."
+      "correctAnswer": "The printer is on the table."
     },
     {
-      "scrambled": [
+      "hu": "Soha nem dolgozik éjszaka.",
+      "id": "wo_040",
+      "scrambledWords": [
         "He",
         "never",
         "works",
         "at",
         "night"
       ],
-      "correct": "He never works at night.",
-      "hu": "Soha nem dolgozik éjszaka."
+      "correctAnswer": "He never works at night."
     },
     {
-      "scrambled": [
+      "hu": "A kulcs a dobozban van.",
+      "id": "wo_041",
+      "scrambledWords": [
         "The",
         "key",
         "is",
@@ -479,22 +521,24 @@
         "the",
         "box"
       ],
-      "correct": "The key is in the box.",
-      "hu": "A kulcs a dobozban van."
+      "correctAnswer": "The key is in the box."
     },
     {
-      "scrambled": [
+      "hu": "A projekt szeptemberben kezdődik.",
+      "id": "wo_042",
+      "scrambledWords": [
         "The",
         "project",
         "starts",
         "in",
         "September"
       ],
-      "correct": "The project starts in September.",
-      "hu": "A projekt szeptemberben kezdődik."
+      "correctAnswer": "The project starts in September."
     },
     {
-      "scrambled": [
+      "hu": "A telefonod a táskádban van?",
+      "id": "wo_043",
+      "scrambledWords": [
         "Is",
         "your",
         "phone",
@@ -502,11 +546,12 @@
         "your",
         "bag"
       ],
-      "correct": "Is your phone in your bag?",
-      "hu": "A telefonod a táskádban van?"
+      "correctAnswer": "Is your phone in your bag?"
     },
     {
-      "scrambled": [
+      "hu": "A papír a könyv alatt van.",
+      "id": "wo_044",
+      "scrambledWords": [
         "The",
         "paper",
         "is",
@@ -514,33 +559,36 @@
         "the",
         "book"
       ],
-      "correct": "The paper is under the book.",
-      "hu": "A papír a könyv alatt van."
+      "correctAnswer": "The paper is under the book."
     },
     {
-      "scrambled": [
+      "hu": "A vonat 8:15-kor indul.",
+      "id": "wo_045",
+      "scrambledWords": [
         "The",
         "train",
         "leaves",
         "at",
         "8:15"
       ],
-      "correct": "The train leaves at 8:15.",
-      "hu": "A vonat 8:15-kor indul."
+      "correctAnswer": "The train leaves at 8:15."
     },
     {
-      "scrambled": [
+      "hu": "Decemberben hideg van.",
+      "id": "wo_046",
+      "scrambledWords": [
         "It",
         "is",
         "cold",
         "in",
         "December"
       ],
-      "correct": "It is cold in December.",
-      "hu": "Decemberben hideg van."
+      "correctAnswer": "It is cold in December."
     },
     {
-      "scrambled": [
+      "hu": "Nyomok vannak a képernyőn.",
+      "id": "wo_047",
+      "scrambledWords": [
         "There",
         "are",
         "marks",
@@ -548,22 +596,24 @@
         "the",
         "screen"
       ],
-      "correct": "There are marks on the screen.",
-      "hu": "Nyomok vannak a képernyőn."
+      "correctAnswer": "There are marks on the screen."
     },
     {
-      "scrambled": [
+      "hu": "Pénteken teniszezünk.",
+      "id": "wo_048",
+      "scrambledWords": [
         "We",
         "play",
         "tennis",
         "on",
         "Friday"
       ],
-      "correct": "We play tennis on Friday.",
-      "hu": "Pénteken teniszezünk."
+      "correctAnswer": "We play tennis on Friday."
     },
     {
-      "scrambled": [
+      "hu": "A doboz a lépcső alatt van.",
+      "id": "wo_049",
+      "scrambledWords": [
         "The",
         "box",
         "is",
@@ -571,11 +621,12 @@
         "the",
         "stairs"
       ],
-      "correct": "The box is under the stairs.",
-      "hu": "A doboz a lépcső alatt van."
+      "correctAnswer": "The box is under the stairs."
     },
     {
-      "scrambled": [
+      "hu": "Vannak szobák a házban?",
+      "id": "wo_050",
+      "scrambledWords": [
         "Are",
         "there",
         "rooms",
@@ -583,8 +634,7 @@
         "the",
         "house"
       ],
-      "correct": "Are there rooms in the house?",
-      "hu": "Vannak szobák a házban?"
+      "correctAnswer": "Are there rooms in the house?"
     }
   ]
 }

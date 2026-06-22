@@ -49,38 +49,77 @@
     {
       "question": "Rakd sorrendbe: father / my / he / is",
       "type": "order",
-      "correct": "He is my father.",
-      "scrambled": ["He", "is", "my", "father"]
+      "id": "wo_010",
+      "scrambledWords": [
+        "He",
+        "is",
+        "my",
+        "father"
+      ],
+      "correctAnswer": "He is my father."
     },
     {
       "question": "Rakd sorrendbe: in / room / the / are / we",
       "type": "order",
-      "correct": "We are in the room.",
-      "scrambled": ["We", "are", "in", "the", "room"]
+      "id": "wo_011",
+      "scrambledWords": [
+        "We",
+        "are",
+        "in",
+        "the",
+        "room"
+      ],
+      "correctAnswer": "We are in the room."
     },
     {
       "question": "Rakd sorrendbe: green / is / car / this",
       "type": "order",
-      "correct": "This car is green.",
-      "scrambled": ["This", "car", "is", "green"]
+      "id": "wo_012",
+      "scrambledWords": [
+        "This",
+        "car",
+        "is",
+        "green"
+      ],
+      "correctAnswer": "This car is green."
     },
     {
       "question": "Rakd sorrendbe: is / teacher / the / Where",
       "type": "order",
-      "correct": "Where is the teacher?",
-      "scrambled": ["Where", "is", "the", "teacher"]
+      "id": "wo_013",
+      "scrambledWords": [
+        "Where",
+        "is",
+        "the",
+        "teacher"
+      ],
+      "correctAnswer": "Where is the teacher?"
     },
     {
       "question": "Rakd sorrendbe: big / house / that / Is",
       "type": "order",
-      "correct": "Is that house big?",
-      "scrambled": ["Is", "that", "house", "big"]
+      "id": "wo_014",
+      "scrambledWords": [
+        "Is",
+        "that",
+        "house",
+        "big"
+      ],
+      "correctAnswer": "Is that house big?"
     },
     {
       "question": "Rakd sorrendbe: bed / the / on / is / cat / The",
       "type": "order",
-      "correct": "The cat is on the bed.",
-      "scrambled": ["The", "cat", "is", "on", "the", "bed"]
+      "id": "wo_015",
+      "scrambledWords": [
+        "The",
+        "cat",
+        "is",
+        "on",
+        "the",
+        "bed"
+      ],
+      "correctAnswer": "The cat is on the bed."
     },
     {
       "question": "\"He are a doctor\" – Ez a mondat helyes?",

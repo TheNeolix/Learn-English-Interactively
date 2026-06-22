@@ -2,201 +2,222 @@
   "description": "Rakd a szavakat helyes sorrendbe, hogy nyelvtanilag helyes mondatot vagy kérdést kapj.",
   "items": [
     {
-      "scrambled": [
+      "hu": "Ez az én telefonom.",
+      "id": "wo_001",
+      "scrambledWords": [
         "This",
         "is",
         "my",
         "phone"
       ],
-      "correct": "This is my phone.",
-      "hu": "Ez az én telefonom."
+      "correctAnswer": "This is my phone."
     },
     {
-      "scrambled": [
+      "hu": "Az ott egy nagy ház.",
+      "id": "wo_002",
+      "scrambledWords": [
         "That",
         "is",
         "a",
         "big",
         "house"
       ],
-      "correct": "That is a big house.",
-      "hu": "Az ott egy nagy ház."
+      "correctAnswer": "That is a big house."
     },
     {
-      "scrambled": [
+      "hu": "Ezek az én kulcsaim.",
+      "id": "wo_003",
+      "scrambledWords": [
         "These",
         "are",
         "my",
         "keys"
       ],
-      "correct": "These are my keys.",
-      "hu": "Ezek az én kulcsaim."
+      "correctAnswer": "These are my keys."
     },
     {
-      "scrambled": [
+      "hu": "Azok a kutyák kedvesek?",
+      "id": "wo_004",
+      "scrambledWords": [
         "Are",
         "those",
         "dogs",
         "nice"
       ],
-      "correct": "Are those dogs nice?",
-      "hu": "Azok a kutyák kedvesek?"
+      "correctAnswer": "Are those dogs nice?"
     },
     {
-      "scrambled": [
+      "hu": "Az a laptop régi.",
+      "id": "wo_005",
+      "scrambledWords": [
         "That",
         "laptop",
         "is",
         "old"
       ],
-      "correct": "That laptop is old.",
-      "hu": "Az a laptop régi."
+      "correctAnswer": "That laptop is old."
     },
     {
-      "scrambled": [
+      "hu": "Ezek a szemek szépek.",
+      "id": "wo_006",
+      "scrambledWords": [
         "These",
         "eyes",
         "are",
         "beautiful"
       ],
-      "correct": "These eyes are beautiful.",
-      "hu": "Ezek a szemek szépek."
+      "correctAnswer": "These eyes are beautiful."
     },
     {
-      "scrambled": [
+      "hu": "Kik azok az emberek?",
+      "id": "wo_007",
+      "scrambledWords": [
         "Who",
         "are",
         "those",
         "people"
       ],
-      "correct": "Who are those people?",
-      "hu": "Kik azok az emberek?"
+      "correctAnswer": "Who are those people?"
     },
     {
-      "scrambled": [
+      "hu": "Ez az autó szép.",
+      "id": "wo_008",
+      "scrambledWords": [
         "This",
         "car",
         "is",
         "nice"
       ],
-      "correct": "This car is nice.",
-      "hu": "Ez az autó szép."
+      "correctAnswer": "This car is nice."
     },
     {
-      "scrambled": [
+      "hu": "Az a számítógép nem működik.",
+      "id": "wo_009",
+      "scrambledWords": [
         "That",
         "computer",
         "doesn't",
         "work"
       ],
-      "correct": "That computer doesn't work.",
-      "hu": "Az a számítógép nem működik."
+      "correctAnswer": "That computer doesn't work."
     },
     {
-      "scrambled": [
+      "hu": "Ezek az asztalok tiszták?",
+      "id": "wo_010",
+      "scrambledWords": [
         "Are",
         "these",
         "tables",
         "clean"
       ],
-      "correct": "Are these tables clean?",
-      "hu": "Ezek az asztalok tiszták?"
+      "correctAnswer": "Are these tables clean?"
     },
     {
-      "scrambled": [
+      "hu": "Ez a könyv az enyém.",
+      "id": "wo_011",
+      "scrambledWords": [
         "This",
         "book",
         "is",
         "mine"
       ],
-      "correct": "This book is mine.",
-      "hu": "Ez a könyv az enyém."
+      "correctAnswer": "This book is mine."
     },
     {
-      "scrambled": [
+      "hu": "Azok a szobák a mi szobáink.",
+      "id": "wo_012",
+      "scrambledWords": [
         "Those",
         "rooms",
         "are",
         "our",
         "rooms"
       ],
-      "correct": "Those rooms are our rooms.",
-      "hu": "Azok a szobák a mi szobáink."
+      "correctAnswer": "Those rooms are our rooms."
     },
     {
-      "scrambled": [
+      "hu": "Ő az új menedzserünk.",
+      "id": "wo_013",
+      "scrambledWords": [
         "That",
         "is",
         "our",
         "new",
         "manager"
       ],
-      "correct": "That is our new manager.",
-      "hu": "Ő az új menedzserünk."
+      "correctAnswer": "That is our new manager."
     },
     {
-      "scrambled": [
+      "hu": "Ezek a tollak töröttek?",
+      "id": "wo_014",
+      "scrambledWords": [
         "Are",
         "these",
         "pens",
         "broken"
       ],
-      "correct": "Are these pens broken?",
-      "hu": "Ezek a tollak töröttek?"
+      "correctAnswer": "Are these pens broken?"
     },
     {
-      "scrambled": [
+      "hu": "Az a csésze tiszta?",
+      "id": "wo_015",
+      "scrambledWords": [
         "Is",
         "that",
         "cup",
         "clean"
       ],
-      "correct": "Is that cup clean?",
-      "hu": "Az a csésze tiszta?"
+      "correctAnswer": "Is that cup clean?"
     },
     {
-      "scrambled": [
+      "hu": "Ebben az irodában van egy íróasztal.",
+      "id": "wo_016",
+      "scrambledWords": [
         "This",
         "office",
         "has",
         "a",
         "desk"
       ],
-      "correct": "This office has a desk.",
-      "hu": "Ebben az irodában van egy íróasztal."
+      "correctAnswer": "This office has a desk."
     },
     {
-      "scrambled": [
+      "hu": "Azok a madarak kékek.",
+      "id": "wo_017",
+      "scrambledWords": [
         "Those",
         "birds",
         "are",
         "blue"
       ],
-      "correct": "Those birds are blue.",
-      "hu": "Azok a madarak kékek."
+      "correctAnswer": "Those birds are blue."
     },
     {
-      "scrambled": [
+      "hu": "Az az ablak nyitva van?",
+      "id": "wo_018",
+      "scrambledWords": [
         "Is",
         "that",
         "window",
         "open"
       ],
-      "correct": "Is that window open?",
-      "hu": "Az az ablak nyitva van?"
+      "correctAnswer": "Is that window open?"
     },
     {
-      "scrambled": [
+      "hu": "Ezek a virágok szépek.",
+      "id": "wo_019",
+      "scrambledWords": [
         "These",
         "flowers",
         "are",
         "beautiful"
       ],
-      "correct": "These flowers are beautiful.",
-      "hu": "Ezek a virágok szépek."
+      "correctAnswer": "These flowers are beautiful."
     },
     {
-      "scrambled": [
+      "hu": "Az a táska az asztal alatt van.",
+      "id": "wo_020",
+      "scrambledWords": [
         "That",
         "bag",
         "is",
@@ -204,113 +225,124 @@
         "the",
         "table"
       ],
-      "correct": "That bag is under the table.",
-      "hu": "Az a táska az asztal alatt van."
+      "correctAnswer": "That bag is under the table."
     },
     {
-      "scrambled": [
+      "hu": "Ez a megbeszélés nagyon fontos.",
+      "id": "wo_021",
+      "scrambledWords": [
         "This",
         "meeting",
         "is",
         "very",
         "important"
       ],
-      "correct": "This meeting is very important.",
-      "hu": "Ez a megbeszélés nagyon fontos."
+      "correctAnswer": "This meeting is very important."
     },
     {
-      "scrambled": [
+      "hu": "Azok a dobozok üresek?",
+      "id": "wo_022",
+      "scrambledWords": [
         "Are",
         "those",
         "boxes",
         "empty"
       ],
-      "correct": "Are those boxes empty?",
-      "hu": "Azok a dobozok üresek?"
+      "correctAnswer": "Are those boxes empty?"
     },
     {
-      "scrambled": [
+      "hu": "Az a csillag fényes.",
+      "id": "wo_023",
+      "scrambledWords": [
         "That",
         "star",
         "is",
         "bright"
       ],
-      "correct": "That star is bright.",
-      "hu": "Az a csillag fényes."
+      "correctAnswer": "That star is bright."
     },
     {
-      "scrambled": [
+      "hu": "Ez a képernyő új.",
+      "id": "wo_024",
+      "scrambledWords": [
         "This",
         "screen",
         "is",
         "new"
       ],
-      "correct": "This screen is new.",
-      "hu": "Ez a képernyő új."
+      "correctAnswer": "This screen is new."
     },
     {
-      "scrambled": [
+      "hu": "Ezek a gyerekek boldogok.",
+      "id": "wo_025",
+      "scrambledWords": [
         "These",
         "children",
         "are",
         "happy"
       ],
-      "correct": "These children are happy.",
-      "hu": "Ezek a gyerekek boldogok."
+      "correctAnswer": "These children are happy."
     },
     {
-      "scrambled": [
+      "hu": "Az a te kódod?",
+      "id": "wo_026",
+      "scrambledWords": [
         "Is",
         "that",
         "your",
         "code"
       ],
-      "correct": "Is that your code?",
-      "hu": "Az a te kódod?"
+      "correctAnswer": "Is that your code?"
     },
     {
-      "scrambled": [
+      "hu": "Ez a számítógép gyorsan fut.",
+      "id": "wo_027",
+      "scrambledWords": [
         "This",
         "computer",
         "runs",
         "fast"
       ],
-      "correct": "This computer runs fast.",
-      "hu": "Ez a számítógép gyorsan fut."
+      "correctAnswer": "This computer runs fast."
     },
     {
-      "scrambled": [
+      "hu": "Azok a lakások drágák.",
+      "id": "wo_028",
+      "scrambledWords": [
         "Those",
         "apartments",
         "are",
         "expensive"
       ],
-      "correct": "Those apartments are expensive.",
-      "hu": "Azok a lakások drágák."
+      "correctAnswer": "Those apartments are expensive."
     },
     {
-      "scrambled": [
+      "hu": "Ez egy kis probléma.",
+      "id": "wo_029",
+      "scrambledWords": [
         "This",
         "is",
         "a",
         "small",
         "problem"
       ],
-      "correct": "This is a small problem.",
-      "hu": "Ez egy kis probléma."
+      "correctAnswer": "This is a small problem."
     },
     {
-      "scrambled": [
+      "hu": "Ezek a kutyák feketék.",
+      "id": "wo_030",
+      "scrambledWords": [
         "These",
         "dogs",
         "are",
         "black"
       ],
-      "correct": "These dogs are black.",
-      "hu": "Ezek a kutyák feketék."
+      "correctAnswer": "These dogs are black."
     },
     {
-      "scrambled": [
+      "hu": "Az a kulcs nem nyitja az ajtót.",
+      "id": "wo_031",
+      "scrambledWords": [
         "That",
         "key",
         "doesn't",
@@ -318,22 +350,24 @@
         "the",
         "door"
       ],
-      "correct": "That key doesn't open the door.",
-      "hu": "Az a kulcs nem nyitja az ajtót."
+      "correctAnswer": "That key doesn't open the door."
     },
     {
-      "scrambled": [
+      "hu": "Ez egy szép telefon.",
+      "id": "wo_032",
+      "scrambledWords": [
         "This",
         "is",
         "a",
         "nice",
         "phone"
       ],
-      "correct": "This is a nice phone.",
-      "hu": "Ez egy szép telefon."
+      "correctAnswer": "This is a nice phone."
     },
     {
-      "scrambled": [
+      "hu": "Azok a kulcsok a padlón vannak.",
+      "id": "wo_033",
+      "scrambledWords": [
         "Those",
         "keys",
         "are",
@@ -341,21 +375,23 @@
         "the",
         "floor"
       ],
-      "correct": "Those keys are on the floor.",
-      "hu": "Azok a kulcsok a padlón vannak."
+      "correctAnswer": "Those keys are on the floor."
     },
     {
-      "scrambled": [
+      "hu": "Ez a teszt könnyű?",
+      "id": "wo_034",
+      "scrambledWords": [
         "Is",
         "this",
         "test",
         "easy"
       ],
-      "correct": "Is this test easy?",
-      "hu": "Ez a teszt könnyű?"
+      "correctAnswer": "Is this test easy?"
     },
     {
-      "scrambled": [
+      "hu": "Ezek a papírok a főnöknek vannak.",
+      "id": "wo_035",
+      "scrambledWords": [
         "These",
         "papers",
         "are",
@@ -363,53 +399,58 @@
         "the",
         "boss"
       ],
-      "correct": "These papers are for the boss.",
-      "hu": "Ezek a papírok a főnöknek vannak."
+      "correctAnswer": "These papers are for the boss."
     },
     {
-      "scrambled": [
+      "hu": "Az a fa magas.",
+      "id": "wo_036",
+      "scrambledWords": [
         "That",
         "tree",
         "is",
         "high"
       ],
-      "correct": "That tree is high.",
-      "hu": "Az a fa magas."
+      "correctAnswer": "That tree is high."
     },
     {
-      "scrambled": [
+      "hu": "Ők az én barátaim.",
+      "id": "wo_037",
+      "scrambledWords": [
         "These",
         "are",
         "my",
         "friends"
       ],
-      "correct": "These are my friends.",
-      "hu": "Ők az én barátaim."
+      "correctAnswer": "These are my friends."
     },
     {
-      "scrambled": [
+      "hu": "Az egy régi épület.",
+      "id": "wo_038",
+      "scrambledWords": [
         "That",
         "is",
         "an",
         "old",
         "building"
       ],
-      "correct": "That is an old building.",
-      "hu": "Az egy régi épület."
+      "correctAnswer": "That is an old building."
     },
     {
-      "scrambled": [
+      "hu": "Ezek az emberek itt dolgoznak?",
+      "id": "wo_039",
+      "scrambledWords": [
         "Do",
         "these",
         "people",
         "work",
         "here"
       ],
-      "correct": "Do these people work here?",
-      "hu": "Ezek az emberek itt dolgoznak?"
+      "correctAnswer": "Do these people work here?"
     },
     {
-      "scrambled": [
+      "hu": "Ennek a laptopnak jó akkumulátora van.",
+      "id": "wo_040",
+      "scrambledWords": [
         "This",
         "laptop",
         "has",
@@ -417,109 +458,118 @@
         "good",
         "battery"
       ],
-      "correct": "This laptop has a good battery.",
-      "hu": "Ennek a laptopnak jó akkumulátora van."
+      "correctAnswer": "This laptop has a good battery."
     },
     {
-      "scrambled": [
+      "hu": "Azok az autók tiszták.",
+      "id": "wo_041",
+      "scrambledWords": [
         "Those",
         "cars",
         "are",
         "clean"
       ],
-      "correct": "Those cars are clean.",
-      "hu": "Azok az autók tiszták."
+      "correctAnswer": "Those cars are clean."
     },
     {
-      "scrambled": [
+      "hu": "Ez a válasz helyes?",
+      "id": "wo_042",
+      "scrambledWords": [
         "Is",
         "this",
         "answer",
         "right"
       ],
-      "correct": "Is this answer right?",
-      "hu": "Ez a válasz helyes?"
+      "correctAnswer": "Is this answer right?"
     },
     {
-      "scrambled": [
+      "hu": "Ezek a cipők piszkosak.",
+      "id": "wo_043",
+      "scrambledWords": [
         "These",
         "shoes",
         "are",
         "dirty"
       ],
-      "correct": "These shoes are dirty.",
-      "hu": "Ezek a cipők piszkosak."
+      "correctAnswer": "These shoes are dirty."
     },
     {
-      "scrambled": [
+      "hu": "Azon a hegyen hó van.",
+      "id": "wo_044",
+      "scrambledWords": [
         "That",
         "mountain",
         "has",
         "snow"
       ],
-      "correct": "That mountain has snow.",
-      "hu": "Azon a hegyen hó van."
+      "correctAnswer": "That mountain has snow."
     },
     {
-      "scrambled": [
+      "hu": "Azok a dokumentumok fontosak.",
+      "id": "wo_045",
+      "scrambledWords": [
         "Those",
         "documents",
         "are",
         "important"
       ],
-      "correct": "Those documents are important.",
-      "hu": "Azok a dokumentumok fontosak."
+      "correctAnswer": "Those documents are important."
     },
     {
-      "scrambled": [
+      "hu": "Ez a kávé forró.",
+      "id": "wo_046",
+      "scrambledWords": [
         "This",
         "coffee",
         "is",
         "hot"
       ],
-      "correct": "This coffee is hot.",
-      "hu": "Ez a kávé forró."
+      "correctAnswer": "This coffee is hot."
     },
     {
-      "scrambled": [
+      "hu": "Azok a táskák nehezek?",
+      "id": "wo_047",
+      "scrambledWords": [
         "Are",
         "those",
         "bags",
         "heavy"
       ],
-      "correct": "Are those bags heavy?",
-      "hu": "Azok a táskák nehezek?"
+      "correctAnswer": "Are those bags heavy?"
     },
     {
-      "scrambled": [
+      "hu": "Az a lány a nővérem/húgom.",
+      "id": "wo_048",
+      "scrambledWords": [
         "That",
         "girl",
         "is",
         "my",
         "sister"
       ],
-      "correct": "That girl is my sister.",
-      "hu": "Az a lány a nővérem/húgom."
+      "correctAnswer": "That girl is my sister."
     },
     {
-      "scrambled": [
+      "hu": "Ezek a szobák tiszták.",
+      "id": "wo_049",
+      "scrambledWords": [
         "These",
         "rooms",
         "are",
         "clean"
       ],
-      "correct": "These rooms are clean.",
-      "hu": "Ezek a szobák tiszták."
+      "correctAnswer": "These rooms are clean."
     },
     {
-      "scrambled": [
+      "hu": "Az az óra nem működik.",
+      "id": "wo_050",
+      "scrambledWords": [
         "That",
         "clock",
         "doesn't",
         "work"
       ],
-      "correct": "That clock doesn't work.",
-      "hu": "Az az óra nem működik."
+      "correctAnswer": "That clock doesn't work."
     }
   ]
 }
