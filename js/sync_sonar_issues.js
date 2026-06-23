@@ -1,14 +1,14 @@
 const { execSync } = require('node:child_process');
 const https = require('node:https');
+const fs = require('node:fs');
 
 let ghPath = 'gh';
-try {
-  ghPath = execSync('which gh', {
-    encoding: 'utf8',
-    env: { PATH: '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/homebrew/bin' }
-  }).trim();
-} catch (e) {
-  ghPath = 'gh';
+if (fs.existsSync('/opt/homebrew/bin/gh')) {
+  ghPath = '/opt/homebrew/bin/gh';
+} else if (fs.existsSync('/usr/local/bin/gh')) {
+  ghPath = '/usr/local/bin/gh';
+} else if (fs.existsSync('/usr/bin/gh')) {
+  ghPath = '/usr/bin/gh';
 }
 
 // Fixed, unwriteable system directories path for safe execution
