@@ -116,13 +116,21 @@ function addIssueToProject(issueUrl, isSecurity) {
   try {
     // 0. Resolve Project Node ID
     console.log(`Resolving project details...`);
-    const projectOutput = execSync(`"${GH_PATH}" project view ${projectNumber} --owner ${owner} --format json`, { encoding: 'utf8' });
-    const project = JSON.parse(projectOutput);
+    const projectResult = spawnSync(GH_PATH, ['project', 'view', projectNumber, '--owner', owner, '--format', 'json'], { encoding: 'utf8' });
+    if (projectResult.status !== 0) {
+      console.error(`Failed to resolve project details: ${projectResult.stderr}`);
+      return;
+    }
+    const project = JSON.parse(projectResult.stdout);
     const projectId = project.id;
 
     // 0b. Resolve Field & Option IDs
-    const fieldsOutput = execSync(`"${GH_PATH}" project field-list ${projectNumber} --owner ${owner} --format json`, { encoding: 'utf8' });
-    const fieldsData = JSON.parse(fieldsOutput);
+    const fieldsResult = spawnSync(GH_PATH, ['project', 'field-list', projectNumber, '--owner', owner, '--format', 'json'], { encoding: 'utf8' });
+    if (fieldsResult.status !== 0) {
+      console.error(`Failed to resolve project fields: ${fieldsResult.stderr}`);
+      return;
+    }
+    const fieldsData = JSON.parse(fieldsResult.stdout);
     const statusField = (fieldsData.fields || []).find(f => f.name === 'Status');
     if (!statusField) {
       console.error('Status field not found in project.');
