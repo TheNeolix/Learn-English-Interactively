@@ -1,3 +1,5 @@
+// Helper script executed during GitHub Actions CD deployment to generate db_config.php
+// using secure single-quoted PHP variables to avoid variable interpolation issues.
 const fs = require('fs');
 
 const esc = (val) => {
