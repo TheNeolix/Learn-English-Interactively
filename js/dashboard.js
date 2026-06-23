@@ -1,5 +1,15 @@
 // js/dashboard.js
 
+// Cryptographically secure random number generator helper to satisfy SonarCloud S2245
+function secureRandom() {
+    if (typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) {
+        const array = new Uint32Array(1);
+        window.crypto.getRandomValues(array);
+        return array[0] / 4294967296; // 0xFFFFFFFF + 1 = 4294967296
+    }
+    return Math.random();
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     // Accordion listeners are now initialized dynamically inside renderSidebar()
     initTopNavbarListeners();
@@ -1139,18 +1149,18 @@ function runConfetti(amount) {
         conf.style.position = 'fixed';
         conf.style.width = '8px';
         conf.style.height = '8px';
-        conf.style.backgroundColor = ['var(--color-accent-in)', 'var(--color-success)', 'var(--color-accent-at)'][Math.floor(Math.random() * 3)];
-        conf.style.left = Math.random() * 100 + 'vw';
+        conf.style.backgroundColor = ['var(--color-accent-in)', 'var(--color-success)', 'var(--color-accent-at)'][Math.floor(secureRandom() * 3)];
+        conf.style.left = secureRandom() * 100 + 'vw';
         conf.style.top = '-10px';
         conf.style.zIndex = 9999;
-        conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        conf.style.borderRadius = secureRandom() > 0.5 ? '50%' : '0';
         conf.style.pointerEvents = 'none';
         document.body.appendChild(conf);
 
-        const dur = Math.random() * 2 + 1;
+        const dur = secureRandom() * 2 + 1;
         conf.animate([
             { transform: 'translateY(0) rotate(0)' },
-            { transform: `translateY(100vh) rotate(${Math.random() * 720}deg)` }
+            { transform: `translateY(100vh) rotate(${secureRandom() * 720}deg)` }
         ], { duration: dur * 1000, easing: 'linear' });
 
         setTimeout(() => conf.remove(), dur * 1000);
@@ -1158,7 +1168,7 @@ function runConfetti(amount) {
 }
 
 function canTriggerMiniQuiz() {
-    return Math.random() < 0.25; // 25% chance
+    return secureRandom() < 0.25; // 25% chance
 }
 
 let activeMiniQuizQuestion = null;
@@ -1187,19 +1197,19 @@ function triggerMiniQuiz(level, section, subsection) {
     }
     
     // Pick a random correct word
-    const correctWord = allWords[Math.floor(Math.random() * allWords.length)];
+    const correctWord = allWords[Math.floor(secureRandom() * allWords.length)];
     
     // Pick 3 random wrong answers
     let wrongOptions = allWords.filter(w => w.hu !== correctWord.hu).map(w => w.hu);
-    wrongOptions = wrongOptions.sort(() => 0.5 - Math.random()).slice(0, 3);
+    wrongOptions = wrongOptions.sort(() => 0.5 - secureRandom()).slice(0, 3);
     
     // If not enough wrong options in cache, fallback
     while (wrongOptions.length < 3) {
-        wrongOptions.push("rossz opció " + Math.random().toString().substring(2,4));
+        wrongOptions.push("rossz opció " + secureRandom().toString().substring(2,4));
     }
     
     let opts = [...wrongOptions, correctWord.hu];
-    opts = opts.sort(() => 0.5 - Math.random());
+    opts = opts.sort(() => 0.5 - secureRandom());
     const answerIdx = opts.indexOf(correctWord.hu);
 
     activeMiniQuizQuestion = {
@@ -3144,10 +3154,10 @@ function convertItemsToQuizQuestions(type, items) {
             if (!opts.includes(answer)) {
                 opts = [answer, "is", "are", "do"];
             }
-            opts = opts.sort(() => 0.5 - Math.random()).slice(0, 4);
+            opts = opts.sort(() => 0.5 - secureRandom()).slice(0, 4);
             if (!opts.includes(answer)) {
                 opts[0] = answer;
-                opts = opts.sort(() => 0.5 - Math.random());
+                opts = opts.sort(() => 0.5 - secureRandom());
             }
             return {
                 q: item.sentence.replace(/_{3,}/, "___"),
@@ -3311,7 +3321,7 @@ function renderQuizCardQuestion() {
     }
 
     if (quizState.type === 'word_order') {
-        const shuffled = [...qData.scrambledWords].sort(() => Math.random() - 0.5);
+        const shuffled = [...qData.scrambledWords].sort(() => secureRandom() - 0.5);
         const chipsHtml = shuffled.map(word =>
             `<button class="word-chip" onclick="selectQuizWordChip(this, '${escapeHTML(word)}')">${escapeHTML(word)}</button>`
         ).join("");
@@ -3448,7 +3458,7 @@ async function renderSectionExamTemplate(workspace, data) {
                             let itemsPool = srcData.items || srcData; 
                             
                             // Randomize
-                            itemsPool = itemsPool.sort(() => 0.5 - Math.random());
+                            itemsPool = itemsPool.sort(() => 0.5 - secureRandom());
                             let selected = itemsPool.slice(0, sourceConfig.count);
                             
                             // MAP TO EXAM FORMAT
@@ -3496,7 +3506,7 @@ async function renderSectionExamTemplate(workspace, data) {
                         }
                     }
                     // Shuffle the combined items
-                    combinedItems = combinedItems.sort(() => 0.5 - Math.random());
+                    combinedItems = combinedItems.sort(() => 0.5 - secureRandom());
                     fetched.items = combinedItems;
                     
                     // Because this is a brand new randomly generated exam, we MUST clear any old saved answers from localStorage!
@@ -3559,7 +3569,7 @@ async function renderSectionExamTemplate(workspace, data) {
             }
             const scrambledArray = item.scrambledWords || item.scrambled || [];
             const correctAnswer = item.correctAnswer || item.correct || "";
-            const shuffled = [...scrambledArray].sort(() => Math.random() - 0.5);
+            const shuffled = [...scrambledArray].sort(() => secureRandom() - 0.5);
             const chipsHtml = shuffled.map(word =>
                 `<button class="word-chip" onclick="selectWordChip(this, ${i}, true)" ${disabledAttr}>${word}</button>`
             ).join("");
@@ -4841,7 +4851,7 @@ async function initDailyQuests() {
         userProgress.completed_quests_today = [];
         
         // Pick 3 random quests
-        let shuffled = [...allQuestsPool].sort(() => 0.5 - Math.random());
+        let shuffled = [...allQuestsPool].sort(() => 0.5 - secureRandom());
         userProgress.active_quests = shuffled.slice(0, 3).map(q => q.id);
         
         // Initialize progress
