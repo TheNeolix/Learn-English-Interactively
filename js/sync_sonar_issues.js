@@ -61,7 +61,8 @@ function createGitHubIssue(issue) {
   else return; // Skip minor/info issues
 
   // Add security label for security vulnerabilities or security-tagged issues
-  if (issue.type === 'VULNERABILITY' || (issue.tags && issue.tags.includes('security'))) {
+  const isSecurity = issue.type === 'VULNERABILITY' || (issue.tags && issue.tags.includes('security'));
+  if (isSecurity) {
     labels.push('security');
   }
 
@@ -90,12 +91,52 @@ function createGitHubIssue(issue) {
 
     const result = spawnSync('gh', args, { encoding: 'utf8' });
     if (result.status === 0) {
-      console.log(`Created GitHub issue: ${result.stdout.trim()} for SonarCloud key: ${issue.key}`);
+      const issueUrl = result.stdout.trim();
+      console.log(`Created GitHub issue: ${issueUrl} for SonarCloud key: ${issue.key}`);
+      
+      // Route the issue to the project board
+      addIssueToProject(issueUrl, isSecurity);
     } else {
       console.error(`Failed to create issue for SonarCloud key ${issue.key}: ${result.stderr}`);
     }
   } catch (e) {
     console.error(`Failed to execute gh CLI for SonarCloud key ${issue.key}:`, e.message);
+  }
+}
+
+// Add issue to project and set Status
+function addIssueToProject(issueUrl, isSecurity) {
+  const projectNumber = process.env.PROJECT_NUMBER || '1'; // Default to project 1
+  const owner = 'Neolix-Studio';
+  
+  try {
+    const { spawnSync } = require('child_process');
+    
+    // 1. Add item to project
+    console.log(`Adding issue to project #${projectNumber}...`);
+    const addResult = spawnSync('gh', ['project', 'item-add', projectNumber, '--owner', owner, '--url', issueUrl], { encoding: 'utf8' });
+    if (addResult.status !== 0) {
+      console.error(`Failed to add issue to project: ${addResult.stderr}`);
+      return;
+    }
+
+    // Extract item ID (e.g. PVTI_...) from output
+    const match = addResult.stdout.match(/PVTI_[A-Za-z0-9_\-]+/);
+    if (!match) {
+      console.error(`Could not parse project item ID from output: ${addResult.stdout}`);
+      return;
+    }
+    const itemId = match[0];
+
+    // 2. Set status to "Security Hotspots" or "Backlog"
+    const targetStatus = isSecurity ? 'Security Hotspots' : 'Backlog';
+    console.log(`Setting status of item ${itemId} to '${targetStatus}'...`);
+    const editResult = spawnSync('gh', ['project', 'item-edit', projectNumber, '--owner', owner, '--id', itemId, '--field', 'Status', '--value', targetStatus], { encoding: 'utf8' });
+    if (editResult.status !== 0) {
+      console.error(`Failed to set status field: ${editResult.stderr}`);
+    }
+  } catch (e) {
+    console.error(`Failed to execute project integration for ${issueUrl}:`, e.message);
   }
 }
 
