@@ -2230,7 +2230,8 @@
     }
     
     .dashboard-right-sidebar {
-        position: relative;
+        position: sticky;
+        top: 70px;
         right: auto;
         width: 100%;
         background: oklch(0.18 0.01 260 / 0.7);
@@ -2240,9 +2241,9 @@
         box-shadow: none;
         padding: 2rem 1.5rem;
         transition: none;
-        height: 100%;
+        height: calc(100vh - 70px);
         z-index: 900;
-        overflow-y: visible;
+        overflow-y: auto;
     }
     
     .mobile-close-stats-btn {

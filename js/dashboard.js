@@ -1,6 +1,6 @@
 // js/dashboard.js
 
-// Cryptographically secure random number generator helper to satisfy SonarCloud S2245
+let randomSeed = Date.now();
 function secureRandom() {
     const cryptoObj = typeof globalThis !== 'undefined' ? (globalThis.crypto || globalThis.msCrypto) : null;
     if (cryptoObj?.getRandomValues) {
@@ -1201,7 +1201,6 @@ function triggerMiniQuiz(level, section, subsection) {
     // Pick a random correct word
     const correctWord = allWords[Math.floor(secureRandom() * allWords.length)];
     
-    // Pick 3 random wrong answers
     let wrongOptions = allWords.filter(w => w.hu !== correctWord.hu).map(w => w.hu);
     wrongOptions.sort(() => 0.5 - secureRandom());
     wrongOptions = wrongOptions.slice(0, 3);
