@@ -110,14 +110,14 @@ jobs:
           define('MIGRATION_TOKEN', "$MIGRATION_TOKEN");
           EOF
 
-      - name: Deploy files via SFTP
+      - name: Deploy files via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.WEBSUPPORT_FTP_SERVER }}
           username: ${{ secrets.WEBSUPPORT_FTP_USERNAME }}
           password: ${{ secrets.WEBSUPPORT_FTP_PASSWORD }}
-          port: 22
-          protocol: sftp
+          port: 21
+          protocol: ftps
           local-dir: ./
           server-dir: ${{ steps.vars.outputs.server_dir }}/
           exclude: |
