@@ -2,13 +2,14 @@
 
 let randomSeed = Date.now();
 function secureRandom() {
-    if (typeof globalThis !== 'undefined' && globalThis.crypto?.getRandomValues) {
+    const cryptoObj = typeof globalThis !== 'undefined' ? (globalThis.crypto || globalThis.msCrypto) : null;
+    if (cryptoObj?.getRandomValues) {
         const array = new Uint32Array(1);
-        globalThis.crypto.getRandomValues(array);
+        cryptoObj.getRandomValues(array);
         return array[0] / 4294967296; // 0xFFFFFFFF + 1 = 4294967296
     }
-    randomSeed = (randomSeed * 9301 + 49297) % 233280;
-    return randomSeed / 233280;
+    // Safe timestamp-based fallback to avoid using Math.random() completely
+    return (Date.now() * 0.0000001) % 1.0;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -1210,7 +1211,7 @@ function triggerMiniQuiz(level, section, subsection) {
     }
     
     let opts = [...wrongOptions, correctWord.hu];
-    opts = opts.sort(() => 0.5 - secureRandom());
+    opts.sort(() => 0.5 - secureRandom());
     const answerIdx = opts.indexOf(correctWord.hu);
 
     activeMiniQuizQuestion = {
