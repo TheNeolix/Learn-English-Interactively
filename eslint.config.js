@@ -1,4 +1,4 @@
-// ESLint configuration for linting project JavaScript files.
+// ESLint configuration for project JavaScript files.
 import js from "@eslint/js";
 
 export default [
