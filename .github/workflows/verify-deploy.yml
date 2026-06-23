@@ -75,7 +75,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           if [ -n "$SLACK_WEBHOOK_URL" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"❌ *CI Verify Failed* for <https://github.com/Neolix-Studio/Learn-English-Interactively/commit/${{ github.sha }}|${{ github.sha }}> (branch \`${{ github.ref_name }}\` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"❌ *CI Verify Failed* for <https://github.com/Neolix-Studio/Learn-English-Interactively/commit/${{ github.sha }}|${{ github.sha }}> (branch `${{ github.ref_name }}` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
           fi
 
       - name: Notify Slack on CI Success (PR Only)
@@ -84,7 +84,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           if [ -n "$SLACK_WEBHOOK_URL" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ *CI Verify Passed* for PR <https://github.com/Neolix-Studio/Learn-English-Interactively/pull/${{ github.event.pull_request.number }}|#${{ github.event.pull_request.number }}> (branch \`${{ github.ref_name }}\` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ *CI Verify Passed* for PR <https://github.com/Neolix-Studio/Learn-English-Interactively/pull/${{ github.event.pull_request.number }}|#${{ github.event.pull_request.number }}> (branch `${{ github.ref_name }}` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
           fi
 
   deploy:
@@ -164,7 +164,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           if [ -n "$SLACK_WEBHOOK_URL" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 *CD Deploy Succeeded* to staging/production for <https://github.com/Neolix-Studio/Learn-English-Interactively/commit/${{ github.sha }}|${{ github.sha }}> (branch \`${{ github.ref_name }}\` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"🚀 *CD Deploy Succeeded* to staging/production for <https://github.com/Neolix-Studio/Learn-English-Interactively/commit/${{ github.sha }}|${{ github.sha }}> (branch `${{ github.ref_name }}` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
           fi
 
       - name: Notify Slack on Deploy Failure
@@ -173,5 +173,5 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           if [ -n "$SLACK_WEBHOOK_URL" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"❌ *CD Deploy Failed* for <https://github.com/Neolix-Studio/Learn-English-Interactively/commit/${{ github.sha }}|${{ github.sha }}> (branch \`${{ github.ref_name }}\` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"❌ *CD Deploy Failed* for <https://github.com/Neolix-Studio/Learn-English-Interactively/commit/${{ github.sha }}|${{ github.sha }}> (branch `${{ github.ref_name }}` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
           fi

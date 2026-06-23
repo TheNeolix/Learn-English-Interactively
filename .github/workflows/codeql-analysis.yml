@@ -43,7 +43,7 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       run: |
         if [ -n "$SLACK_WEBHOOK_URL" ]; then
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ *CodeQL Security Scan Passed* for <https://github.com/Neolix-Studio/Learn-English-Interactively/commit/${{ github.sha }}|${{ github.sha }}> (branch \`${{ github.ref_name }}\` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ *CodeQL Security Scan Passed* for <https://github.com/Neolix-Studio/Learn-English-Interactively/commit/${{ github.sha }}|${{ github.sha }}> (branch `${{ github.ref_name }}` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
         fi
 
     - name: Notify Slack on Failure
@@ -52,5 +52,5 @@ jobs:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       run: |
         if [ -n "$SLACK_WEBHOOK_URL" ]; then
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"❌ *CodeQL Security Scan Failed* for <https://github.com/Neolix-Studio/Learn-English-Interactively/commit/${{ github.sha }}|${{ github.sha }}> (branch \`${{ github.ref_name }}\` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"❌ *CodeQL Security Scan Failed* for <https://github.com/Neolix-Studio/Learn-English-Interactively/commit/${{ github.sha }}|${{ github.sha }}> (branch `${{ github.ref_name }}` by ${{ github.actor }})"}' "$SLACK_WEBHOOK_URL"
         fi
