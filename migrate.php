@@ -65,7 +65,7 @@ try {
     // 1. Ensure migration_history table exists
     $historySqlFile = __DIR__ . '/data/migrations/03_create_migration_history.sql';
     if (!file_exists($historySqlFile)) {
-        throw new Exception("Core migration file 03_create_migration_history.sql is missing!");
+        throw new RuntimeException("Core migration file 03_create_migration_history.sql is missing!");
     }
     
     $historySql = file_get_contents($historySqlFile);
@@ -122,7 +122,7 @@ try {
 }
 
 // Response output
-$status = count($errors) === 0;
+$status = empty($errors);
 $response = [
     'success' => $status,
     'applied' => $applied,
