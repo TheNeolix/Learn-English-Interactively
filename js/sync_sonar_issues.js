@@ -1,5 +1,10 @@
-const { execSync } = require('child_process');
-const https = require('https');
+const { execSync, spawnSync } = require('node:child_process');
+const https = require('node:https');
+const fs = require('node:fs');
+
+// Resolve absolute path to the 'gh' executable to satisfy SonarCloud security rule S4036
+const GH_PATHS = ['/usr/bin/gh', '/usr/local/bin/gh', '/opt/homebrew/bin/gh'];
+const GH_PATH = GH_PATHS.find(p => fs.existsSync(p)) || 'gh';
 
 // Configuration
 const PROJECT_KEY = 'Neolix-Studio_Learn-English-Interactively';
@@ -41,7 +46,7 @@ function fetchSonarIssues() {
 // Check existing GitHub issues with 'sonarcloud' label
 function fetchExistingGitHubIssues() {
   try {
-    const output = execSync('gh issue list --label "sonarcloud" --json title,body,number --limit 200', { encoding: 'utf8' });
+    const output = execSync(`"${GH_PATH}" issue list --label "sonarcloud" --json title,body,number --limit 200`, { encoding: 'utf8' });
     return JSON.parse(output || '[]');
   } catch (e) {
     console.error('Failed to fetch existing GitHub issues via gh CLI:', e.message);
@@ -83,13 +88,12 @@ function createGitHubIssue(issue) {
 `;
 
   try {
-    const { spawnSync } = require('child_process');
     const args = ['issue', 'create', '--title', title, '--body', body];
     labels.forEach(l => {
       args.push('--label', l);
     });
 
-    const result = spawnSync('gh', args, { encoding: 'utf8' });
+    const result = spawnSync(GH_PATH, args, { encoding: 'utf8' });
     if (result.status === 0) {
       const issueUrl = result.stdout.trim();
       console.log(`Created GitHub issue: ${issueUrl} for SonarCloud key: ${issue.key}`);
@@ -110,16 +114,14 @@ function addIssueToProject(issueUrl, isSecurity) {
   const owner = 'Neolix-Studio';
   
   try {
-    const { spawnSync, execSync } = require('child_process');
-    
     // 0. Resolve Project Node ID
     console.log(`Resolving project details...`);
-    const projectOutput = execSync(`gh project view ${projectNumber} --owner ${owner} --format json`, { encoding: 'utf8' });
+    const projectOutput = execSync(`"${GH_PATH}" project view ${projectNumber} --owner ${owner} --format json`, { encoding: 'utf8' });
     const project = JSON.parse(projectOutput);
     const projectId = project.id;
 
     // 0b. Resolve Field & Option IDs
-    const fieldsOutput = execSync(`gh project field-list ${projectNumber} --owner ${owner} --format json`, { encoding: 'utf8' });
+    const fieldsOutput = execSync(`"${GH_PATH}" project field-list ${projectNumber} --owner ${owner} --format json`, { encoding: 'utf8' });
     const fieldsData = JSON.parse(fieldsOutput);
     const statusField = (fieldsData.fields || []).find(f => f.name === 'Status');
     if (!statusField) {
@@ -138,7 +140,7 @@ function addIssueToProject(issueUrl, isSecurity) {
 
     // 1. Add item to project
     console.log(`Adding issue to project #${projectNumber}...`);
-    const addResult = spawnSync('gh', ['project', 'item-add', projectNumber, '--owner', owner, '--url', issueUrl], { encoding: 'utf8' });
+    const addResult = spawnSync(GH_PATH, ['project', 'item-add', projectNumber, '--owner', owner, '--url', issueUrl], { encoding: 'utf8' });
     if (addResult.status !== 0) {
       console.error(`Failed to add issue to project: ${addResult.stderr}`);
       return;
@@ -154,7 +156,7 @@ function addIssueToProject(issueUrl, isSecurity) {
 
     // 2. Set status using node IDs
     console.log(`Setting status of item ${itemId} to '${targetStatusName}' (${optionId})...`);
-    const editResult = spawnSync('gh', [
+    const editResult = spawnSync(GH_PATH, [
       'project', 'item-edit',
       '--project-id', projectId,
       '--id', itemId,
@@ -184,8 +186,8 @@ async function run() {
     
     // Extract SonarCloud keys from HTML comments in existing issue bodies
     existingIssues.forEach(issue => {
-      const match = (issue.body || '').match(/<!-- SonarCloudKey:\s*([A-Za-z0-9_\-]+)\s*-->/);
-      if (match && match[1]) {
+      const match = (issue.body || '').match(/<!-- SonarCloudKey:\s*([A-Za-z0-9_-]+)\s*-->/);
+      if (match?.[1]) {
         existingKeys.add(match[1]);
       }
     });
