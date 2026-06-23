@@ -58,6 +58,8 @@ try {
     exit(1);
 }
 
+class MigrationException extends RuntimeException {}
+
 $applied = [];
 $errors = [];
 
@@ -65,7 +67,7 @@ try {
     // 1. Ensure migration_history table exists
     $historySqlFile = __DIR__ . '/data/migrations/03_create_migration_history.sql';
     if (!file_exists($historySqlFile)) {
-        throw new RuntimeException("Core migration file 03_create_migration_history.sql is missing!");
+        throw new MigrationException("Core migration file 03_create_migration_history.sql is missing!");
     }
     
     $historySql = file_get_contents($historySqlFile);
