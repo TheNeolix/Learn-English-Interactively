@@ -203,6 +203,14 @@ async function run() {
 
     // Filter and process new issues
     let createdCount = 0;
+    
+    // Sort issues so that security-related issues are prioritized and processed first
+    const getIssuePriority = (issue) => {
+      const isSecurity = issue.type === 'VULNERABILITY' || (issue.tags && issue.tags.includes('security'));
+      return isSecurity ? 1 : 0;
+    };
+    sonarIssues.sort((a, b) => getIssuePriority(b) - getIssuePriority(a));
+
     for (const issue of sonarIssues) {
       if (existingKeys.has(issue.key)) {
         continue; // Already tracked
