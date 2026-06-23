@@ -1,5 +1,11 @@
-const { execSync } = require('child_process');
-const https = require('https');
+const { execSync } = require('node:child_process');
+const https = require('node:https');
+
+// Fixed, unwriteable directories path for safe OS command execution
+const safeEnv = {
+  ...process.env,
+  PATH: '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/homebrew/bin'
+};
 
 // Configuration
 const PROJECT_KEY = 'Neolix-Studio_Learn-English-Interactively';
@@ -41,7 +47,7 @@ function fetchSonarIssues() {
 // Check existing GitHub issues with 'sonarcloud' label
 function fetchExistingGitHubIssues() {
   try {
-    const output = execSync('gh issue list --label "sonarcloud" --json title,body,number --limit 200', { encoding: 'utf8' });
+    const output = execSync('gh issue list --label "sonarcloud" --json title,body,number --limit 200', { encoding: 'utf8', env: safeEnv });
     return JSON.parse(output || '[]');
   } catch (e) {
     console.error('Failed to fetch existing GitHub issues via gh CLI:', e.message);
@@ -61,7 +67,7 @@ function createGitHubIssue(issue) {
   else return; // Skip minor/info issues
 
   // Add security label for security vulnerabilities or security-tagged issues
-  const isSecurity = issue.type === 'VULNERABILITY' || (issue.tags && issue.tags.includes('security'));
+  const isSecurity = issue.type === 'VULNERABILITY' || issue.tags?.includes('security');
   if (isSecurity) {
     labels.push('security');
   }
@@ -83,13 +89,13 @@ function createGitHubIssue(issue) {
 `;
 
   try {
-    const { spawnSync } = require('child_process');
+    const { spawnSync } = require('node:child_process');
     const args = ['issue', 'create', '--title', title, '--body', body];
     labels.forEach(l => {
       args.push('--label', l);
     });
 
-    const result = spawnSync('gh', args, { encoding: 'utf8' });
+    const result = spawnSync('gh', args, { encoding: 'utf8', env: safeEnv });
     if (result.status === 0) {
       const issueUrl = result.stdout.trim();
       console.log(`Created GitHub issue: ${issueUrl} for SonarCloud key: ${issue.key}`);
@@ -110,18 +116,18 @@ function addIssueToProject(issueUrl, isSecurity) {
   const owner = 'Neolix-Studio';
   
   try {
-    const { spawnSync } = require('child_process');
+    const { spawnSync } = require('node:child_process');
     
     // 1. Add item to project
     console.log(`Adding issue to project #${projectNumber}...`);
-    const addResult = spawnSync('gh', ['project', 'item-add', projectNumber, '--owner', owner, '--url', issueUrl], { encoding: 'utf8' });
+    const addResult = spawnSync('gh', ['project', 'item-add', projectNumber, '--owner', owner, '--url', issueUrl], { encoding: 'utf8', env: safeEnv });
     if (addResult.status !== 0) {
       console.error(`Failed to add issue to project: ${addResult.stderr}`);
       return;
     }
 
     // Extract item ID (e.g. PVTI_...) from output
-    const match = addResult.stdout.match(/PVTI_[A-Za-z0-9_\-]+/);
+    const match = addResult.stdout.match(/PVTI_[A-Za-z0-9_-]+/);
     if (!match) {
       console.error(`Could not parse project item ID from output: ${addResult.stdout}`);
       return;
@@ -131,7 +137,7 @@ function addIssueToProject(issueUrl, isSecurity) {
     // 2. Set status to "Security Hotspots" or "Bug/Refinement"
     const targetStatus = isSecurity ? 'Security Hotspots' : 'Bug/Refinement';
     console.log(`Setting status of item ${itemId} to '${targetStatus}'...`);
-    const editResult = spawnSync('gh', ['project', 'item-edit', projectNumber, '--owner', owner, '--id', itemId, '--field', 'Status', '--value', targetStatus], { encoding: 'utf8' });
+    const editResult = spawnSync('gh', ['project', 'item-edit', projectNumber, '--owner', owner, '--id', itemId, '--field', 'Status', '--value', targetStatus], { encoding: 'utf8', env: safeEnv });
     if (editResult.status !== 0) {
       console.error(`Failed to set status field: ${editResult.stderr}`);
     }
@@ -152,8 +158,8 @@ async function run() {
     
     // Extract SonarCloud keys from HTML comments in existing issue bodies
     existingIssues.forEach(issue => {
-      const match = (issue.body || '').match(/<!-- SonarCloudKey:\s*([A-Za-z0-9_\-]+)\s*-->/);
-      if (match && match[1]) {
+      const match = (issue.body || '').match(/<!-- SonarCloudKey:\s*([A-Za-z0-9_-]+)\s*-->/);
+      if (match?.[1]) {
         existingKeys.add(match[1]);
       }
     });
