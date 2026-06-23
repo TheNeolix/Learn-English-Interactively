@@ -30,13 +30,13 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@e4308575001469e8b7593c6f86236b2880c5c643 # v2.30.0
+        uses: shivammathur/setup-php@7c071df6c8888b569562719a6907403482705299 # v2.37.1
         with:
           php-version: '8.2'
           extensions: pdo, pdo_mysql
 
       - name: Setup Node.js
-        uses: actions/setup-node@917d6981881532163155708573673c68331d2797 # v4.0.3
+        uses: actions/setup-node@eff380dfbcf941bf8832e4acb788cebe13dfd758 # v4.0.3
         with:
           node-version: '20'
 
