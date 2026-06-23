@@ -60,6 +60,11 @@ function createGitHubIssue(issue) {
   else if (severity === 'major') labels.push('severity/medium');
   else return; // Skip minor/info issues
 
+  // Add security label for security vulnerabilities or security-tagged issues
+  if (issue.type === 'VULNERABILITY' || (issue.tags && issue.tags.includes('security'))) {
+    labels.push('security');
+  }
+
   const title = `[SonarCloud] ${issue.message}`;
   
   // Format body with issue details and trailing metadata key for tracking
