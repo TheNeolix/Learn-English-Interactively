@@ -1643,6 +1643,27 @@ function renderRoadmap(levelName) {
     setupHeroCardAndScroll(levelName);
 }
 
+function setupHeroCardAndScroll(levelName) {
+    const titleEl = document.getElementById("hero-card-title");
+    if (titleEl) {
+        const levelLabels = {
+            A1: 'A1 - Kezdő Szint',
+            A2: 'A2 - Alapfokú Szint',
+            B1: 'B1 - Középfokú Szint',
+            B2: 'B2 - Haladó Szint'
+        };
+        titleEl.textContent = levelLabels[levelName] || `${levelName} Szint`;
+    }
+    
+    // Auto-scroll the roadmap to the first active lesson node
+    setTimeout(() => {
+        const activeNode = document.querySelector(".lesson-node.active");
+        if (activeNode) {
+            activeNode.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }, 100);
+}
+
 window.openRoadmapNode = function(level, section, subsection, isAccessible) {
     if (!isAccessible) {
         if (ProgressManager.isGuest && !isContentAccessible(level, section, subsection)) {
