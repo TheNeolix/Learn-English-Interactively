@@ -139,6 +139,8 @@ jobs:
             .stylelintrc.json
             js/validate_json.js
             js/write_db_config.js
+            js/sync_sonar_issues.js
+            .github/**
 
       - name: Run Remote Migrations
         env:

@@ -1,0 +1,32 @@
+name: SonarCloud Issue Sync
+
+on:
+  workflow_run:
+    workflows: ["CI/CD Verify and Deploy"]
+    types:
+      - completed
+  schedule:
+    - cron: '0 0 * * *' # Also run daily at midnight to keep in sync
+  workflow_dispatch: # Allow manual triggers
+
+jobs:
+  sync:
+    name: Sync SonarCloud Issues
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Sync Script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: node js/sync_sonar_issues.js
