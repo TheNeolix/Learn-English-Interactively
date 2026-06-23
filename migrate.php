@@ -101,7 +101,10 @@ try {
                 // Record execution
                 $logStmt = $pdo->prepare("INSERT INTO migration_history (migration_name) VALUES (?)");
                 $logStmt->execute([$fileName]);
-                $pdo->commit();
+                
+                if ($pdo->inTransaction()) {
+                    $pdo->commit();
+                }
                 
                 $applied[] = $fileName;
             } catch (Exception $e) {
