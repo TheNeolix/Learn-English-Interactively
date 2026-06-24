@@ -1,0 +1,177 @@
+[
+  {
+    "number": 156,
+    "title": "[SonarCloud] Unnecessary escape character: \\-.",
+    "status": "Bug/Refinement",
+    "body": "\n### SonarCloud Issue Detail\n* **Message:** Unnecessary escape character: \\-.\n* **Severity:** MAJOR\n* **Type:** CODE_SMELL\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/sync_sonar_issues.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/sync_sonar_issues.js)\n* **Line:** 158\n\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ71R8FScDLBeSzRRW5Z)\n\n<!-- SonarCloudKey: AZ71R8FScDLBeSzRRW5Z -->\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/156"
+  },
+  {
+    "number": 155,
+    "title": "[SonarCloud] Prefer using an optional chain expression instead, as it's more concise and easier to read.",
+    "status": "Bug/Refinement",
+    "body": "\n### SonarCloud Issue Detail\n* **Message:** Prefer using an optional chain expression instead, as it's more concise and easier to read.\n* **Severity:** MAJOR\n* **Type:** CODE_SMELL\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/sync_sonar_issues.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/sync_sonar_issues.js)\n* **Line:** 69\n\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ71R8FScDLBeSzRRW5Y)\n\n<!-- SonarCloudKey: AZ71R8FScDLBeSzRRW5Y -->\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/155"
+  },
+  {
+    "number": 34,
+    "title": "Dynamic Content Generation for Exercises, Quizzes, and Exams from JSON Data",
+    "status": "Bug/Refinement",
+    "body": "As a system developer, I want all exercises, pop-quizzes, and exams to pull their vocabulary and sentence structures directly from our local JSON files, so that content changes can be managed centrally through data updates without rewriting application logic.\n\nAcceptance Criteria\n1. Data-Driven Content Generation\n\nAll interactive assessment elements—including exercises, pop-quizzes, and milestone exams—must be dynamically generated using only the words and sentences present in the application's .json data files.\n\nHardcoded text strings or manual content blocks within the application component views must be removed.\n\n2. Content Matching & Validation\n\nThe generation engine must strictly pair definitions, vocabulary words, translation tasks, and sentence puzzles to the exact content blocks mapped out in the JSON file for that specific lesson or module.\n\nBuild a validation fallback to ensure that if a JSON block is missing expected variables (like a missing translation string), the system fails gracefully rather than rendering empty text spaces.\n\n3. Test and Quiz Logic Integrity\n\nPop-quizzes and exams must dynamically pull correct answers and corresponding distractor options (wrong answers) directly from the context of the JSON dataset.\n\nRandomized matching logic must ensure that test variants pull from the assigned pool of JSON content mapped to the user's current progress milestone.",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/34"
+  },
+  {
+    "number": 96,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 16 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 16 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 206\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VHq)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VHq -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/96"
+  },
+  {
+    "number": 157,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 55 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\n### SonarCloud Issue Detail\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 55 to the 15 allowed.\n* **Severity:** CRITICAL\n* **Type:** CODE_SMELL\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\n* **Line:** 1381\n\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VIs)\n\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VIs -->\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/157"
+  },
+  {
+    "number": 97,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 26 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 26 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 248\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VHr)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VHr -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/97"
+  },
+  {
+    "number": 99,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 332\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VHt)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VHt -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/99"
+  },
+  {
+    "number": 100,
+    "title": "[SonarCloud] Prefer  over .",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Prefer  over .\\n* **Severity:** MAJOR\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 430\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VHy)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VHy -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/100"
+  },
+  {
+    "number": 101,
+    "title": "[SonarCloud] Prefer  over .",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Prefer  over .\\n* **Severity:** MAJOR\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 432\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VHz)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VHz -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/101"
+  },
+  {
+    "number": 102,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 28 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 28 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 3254\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VJU)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VJU -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/102"
+  },
+  {
+    "number": 103,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 651\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VIL)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VIL -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/103"
+  },
+  {
+    "number": 107,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 36 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 36 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 874\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VIW)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VIW -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/107"
+  },
+  {
+    "number": 109,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 1035\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VIc)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VIc -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/109"
+  },
+  {
+    "number": 114,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 43 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 43 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 3418\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VJc)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VJc -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/114"
+  },
+  {
+    "number": 115,
+    "title": "[SonarCloud] This function has 6 returns, which is more than the 3 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** This function has 6 returns, which is more than the 3 allowed.\\n* **Severity:** MAJOR\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:api.php](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/api.php)\\n* **Line:** 98\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Z9zgc9E2gE0VKn)\\n\\n<!-- SonarCloudKey: AZ7ym2Z9zgc9E2gE0VKn -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/115"
+  },
+  {
+    "number": 117,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:api.php](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/api.php)\\n* **Line:** 98\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Z9zgc9E2gE0VKp)\\n\\n<!-- SonarCloudKey: AZ7ym2Z9zgc9E2gE0VKp -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/117"
+  },
+  {
+    "number": 128,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 20 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 20 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 547\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VH9)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VH9 -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/128"
+  },
+  {
+    "number": 130,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 26 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 26 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:api.php](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/api.php)\\n* **Line:** 246\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Z9zgc9E2gE0VKq)\\n\\n<!-- SonarCloudKey: AZ7ym2Z9zgc9E2gE0VKq -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/130"
+  },
+  {
+    "number": 136,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 332\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VHt)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VHt -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/136"
+  },
+  {
+    "number": 137,
+    "title": "[SonarCloud] Prefer  over .",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Prefer  over .\\n* **Severity:** MAJOR\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 430\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VHy)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VHy -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/137"
+  },
+  {
+    "number": 138,
+    "title": "[SonarCloud] Prefer  over .",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Prefer  over .\\n* **Severity:** MAJOR\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 432\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VHz)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VHz -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/138"
+  },
+  {
+    "number": 139,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 651\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VIL)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VIL -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/139"
+  },
+  {
+    "number": 142,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 1035\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VIc)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VIc -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/142"
+  },
+  {
+    "number": 141,
+    "title": "[SonarCloud] Refactor this function to reduce its Cognitive Complexity from 36 to the 15 allowed.",
+    "status": "Bug/Refinement",
+    "body": "\\n### SonarCloud Issue Detail\\n* **Message:** Refactor this function to reduce its Cognitive Complexity from 36 to the 15 allowed.\\n* **Severity:** CRITICAL\\n* **Type:** CODE_SMELL\\n* **File:** [Neolix-Studio_Learn-English-Interactively:js/dashboard.js](https://github.com/Neolix-Studio/Learn-English-Interactively/blob/main/js/dashboard.js)\\n* **Line:** 874\\n\\n[View on SonarCloud](https://sonarcloud.io/project/issues?id=Neolix-Studio_Learn-English-Interactively&open=AZ7ym2Zozgc9E2gE0VIW)\\n\\n<!-- SonarCloudKey: AZ7ym2Zozgc9E2gE0VIW -->\\n",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/141"
+  },
+  {
+    "number": 160,
+    "title": "Fix Streak Shield (Streak Pajzs) Rendering, Purchase Logic, and Validation",
+    "status": "Bug/Refinement",
+    "body": "As a learner on the platform,\nI want my Streak Shields (Streak Pajzsok) to accurately reflect how many shields I own (up to a maximum of 3),\nSo that I can confidently know my daily streak is protected if I miss a day of practicing English.\n\nAcceptance Criteria (AC)\n1. Visual Rendering Fix (The 3rd Shield Bug)\n•\tGiven a user has purchased or earned 3 Streak Shields,\n•\tWhen they look at the header section in the right sidebar,\n•\tThen all 3 shield icons must render as fully active/filled. (Currently, the third icon never shows as full, even if the backend count is 3).\n•\tThen if a user has 0, 1, or 2 shields, the remaining slots up to the max capacity of 3 must render as empty/inactive placeholders.\n2. Purchase & Inventory Logic\n•\tGiven a user is in the Reward Shop (JUTALOM BOLT),\n•\tWhen they click \"Buy\" (Vásárlás) on the Streak Shield item,\n•\tThen the system must check if current_shields < 3.\n•\tIf true: Deduct the cost, increment the shield count in the database (Supabase/MariaDB), and update the UI.\n•\tIf false (already has 3): The \"Vásárlás\" button should be disabled, or a message should state that shield inventory is full.\n3. Streak Protection Logic (The \"Missed Day\" Rules)\n•\tWhen a user opens the app for the first time on a new calendar day:\n•\tScenario A (Active): If they completed a module yesterday, their active streak day count increments or holds.\n•\tScenario B (Protected): If they missed yesterday but have shields > 0, the system must consume exactly 1 shield (shields - 1), maintain the active streak count, and notify the user that a shield saved their streak.\n•\tScenario C (Broken): If they missed yesterday and have shields == 0, the active streak resets to 0.\n\nHardcoded Test Scenario (Local Development Setup)\nTo help your junior developer test edge cases safely without waiting 48 real-world hours, have them implement a temporary mock state toggle in the code.\n•\tThe Setup: Create a hardcoded mock state that simulates the following data timeline when the component mounts:\n•\tDay 1 to 10: User builds a 10-day streak (saved in DB).\n•\tDay 11: User has 3 Streak Shields in inventory.\n•\tDay 12 & 13: User completely logs off and misses both days.\n•\tThe Expected Outcome to Verify: * When the app is opened on Day 14, the user should see their 10-day streak is still intact.\n•\tThe right sidebar must now display exactly 1 active shield left (2 shields were consumed to protect the 2 missed days).\n🛠️ Technical Context & Notes (For Junior Dev)\n•\tCheck the Loop/Array Index: The bug where the \"third shield is never full\" is highly likely a classic off-by-one error in the UI rendering loop. Look at the component drawing the shields (e.g., a .map() or a for loop checking index < streakShields). If it's using a strict less-than operator against a 0-indexed layout, the 3rd item might be failing the condition.\n•\tState Synchronization: Ensure that when a shield is bought in the shop column, the state in the header column updates instantly without requiring a full page refresh.\n\nWhy This Matters to a Junior (Teaching Moment)\n\"Gamification features like streaks and shields drive user retention, but they rely entirely on trust. If a user loses a 50-day streak because our code didn't accurately register their third shield, they will feel cheated and might quit the app. This is why writing hardcoded time-travel test scenarios is an industry standard: we can't wait days in real life to see if our time and date logic actually works!\"",
+    "url": "https://github.com/Neolix-Studio/Learn-English-Interactively/issues/160"
+  }
+]
