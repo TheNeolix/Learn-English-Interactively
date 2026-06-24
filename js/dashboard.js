@@ -1203,7 +1203,6 @@ function triggerMiniQuiz(level, section, subsection) {
     // Pick a random correct word
     const correctWord = allWords[Math.floor(secureRandom() * allWords.length)];
     
-    // Pick 3 random wrong answers
     let wrongOptions = allWords.filter(w => w.hu !== correctWord.hu).map(w => w.hu);
     wrongOptions.sort(() => 0.5 - secureRandom());
     wrongOptions = wrongOptions.slice(0, 3);
@@ -1214,7 +1213,7 @@ function triggerMiniQuiz(level, section, subsection) {
     }
     
     let opts = [...wrongOptions, correctWord.hu];
-    opts = opts.sort(() => 0.5 - secureRandom());
+    opts.sort(() => 0.5 - secureRandom());
     const answerIdx = opts.indexOf(correctWord.hu);
 
     activeMiniQuizQuestion = {
@@ -3163,7 +3162,7 @@ function convertItemsToQuizQuestions(type, items) {
             opts = opts.slice(0, 4);
             if (!opts.includes(answer)) {
                 opts[0] = answer;
-                opts = opts.sort(() => 0.5 - secureRandom());
+                opts.sort(() => 0.5 - secureRandom());
             }
             return {
                 q: item.sentence.replace(/_{3,}/, "___"),
