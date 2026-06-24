@@ -201,15 +201,16 @@
                     
                     <div style="display: flex; flex-direction: column; margin-bottom: 0.8rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-                            <span style="font-size: 0.85rem; font-weight: 500;">Hangeffektek Hangerő</span>
+                            <label for="sound-slider" style="font-size: 0.85rem; font-weight: 500; cursor: pointer;">Hangeffektek Hangerő</label>
                             <span id="sound-val-display" style="font-size: 0.75rem; color: var(--color-accent-in); font-weight: bold;">50%</span>
                         </div>
                         <input type="range" id="sound-slider" min="0" max="1" step="0.1" value="0.5" oninput="updateVolume(this.value)" style="width: 100%; accent-color: var(--color-accent-in);">
                     </div>
                     
                     <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <span style="font-size: 0.85rem;">Csökkentett mozgás</span>
-                        <label class="switch">
+                        <label for="reduced-motion-toggle" style="font-size: 0.85rem; cursor: pointer;">Csökkentett mozgás</label>
+                        <label class="switch" for="reduced-motion-toggle">
+                            <span style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;">Csökkentett mozgás bekapcsolása</span>
                             <input type="checkbox" id="reduced-motion-toggle" onchange="toggleReducedMotion(this.checked)">
                             <span class="slider round"></span>
                         </label>
@@ -222,28 +223,27 @@
 
     </div>
 
-    <!-- MOBILE BOTTOM NAVIGATION BAR -->
     <nav class="mobile-bottom-bar" aria-label="Mobil navigáció">
-        <a href="#" class="bottom-nav-item" id="mobile-nav-menu" onclick="openMobileDrawer('nav'); return false;">
+        <button type="button" class="bottom-nav-item" id="mobile-nav-menu" onclick="openMobileDrawer('nav')">
             <span class="bottom-nav-icon">☰</span>
             <span>Szintek</span>
-        </a>
-        <a href="#" class="bottom-nav-item active" id="mobile-nav-home" onclick="openMobileDrawer('home'); return false;">
+        </button>
+        <button type="button" class="bottom-nav-item active" id="mobile-nav-home" onclick="openMobileDrawer('home')">
             <span class="bottom-nav-icon">🏠</span>
             <span>Tananyag</span>
-        </a>
-        <a href="#" class="bottom-nav-item" id="mobile-nav-quests" onclick="openMobileDrawer('quests'); return false;">
+        </button>
+        <button type="button" class="bottom-nav-item" id="mobile-nav-quests" onclick="openMobileDrawer('quests')">
             <span class="bottom-nav-icon">🎯</span>
             <span>Küldetések</span>
-        </a>
-        <a href="#" class="bottom-nav-item" id="mobile-nav-stats" onclick="openMobileDrawer('stats'); return false;">
+        </button>
+        <button type="button" class="bottom-nav-item" id="mobile-nav-stats" onclick="openMobileDrawer('stats')">
             <span class="bottom-nav-icon">📊</span>
             <span>Statisztika</span>
-        </a>
-        <a href="#" class="bottom-nav-item" id="mobile-nav-profile" onclick="openMobileDrawer('profile'); return false;">
+        </button>
+        <button type="button" class="bottom-nav-item" id="mobile-nav-profile" onclick="openMobileDrawer('profile')">
             <span class="bottom-nav-icon">👤</span>
             <span>Profil</span>
-        </a>
+        </button>
     </nav>
 
     <!-- ANIMATED WIP MODAL OVERLAY BOX FOR DASHBOARD -->
@@ -279,7 +279,7 @@
 
     <!-- PROFILE MODAL -->
     <div id="profile-modal" class="modal-overlay" aria-hidden="true" onclick="if(event.target===this)this.classList.remove('is-active')">
-        <div class="modal-content drawer-modal-content glass-panel profile-glass-panel" onclick="event.stopPropagation()">
+        <div class="modal-content drawer-modal-content glass-panel profile-glass-panel">
             <button id="close-profile-btn" class="btn-close-icon" aria-label="Bezárás" onclick="document.getElementById('profile-modal').classList.remove('is-active')">✕</button>
             <h2 class="profile-title">👤 Profilom</h2>
             
@@ -305,7 +305,7 @@
                         <div class="input-group">
                             <label for="new-password">Új jelszó 
                                 <div class="tooltip-container" onclick="event.preventDefault();">
-                                    <span class="info-tooltip" tabindex="0">ⓘ</span>
+                                    <button type="button" class="info-tooltip" aria-label="Jelszó követelmények információ">ⓘ</button>
                                     <div class="custom-tooltip">Minimum 8, maximum 16 karakter. Tartalmaznia kell: kisbetűt, nagybetűt, számot és speciális karaktert.</div>
                                 </div>
                             </label>
@@ -359,8 +359,8 @@
     </div>
 
     <!-- IMAGE LIGHTBOX MODAL -->
-    <div id="image-lightbox" class="modal-overlay" aria-hidden="true" onclick="closeLightbox(event)">
-        <div class="lightbox-content" style="position: relative; max-width: 90vw; max-height: 90vh; display: flex; justify-content: center; align-items: center;" onclick="event.stopPropagation()">
+    <div id="image-lightbox" class="modal-overlay" aria-hidden="true" onclick="if(event.target===this)closeLightbox(event)">
+        <div class="lightbox-content" style="position: relative; max-width: 90vw; max-height: 90vh; display: flex; justify-content: center; align-items: center;">
             <button id="close-lightbox-btn" class="btn-close-icon" aria-label="Bezárás" style="position: absolute; top: -15px; right: -15px; background: oklch(0.2 0.05 250); border: 2px solid oklch(1 0 0 / 0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.5);" onclick="closeLightbox(event)">✕</button>
             <img id="lightbox-img" src="" alt="Nagyított kép" style="max-width: 100%; max-height: 85vh; border-radius: 8px; box-shadow: 0 4px 30px rgba(0,0,0,0.5); object-fit: contain;">
         </div>

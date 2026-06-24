@@ -1703,6 +1703,10 @@
     font-weight: bold;
     cursor: help;
     margin-left: 0.3rem;
+    border: none;
+    padding: 0;
+    line-height: 1;
+    font-family: inherit;
 }
 
 .error-msg {
@@ -1920,6 +1924,10 @@
     padding: 0.5rem;
     min-width: 64px;
     min-height: 44px;
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
 }
 
 .bottom-nav-item.active,

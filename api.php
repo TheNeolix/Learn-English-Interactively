@@ -95,6 +95,31 @@ switch ($action) {
 // --- API ACTIONS HANDLERS ---
 
 // 1. Sign Up
+function validateSignupData($pdo, $email, $password, $username) {
+    if (empty($email) || empty($password) || empty($username)) {
+        return 'Minden mező kitöltése kötelező (felhasználónév, e-mail, jelszó)!';
+    }
+    if (mb_strlen($username) > 50) {
+        return 'A felhasználónév maximum 50 karakter hosszú lehet!';
+    }
+    if (mb_strlen($email) > 100) {
+        return 'Az e-mail cím maximum 100 karakter hosszú lehet!';
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return 'Érvénytelen e-mail cím formátum!';
+    }
+    if (strlen($password) < 6) {
+        return 'A jelszónak legalább 6 karakterből kell állnia!';
+    }
+    // Check if email already exists
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    if ($stmt->fetch()) {
+        return 'Ez az e-mail cím már regisztrálva van!';
+    }
+    return null;
+}
+
 function handleSignup($pdo, $data) {
     $email = isset($data['email']) ? trim($data['email']) : '';
     $password = isset($data['password']) ? $data['password'] : '';
@@ -102,37 +127,10 @@ function handleSignup($pdo, $data) {
     $ageRange = isset($data['age_range']) ? trim($data['age_range']) : 'unknown';
     $guestMigration = isset($data['guest_migration']) ? $data['guest_migration'] : [];
 
-    if (empty($email) || empty($password) || empty($username)) {
-        echo json_encode(['error' => 'Minden mező kitöltése kötelező (felhasználónév, e-mail, jelszó)!']);
-        return;
-    }
-
-    if (mb_strlen($username) > 50) {
-        echo json_encode(['error' => 'A felhasználónév maximum 50 karakter hosszú lehet!']);
-        return;
-    }
-
-    if (mb_strlen($email) > 100) {
-        echo json_encode(['error' => 'Az e-mail cím maximum 100 karakter hosszú lehet!']);
-        return;
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(['error' => 'Érvénytelen e-mail cím formátum!']);
-        return;
-    }
-
-    if (strlen($password) < 6) {
-        echo json_encode(['error' => 'A jelszónak legalább 6 karakterből kell állnia!']);
-        return;
-    }
-
     try {
-        // Check if email already exists
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        if ($stmt->fetch()) {
-            echo json_encode(['error' => 'Ez az e-mail cím már regisztrálva van!']);
+        $validationError = validateSignupData($pdo, $email, $password, $username);
+        if ($validationError) {
+            echo json_encode(['error' => $validationError]);
             return;
         }
 
@@ -243,6 +241,44 @@ function handleLogout() {
 }
 
 // 4. Get Current Session State (Retrieves user data + progress details)
+function formatUserProgress($progress) {
+    if (!$progress) {
+        return [
+            'points' => 0,
+            'completed' => new stdClass(),
+            'scores' => new stdClass(),
+            'level' => 1,
+            'streak_count' => 0,
+            'streak_shields' => 2,
+            'last_active_date' => null,
+            'unlocked_items' => [],
+            'active_theme' => 'default',
+            'earned_xp_per_node' => new stdClass(),
+            'daily_quests_date' => null,
+            'active_quests' => [],
+            'quest_progress' => new stdClass(),
+            'completed_quests_today' => []
+        ];
+    }
+    return [
+        'points' => intval($progress['points']),
+        'completed' => !empty($progress['completed']) ? json_decode($progress['completed']) : new stdClass(),
+        'scores' => !empty($progress['scores']) ? json_decode($progress['scores']) : new stdClass(),
+        'level' => intval($progress['level']),
+        'streak_count' => intval($progress['streak_count']),
+        'streak_shields' => intval($progress['streak_shields']),
+        'last_active_date' => $progress['last_active_date'],
+        'unlocked_items' => !empty($progress['unlocked_items']) ? json_decode($progress['unlocked_items']) : [],
+        'active_theme' => $progress['active_theme'],
+        'earned_xp_per_node' => !empty($progress['earned_xp_per_node']) ? json_decode($progress['earned_xp_per_node']) : new stdClass(),
+        'daily_quests_date' => $progress['daily_quests_date'],
+        'active_quests' => !empty($progress['active_quests']) ? json_decode($progress['active_quests']) : [],
+        'quest_progress' => !empty($progress['quest_progress']) ? json_decode($progress['quest_progress']) : new stdClass(),
+        'completed_quests_today' => !empty($progress['completed_quests_today']) ? json_decode($progress['completed_quests_today']) : []
+    ];
+}
+
+// 4. Get Current Session State (Retrieves user data + progress details)
 function handleGetSession($pdo) {
     if (!isset($_SESSION['user_id'])) {
         echo json_encode(['session' => null]);
@@ -284,22 +320,7 @@ function handleGetSession($pdo) {
                         'age_range' => $user['age_range']
                     ]
                 ],
-                'progress' => [
-                    'points' => $progress ? intval($progress['points']) : 0,
-                    'completed' => ($progress && !empty($progress['completed'])) ? json_decode($progress['completed']) : new stdClass(),
-                    'scores' => ($progress && !empty($progress['scores'])) ? json_decode($progress['scores']) : new stdClass(),
-                    'level' => $progress ? intval($progress['level']) : 1,
-                    'streak_count' => $progress ? intval($progress['streak_count']) : 0,
-                    'streak_shields' => $progress ? intval($progress['streak_shields']) : 2,
-                    'last_active_date' => $progress ? $progress['last_active_date'] : null,
-                    'unlocked_items' => ($progress && !empty($progress['unlocked_items'])) ? json_decode($progress['unlocked_items']) : [],
-                    'active_theme' => $progress ? $progress['active_theme'] : 'default',
-                    'earned_xp_per_node' => ($progress && !empty($progress['earned_xp_per_node'])) ? json_decode($progress['earned_xp_per_node']) : new stdClass(),
-                    'daily_quests_date' => $progress ? $progress['daily_quests_date'] : null,
-                    'active_quests' => ($progress && !empty($progress['active_quests'])) ? json_decode($progress['active_quests']) : [],
-                    'quest_progress' => ($progress && !empty($progress['quest_progress'])) ? json_decode($progress['quest_progress']) : new stdClass(),
-                    'completed_quests_today' => ($progress && !empty($progress['completed_quests_today'])) ? json_decode($progress['completed_quests_today']) : []
-                ],
+                'progress' => formatUserProgress($progress),
                 'subscription' => [
                     'role' => $sub ? $sub['role'] : 'user',
                     'subscription_tier' => $sub ? $sub['subscription_tier'] : 'free'
@@ -313,6 +334,25 @@ function handleGetSession($pdo) {
     }
 }
 
+function parseProgressData($data) {
+    return [
+        'points' => isset($data['points']) ? intval($data['points']) : 0,
+        'completed' => isset($data['completed']) ? json_encode($data['completed']) : json_encode(new stdClass()),
+        'scores' => isset($data['scores']) ? json_encode($data['scores']) : json_encode(new stdClass()),
+        'level' => isset($data['level']) ? intval($data['level']) : 1,
+        'streak_count' => isset($data['streak_count']) ? intval($data['streak_count']) : 0,
+        'streak_shields' => isset($data['streak_shields']) ? intval($data['streak_shields']) : 2,
+        'last_active_date' => !empty($data['last_active_date']) ? $data['last_active_date'] : null,
+        'unlocked_items' => isset($data['unlocked_items']) ? json_encode($data['unlocked_items']) : json_encode([]),
+        'active_theme' => !empty($data['active_theme']) ? $data['active_theme'] : 'default',
+        'earned_xp_per_node' => isset($data['earned_xp_per_node']) ? json_encode($data['earned_xp_per_node']) : json_encode(new stdClass()),
+        'daily_quests_date' => !empty($data['daily_quests_date']) ? $data['daily_quests_date'] : null,
+        'active_quests' => isset($data['active_quests']) ? json_encode($data['active_quests']) : json_encode([]),
+        'quest_progress' => isset($data['quest_progress']) ? json_encode($data['quest_progress']) : json_encode(new stdClass()),
+        'completed_quests_today' => isset($data['completed_quests_today']) ? json_encode($data['completed_quests_today']) : json_encode([])
+    ];
+}
+
 // 5. Save Progress
 function handleSaveProgress($pdo, $data) {
     if (!isset($_SESSION['user_id'])) {
@@ -321,24 +361,7 @@ function handleSaveProgress($pdo, $data) {
     }
 
     $userId = $_SESSION['user_id'];
-    $points = isset($data['points']) ? intval($data['points']) : 0;
-    $completed = isset($data['completed']) ? json_encode($data['completed']) : json_encode(new stdClass());
-    $scores = isset($data['scores']) ? json_encode($data['scores']) : json_encode(new stdClass());
-    
-    // Gamification
-    $level = isset($data['level']) ? intval($data['level']) : 1;
-    $streakCount = isset($data['streak_count']) ? intval($data['streak_count']) : 0;
-    $streakShields = isset($data['streak_shields']) ? intval($data['streak_shields']) : 2;
-    $lastActiveDate = !empty($data['last_active_date']) ? $data['last_active_date'] : null;
-    $unlockedItems = isset($data['unlocked_items']) ? json_encode($data['unlocked_items']) : json_encode([]);
-    $activeTheme = !empty($data['active_theme']) ? $data['active_theme'] : 'default';
-    $earnedXpPerNode = isset($data['earned_xp_per_node']) ? json_encode($data['earned_xp_per_node']) : json_encode(new stdClass());
-    
-    // Daily Quests
-    $dailyQuestsDate = !empty($data['daily_quests_date']) ? $data['daily_quests_date'] : null;
-    $activeQuests = isset($data['active_quests']) ? json_encode($data['active_quests']) : json_encode([]);
-    $questProgress = isset($data['quest_progress']) ? json_encode($data['quest_progress']) : json_encode(new stdClass());
-    $completedQuestsToday = isset($data['completed_quests_today']) ? json_encode($data['completed_quests_today']) : json_encode([]);
+    $parsed = parseProgressData($data);
 
     try {
         $stmt = $pdo->prepare("INSERT INTO user_progress 
@@ -361,9 +384,9 @@ function handleSaveProgress($pdo, $data) {
             completed_quests_today = VALUES(completed_quests_today)");
             
         $stmt->execute([
-            $userId, $points, $completed, $scores, 
-            $level, $streakCount, $streakShields, $lastActiveDate, $unlockedItems, $activeTheme, $earnedXpPerNode,
-            $dailyQuestsDate, $activeQuests, $questProgress, $completedQuestsToday
+            $userId, $parsed['points'], $parsed['completed'], $parsed['scores'], 
+            $parsed['level'], $parsed['streak_count'], $parsed['streak_shields'], $parsed['last_active_date'], $parsed['unlocked_items'], $parsed['active_theme'], $parsed['earned_xp_per_node'],
+            $parsed['daily_quests_date'], $parsed['active_quests'], $parsed['quest_progress'], $parsed['completed_quests_today']
         ]);
 
         echo json_encode(['success' => true]);
