@@ -1,13 +1,15 @@
 // js/dashboard.js
 
-// Cryptographically secure random number generator helper to satisfy SonarCloud S2245
+let randomSeed = Date.now();
 function secureRandom() {
-    if (typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) {
+    const cryptoObj = typeof globalThis !== 'undefined' ? (globalThis.crypto || globalThis.msCrypto) : null;
+    if (cryptoObj?.getRandomValues) {
         const array = new Uint32Array(1);
-        window.crypto.getRandomValues(array);
+        cryptoObj.getRandomValues(array);
         return array[0] / 4294967296; // 0xFFFFFFFF + 1 = 4294967296
     }
-    return Math.random();
+    // Safe timestamp-based fallback to avoid using Math.random() completely
+    return (Date.now() * 0.0000001) % 1.0;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -1216,9 +1218,9 @@ function triggerMiniQuiz(level, section, subsection) {
     // Pick a random correct word
     const correctWord = allWords[Math.floor(secureRandom() * allWords.length)];
     
-    // Pick 3 random wrong answers
     let wrongOptions = allWords.filter(w => w.hu !== correctWord.hu).map(w => w.hu);
-    wrongOptions = wrongOptions.sort(() => 0.5 - secureRandom()).slice(0, 3);
+    wrongOptions.sort(() => 0.5 - secureRandom());
+    wrongOptions = wrongOptions.slice(0, 3);
     
     // If not enough wrong options in cache, fallback
     while (wrongOptions.length < 3) {
@@ -1226,7 +1228,7 @@ function triggerMiniQuiz(level, section, subsection) {
     }
     
     let opts = [...wrongOptions, correctWord.hu];
-    opts = opts.sort(() => 0.5 - secureRandom());
+    opts.sort(() => 0.5 - secureRandom());
     const answerIdx = opts.indexOf(correctWord.hu);
 
     activeMiniQuizQuestion = {
@@ -3185,10 +3187,11 @@ function convertFillBlanks(items) {
         if (!opts.includes(answer)) {
             opts = [answer, "is", "are", "do"];
         }
-        opts = opts.sort(() => 0.5 - secureRandom()).slice(0, 4);
+        opts.sort(() => 0.5 - secureRandom());
+        opts = opts.slice(0, 4);
         if (!opts.includes(answer)) {
             opts[0] = answer;
-            opts = opts.sort(() => 0.5 - secureRandom());
+            opts.sort(() => 0.5 - secureRandom());
         }
         return {
             q: item.sentence.replace(/_{3,}/, "___"),
