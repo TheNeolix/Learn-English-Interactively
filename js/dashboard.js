@@ -666,6 +666,7 @@ function isContentAccessible(level, courseKey, subsectionType = null) {
     // For testing purposes, allow all users (including guests) full access to all levels/content
     return true;
 
+    /*
     if (!ProgressManager.isGuest) {
         // Admin or Lifetime bypasses everything
         if (ProgressManager.data.role === "admin" || ProgressManager.data.subscription_tier === "lifetime") {
@@ -716,6 +717,7 @@ function isContentAccessible(level, courseKey, subsectionType = null) {
     }
 
     return true;
+    */
 }
 
 // Stopwatch actions
