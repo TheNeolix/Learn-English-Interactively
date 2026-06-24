@@ -61,7 +61,7 @@ function createGitHubIssue(issue) {
   else return; // Skip minor/info issues
 
   // Add security label for security vulnerabilities or security-tagged issues
-  const isSecurity = issue.type === 'VULNERABILITY' || (issue.tags && issue.tags.includes('security'));
+  const isSecurity = issue.type === 'VULNERABILITY' || issue.tags?.includes('security');
   if (isSecurity) {
     labels.push('security');
   }
@@ -152,7 +152,7 @@ async function run() {
     
     // Extract SonarCloud keys from HTML comments in existing issue bodies
     existingIssues.forEach(issue => {
-      const match = (issue.body || '').match(/<!-- SonarCloudKey:\s*([A-Za-z0-9_\-]+)\s*-->/);
+      const match = (issue.body || '').match(/<!-- SonarCloudKey:\s*([A-Za-z0-9_-]+)\s*-->/);
       if (match && match[1]) {
         existingKeys.add(match[1]);
       }
