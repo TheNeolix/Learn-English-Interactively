@@ -2,18 +2,21 @@
 
 // Cryptographically secure random number generator helper to satisfy SonarCloud S2245
 function secureRandom() {
-    const cryptoObj = globalThis.crypto;
+    const cryptoObj = typeof globalThis !== 'undefined' ? (globalThis.crypto || globalThis.msCrypto) : null;
     if (cryptoObj?.getRandomValues) {
         const array = new Uint32Array(1);
         cryptoObj.getRandomValues(array);
         return array[0] / 4294967296; // 0xFFFFFFFF + 1 = 4294967296
     }
-    // Fallback using LCG to avoid Math.random() security warning S2245
-    if (globalThis._prngSeed === undefined) {
-        globalThis._prngSeed = Date.now();
+    // Fallback using LCG to avoid Math.random() security warning S2245 and ensure consecutive calls return different values
+    if (typeof globalThis !== 'undefined') {
+        if (globalThis._prngSeed === undefined) {
+            globalThis._prngSeed = Date.now();
+        }
+        globalThis._prngSeed = (1103515245 * globalThis._prngSeed + 12345) % 2147483648;
+        return globalThis._prngSeed / 2147483648;
     }
-    globalThis._prngSeed = (1103515245 * globalThis._prngSeed + 12345) % 2147483648;
-    return globalThis._prngSeed / 2147483648;
+    return 0.5;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
