@@ -1132,7 +1132,10 @@ function markSubsectionCompleted(level, section, subsection, score = null) {
 
 // Generates the completion button HTML based on completion state
 function getCompleteButtonHtml(level, section, subsection, requiresAttempt = false) {
-    const key = `${level}_${section}_${subsection}`;
+    const safeLevel = escapeHTML(level);
+    const safeSection = escapeHTML(section);
+    const safeSubsection = escapeHTML(subsection);
+    const key = `${safeLevel}_${safeSection}_${safeSubsection}`;
     const isCompleted = userProgress.completed[key];
     
     let disabledAttr = "";
@@ -1151,7 +1154,7 @@ function getCompleteButtonHtml(level, section, subsection, requiresAttempt = fal
     } else {
         return `
             <div class="completion-button-container">
-                <button class="btn-complete-section" ${disabledAttr} onclick="completeSubsectionAction('${level}', '${section}', '${subsection}', this)">
+                <button class="btn-complete-section" ${disabledAttr} onclick="completeSubsectionAction('${safeLevel}', '${safeSection}', '${safeSubsection}', this)">
                     <span>Teljesítettem (+5 pont)</span>
                 </button>
             </div>
