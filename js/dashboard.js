@@ -498,7 +498,7 @@ function syncShopButtonsUI() {
 
 // 6. Accessibility Settings sliders/toggles
 window.updateVolume = function(val) {
-    const volume = parseFloat(val);
+    const volume = Number.parseFloat(val);
     if(typeof AudioSynth !== 'undefined') {
         AudioSynth.volume = volume;
     }
@@ -537,7 +537,7 @@ function initSettingsUI() {
     
     let vol = 0.5;
     if (savedVolume !== null) {
-        vol = parseFloat(savedVolume);
+        vol = Number.parseFloat(savedVolume);
     }
     
     if(typeof AudioSynth !== 'undefined') AudioSynth.volume = vol;
@@ -876,7 +876,7 @@ function getLoggedInUser() {
     const welcomeSpan = document.querySelector(".user-welcome");
     if (welcomeSpan) {
         const text = welcomeSpan.textContent;
-        const match = text.match(/Szia,?\s+(.+)!/);
+        const match = text.match(/Szia,?\s+([^!]+)!/);
         if (match && match[1]) {
             return match[1].trim();
         }
@@ -3316,11 +3316,13 @@ function renderQuizCardQuestion() {
         
         const messageEl = document.getElementById("quiz-complete-message");
         if (messageEl) {
-            messageEl.textContent = isFlawless 
-                ? 'Zseniális! Minden válaszod tökéletes lett.' 
-                : passed 
-                    ? 'Szép munka! Folytathatod a következő leckével.' 
-                    : 'Ezt még gyakorolni kell. Nézd át a hibákat és próbáld újra!';
+            let msg = 'Ezt még gyakorolni kell. Nézd át a hibákat és próbáld újra!';
+            if (isFlawless) {
+                msg = 'Zseniális! Minden válaszod tökéletes lett.';
+            } else if (passed) {
+                msg = 'Szép munka! Folytathatod a következő leckével.';
+            }
+            messageEl.textContent = msg;
         }
         return;
     }
@@ -4949,7 +4951,7 @@ window.openQuestsModal = function() {
         document.body.appendChild(overlay);
         
         // Force reflow before adding is-active
-        overlay.offsetHeight;
+        void overlay.offsetHeight;
         overlay.classList.add('is-active');
     } else {
         overlay.classList.add('is-active');
