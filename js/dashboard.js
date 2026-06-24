@@ -3330,24 +3330,22 @@ function renderQuizCompletionState(container) {
         }
     }
     
-    let completionBtnHtml = passed 
-        ? getCompleteButtonHtml(quizState.level, quizState.section, quizState.subsection, true)
-        : `<button class="btn btn-primary" onclick="restartQuiz()">Újrapróbálkozás</button>`;
-
     container.innerHTML = `
         <div style="text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
             <span style="font-size: 4rem;">🎯</span>
             <h3 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: bold;">Kvíz befejezve!</h3>
-            <div style="font-size: 3rem; font-weight: bold; color: ${isFlawless ? 'var(--color-success)' : 'var(--color-text-main)'};">
-                ${score} / ${quizState.questions.length}
-            </div>
+            <div id="quiz-complete-score" style="font-size: 3rem; font-weight: bold;"></div>
             <p id="quiz-complete-message" style="color: var(--color-text-muted); max-width: 400px; font-size: 1.1rem; line-height: 1.6;"></p>
-            <div style="margin-top: 2rem;">
-                ${completionBtnHtml}
-            </div>
+            <div id="quiz-complete-btn-container" style="margin-top: 2rem;"></div>
         </div>
     `;
     
+    const scoreEl = document.getElementById("quiz-complete-score");
+    if (scoreEl) {
+        scoreEl.textContent = `${score} / ${quizState.questions.length}`;
+        scoreEl.style.color = isFlawless ? 'var(--color-success)' : 'var(--color-text-main)';
+    }
+
     const messageEl = document.getElementById("quiz-complete-message");
     if (messageEl) {
         messageEl.textContent = isFlawless 
@@ -3355,6 +3353,23 @@ function renderQuizCompletionState(container) {
             : passed 
                 ? 'Szép munka! Folytathatod a következő leckével.' 
                 : 'Ezt még gyakorolni kell. Nézd át a hibákat és próbáld újra!';
+    }
+
+    const btnContainer = document.getElementById("quiz-complete-btn-container");
+    if (btnContainer) {
+        if (passed) {
+            btnContainer.innerHTML = getCompleteButtonHtml(quizState.level, quizState.section, quizState.subsection, true);
+        } else {
+            const btn = document.createElement("button");
+            btn.className = "btn btn-primary";
+            btn.textContent = "Újrapróbálkozás";
+            btn.onclick = () => {
+                if (typeof restartQuiz === "function") {
+                    restartQuiz();
+                }
+            };
+            btnContainer.appendChild(btn);
+        }
     }
 }
 
