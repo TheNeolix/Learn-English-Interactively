@@ -340,12 +340,43 @@ function updateUserLevelState() {
 
 // 4. Streak protections and checking on load
 function checkStreakOnLoad() {
-    if (!userProgress.scores) userProgress.scores = {};
-    const lastActive = userProgress.scores.last_active_date;
+    // ----------------------------------------------------
+    // Hardcoded Test Scenario for Issue #160
+    // ----------------------------------------------------
+    if (localStorage.getItem("mock_streak_shield_test") === "true") {
+        userProgress.streak_count = 10;
+        userProgress.streak_shields = 3;
+        
+        // Mock last active date to 3 days ago (2 missed days: day 12, day 13; today is day 14)
+        const mockDate = new Date();
+        mockDate.setDate(mockDate.getDate() - 3);
+        userProgress.last_active_date = mockDate.toISOString().split('T')[0];
+        
+        // Update nested scores for compatibility
+        if (!userProgress.scores) userProgress.scores = {};
+        userProgress.scores.streak_count = 10;
+        userProgress.scores.streak_shields = 3;
+        userProgress.scores.last_active_date = userProgress.last_active_date;
+        
+        // Clear mock indicator
+        localStorage.removeItem("mock_streak_shield_test");
+        console.log("🛠️ Mock streak state loaded: 10-day streak, 3 shields, active 3 days ago.");
+    }
+    // ----------------------------------------------------
+
+    // Initialize root values from loaded/nested properties
+    if (userProgress.streak_count === undefined) {
+        userProgress.streak_count = userProgress.scores?.streak_count || 0;
+    }
+    if (userProgress.streak_shields === undefined) {
+        userProgress.streak_shields = userProgress.scores?.streak_shields !== undefined ? userProgress.scores.streak_shields : 2;
+    }
+    if (!userProgress.last_active_date) {
+        userProgress.last_active_date = userProgress.scores?.last_active_date || null;
+    }
+
+    const lastActive = userProgress.last_active_date;
     const today = new Date().toISOString().split('T')[0];
-    
-    if (!userProgress.scores.streak_count) userProgress.scores.streak_count = 0;
-    if (typeof userProgress.scores.streak_shields === 'undefined') userProgress.scores.streak_shields = 2;
     
     if (lastActive) {
         if (lastActive === today) {
@@ -354,42 +385,53 @@ function checkStreakOnLoad() {
             const lastActiveDate = new Date(lastActive);
             const todayDate = new Date(today);
             const diffTime = Math.abs(todayDate - lastActiveDate);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             
             if (diffDays === 1) {
-                userProgress.scores.streak_count++;
+                userProgress.streak_count++;
             } else if (diffDays > 1) {
-                const shields = userProgress.scores.streak_shields || 0;
+                const missedDays = diffDays - 1;
+                const shields = userProgress.streak_shields || 0;
                 if (shields > 0) {
-                    userProgress.scores.streak_shields = shields - 1;
+                    const shieldsUsed = Math.min(missedDays, shields);
+                    userProgress.streak_shields -= shieldsUsed;
+                    
                     setTimeout(() => {
                         const alertEl = document.getElementById('streak-alert');
                         if (alertEl) {
                             alertEl.style.display = 'block';
-                            alertEl.textContent = `Pajzs elhasználva! Napi szériád megvédve. Maradt: ${userProgress.scores.streak_shields} db.`;
+                            alertEl.textContent = `Pajzs elhasználva! Napi szériád megvédve. Elhasznált: ${shieldsUsed} db, maradt: ${userProgress.streak_shields} db.`;
                             AudioSynth.playTone(330, 'sine', 0.25);
                             setTimeout(() => { alertEl.style.display = 'none'; }, 5000);
                         }
                     }, 1000);
                 } else {
-                    userProgress.scores.streak_count = 1;
+                    userProgress.streak_count = 1;
                 }
             }
         }
     } else {
-        userProgress.scores.streak_count = 1;
+        userProgress.streak_count = 1;
     }
     
-    userProgress.scores.last_active_date = today;
+    userProgress.last_active_date = today;
+
+    // Sync legacy/nested properties
+    if (!userProgress.scores) userProgress.scores = {};
+    userProgress.scores.streak_count = userProgress.streak_count;
+    userProgress.scores.streak_shields = userProgress.streak_shields;
+    userProgress.scores.last_active_date = userProgress.last_active_date;
+
+    saveUserProgress();
     updateStreakUI();
 }
 
 function updateStreakUI() {
-    if (!userProgress.scores) return;
+    const streakVal = userProgress.streak_count !== undefined ? userProgress.streak_count : (userProgress.scores?.streak_count || 0);
     const streakCounter = document.getElementById("streak-counter");
-    if (streakCounter) streakCounter.textContent = userProgress.scores.streak_count || 0;
+    if (streakCounter) streakCounter.textContent = streakVal;
     
-    const shieldsCount = userProgress.scores.streak_shields || 0;
+    const shieldsCount = userProgress.streak_shields !== undefined ? userProgress.streak_shields : (userProgress.scores?.streak_shields || 0);
     for (let i = 1; i <= 3; i++) {
         const shield = document.getElementById(`shield-${i}`);
         if (shield) {
@@ -467,6 +509,16 @@ function syncShopButtonsUI() {
                 btn.disabled = false;
             } else {
                 btn.textContent = 'Feloldás';
+                btn.disabled = false;
+            }
+        }
+        else if (onclick.includes("buyStreakShield")) {
+            const shields = userProgress.streak_shields !== undefined ? userProgress.streak_shields : (userProgress.scores?.streak_shields || 0);
+            if (shields >= 3) {
+                btn.textContent = 'Megtelt';
+                btn.disabled = true;
+            } else {
+                btn.textContent = 'Vásárlás';
                 btn.disabled = false;
             }
         }
@@ -4741,6 +4793,11 @@ window.buyStreakShield = function(cost, btnEl) {
     // Deduct cost
     userProgress.points -= cost;
     userProgress.streak_shields++;
+    
+    // Sync nested legacy scores property
+    if (!userProgress.scores) userProgress.scores = {};
+    userProgress.scores.streak_shields = userProgress.streak_shields;
+    
     saveUserProgress();
     updateProgressUI();
     
