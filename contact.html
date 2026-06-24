@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapcsolat - NeolixStudio</title>
+    <!-- Relative paths link your MacBook project folder safe for websupport.sk -->
+    <link rel="stylesheet" href="css/main.css?v=1.0.7">
+    <style>
+        /* Grid layout for Contact content */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+        
+        /* Contact Form Styles */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .form-group label {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--color-text-main);
+        }
+        .form-control {
+            background: oklch(0.12 0.01 260 / 0.5);
+            border: 1px solid oklch(1 0 0 / 0.15);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--color-text-main);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color var(--transition-base), box-shadow var(--transition-base);
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-accent-in);
+            box-shadow: 0 0 10px oklch(0.75 0.15 250 / 0.2);
+        }
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .btn-submit {
+            align-self: flex-start;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: #000;
+            background: var(--color-accent-in);
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            box-shadow: 0 0 15px oklch(0.75 0.15 250 / 0.3);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--color-accent-in);
+            filter: brightness(1.1);
+        }
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+        
+        /* Status Notification Styles */
+        .status-message {
+            display: none;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        .status-success {
+            display: block;
+            background: oklch(0.75 0.2 150 / 0.1);
+            border: 1px solid var(--color-success);
+            color: var(--color-success);
+        }
+        .status-error {
+            display: block;
+            background: oklch(0.65 0.2 25 / 0.1);
+            border: 1px solid var(--color-error);
+            color: var(--color-error);
+        }
+
+        .copy-btn {
+            background: oklch(1 0 0 / 0.08);
+            border: 1px solid oklch(1 0 0 / 0.15);
+            color: var(--color-text-muted);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: all var(--transition-base);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .copy-btn:hover {
+            background: oklch(1 0 0 / 0.15);
+            color: var(--color-accent-in);
+            border-color: var(--color-accent-in);
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GLOBAL STATIC TOP NAVBAR -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="index.html" class="logo" aria-label="Főoldal">
+                <span class="logo-text">NeolixStudio</span>
+            </a>
+            <div class="header-actions" style="border: none; padding: 0;">
+                <a href="index.html" class="btn btn-logout" style="border: 1px solid var(--color-accent-in); color: var(--color-accent-in); font-size: 0.9rem; padding: 0.5rem 1.2rem; width: auto;">Főoldal</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="legal-wrapper">
+        <article class="legal-card">
+            <h1>Kapcsolat (Contact)</h1>
+            <p>Utolsó frissítés: 2026. június 24.</p>
+            
+            <div class="contact-grid">
+                <!-- Info Section -->
+                <div>
+                    <h2>1. Kapcsolattartási Csatornák</h2>
+                    <p>
+                        Bármilyen kérdés, észrevétel vagy technikai segítségnyújtás esetén az alábbi e-mail címen tudja elérni ügyfélszolgálatunkat:
+                    </p>
+                    <p>
+                        <strong>Ügyfélszolgálat / Support E-mail:</strong> <br>
+                        <span style="font-family: monospace; font-size: 1.1rem; color: var(--color-text-main);">info@neolix.studio</span>
+                        <button class="copy-btn" onclick="copyEmail()" id="copyBtn">
+                            <span>📋</span> Másolás
+                        </button>
+                    </p>
+
+                    <h2>2. Hivatalos Cégadatok (Szolgáltató)</h2>
+                    <p>
+                        A platformot egyéni vállalkozóként üzemeltetem az EU-s irányelvek és a helyi jogszabályoknak megfelelően:
+                    </p>
+                    <p>
+                        <strong>Név / Üzemeltető:</strong> Ladislav Szép<br>
+                        <strong>Székhely / Postacím:</strong> Cabaj 252, Cabaj-Čápor 951 17 Szlovákia<br>
+                        <strong>Cégjegyzékszám / Cégnyilvántartási szám (IČO):</strong> [Feltöltés alatt / Registration number]<br>
+                        <strong>Adószám (DIČ):</strong> [Feltöltés alatt / Tax ID]<br>
+                        <strong>Közösségi adószám (IČ DPH):</strong> [Feltöltés alatt / VAT ID]<br>
+                        <strong>Nyilvántartást vezető hatóság:</strong> [Feltöltés alatt / Court Registry]
+                    </p>
+
+                    <h2>3. Egyéni Angol Oktatás / Magánórák (Tutoring)</h2>
+                    <p>
+                        A platform mellett egyéni online angol nyelvoktatást és korrepetálást is vállalok diákok részére:
+                    </p>
+                    <p style="background: oklch(1 0 0 / 0.05); padding: 0.8rem 1.2rem; border-radius: 8px; border: 1px dashed var(--color-accent-in); display: inline-block; margin-bottom: 1.2rem;">
+                        <strong>Óradíj:</strong> <span style="color: var(--color-accent-in); font-size: 1.1rem; font-weight: bold;">15 € / 50 perc</span>
+                    </p>
+                    <p>
+                        Amennyiben egyéni órákra szeretne jelentkezni, vagy további részletek érdeklik, jelezze szándékát az oldalsó űrlapon vagy közvetlenül e-mailben!
+                    </p>
+
+                    <h2>4. Digitális Működés</h2>
+                    <p style="border-left: 3px solid var(--color-accent-in); padding-left: 1rem; font-style: italic;">
+                        <strong>Fontos megjegyzés:</strong> A NeolixStudio teljesen digitálisan működik. Nem tartunk fenn fizikai ügyfélszolgálatot, így személyes ügyfélfogadásra vagy walk-in segítségnyújtásra nincs lehetőség. Minden megkeresést online és e-mailen keresztül kezelünk.
+                    </p>
+                </div>
+
+                <!-- Form Section -->
+                <div>
+                    <h2>Írjon nekünk üzenetet</h2>
+                    <p>Használhatja az alábbi űrlapot is az azonnali üzenetküldéshez:</p>
+                    
+                    <form id="contactForm" class="contact-form" novalidate>
+                        <div class="form-group">
+                            <label for="contactName">Név</label>
+                            <input type="text" id="contactName" class="form-control" placeholder="Az Ön neve" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">E-mail cím</label>
+                            <input type="email" id="contactEmail" class="form-control" placeholder="pelda@domain.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Üzenet</label>
+                            <textarea id="contactMessage" class="form-control" placeholder="Miben segíthetünk?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Küldés</button>
+                    </form>
+                    
+                    <div id="statusMsg" class="status-message"></div>
+                </div>
+            </div>
+        </article>
+
+        <div class="back-link-container">
+            <a href="index.html" class="btn-back">Vissza a főoldalra</a>
+        </div>
+    </main>
+
+    <!-- GLOBAL FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="footer-logo">NeolixStudio</span>
+                <p>Online angol nyelvtanulás magyaroknak, egyszerűen és hatékonyan.</p>
+            </div>
+            
+            <nav class="footer-nav" aria-label="Lábléc navigáció">
+                <ul class="footer-links">
+                    <li><a href="privacy-policy.html">Adatkezelési Tájékoztató</a></li>
+                    <li><a href="terms.html">ÁSZF</a></li>
+                    <li><a href="impressum.html">Impresszum</a></li>
+                    <li><a href="contact.html" style="color: var(--color-accent-in);">Kapcsolat</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 NeolixStudio. Minden jog fenntartva.</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyEmail() {
+            navigator.clipboard.writeText('info@neolix.studio').then(() => {
+                const btn = document.getElementById('copyBtn');
+                const origHTML = btn.innerHTML;
+                btn.innerHTML = '<span>✅</span> Másolva!';
+                btn.style.color = 'var(--color-success)';
+                btn.style.borderColor = 'var(--color-success)';
+                setTimeout(() => {
+                    btn.innerHTML = origHTML;
+                    btn.style.color = '';
+                    btn.style.borderColor = '';
+                }, 2000);
+            });
+        }
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nameInput = document.getElementById('contactName');
+            const emailInput = document.getElementById('contactEmail');
+            const messageInput = document.getElementById('contactMessage');
+            const statusMsg = document.getElementById('statusMsg');
+            
+            // Reset status message
+            statusMsg.className = 'status-message';
+            statusMsg.style.display = 'none';
+            
+            // Front-end Validation
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const message = messageInput.value.trim();
+            
+            if (!name) {
+                showStatus('Kérjük, adja meg a nevét!', 'error');
+                nameInput.focus();
+                return;
+            }
+            
+            if (!email) {
+                showStatus('Kérjük, adja meg az e-mail címét!', 'error');
+                emailInput.focus();
+                return;
+            }
+            
+            // Simple email pattern check
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                showStatus('Kérjük, valós e-mail címet adjon meg!', 'error');
+                emailInput.focus();
+                return;
+            }
+            
+            if (!message) {
+                showStatus('Az üzenet mező nem lehet üres!', 'error');
+                messageInput.focus();
+                return;
+            }
+            
+            // Log to console as required by junior dev guidelines
+            console.log('Kapcsolat űrlap küldés:', { name, email, message });
+            
+            // Show Success UI
+            showStatus('Köszönjük! Az üzenetét sikeresen rögzítettük, hamarosan felvesszük Önnel a kapcsolatot.', 'success');
+            
+            // Reset form
+            this.reset();
+        });
+
+        function showStatus(text, type) {
+            const statusMsg = document.getElementById('statusMsg');
+            statusMsg.innerText = text;
+            statusMsg.className = 'status-message status-' + type;
+            statusMsg.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
