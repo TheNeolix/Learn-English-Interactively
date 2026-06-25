@@ -3,8 +3,8 @@
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 30);
 ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 30);
 
-$isSecure = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') 
-            || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+$isSecure = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+    || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
 
 session_start([
     'cookie_lifetime' => 60 * 60 * 24 * 30,
@@ -58,35 +58,39 @@ switch ($action) {
     case 'signup':
         handleSignup($pdo, $inputData);
         break;
-        
+
+    case 'verify_email':
+        handleVerifyEmail($pdo, $inputData);
+        break;
+
     case 'login':
         handleLogin($pdo, $inputData);
         break;
-        
+
     case 'logout':
         handleLogout();
         break;
-        
+
     case 'get_session':
         handleGetSession($pdo);
         break;
-        
+
     case 'save_progress':
         handleSaveProgress($pdo, $inputData);
         break;
-        
+
     case 'update_password':
         handleUpdatePassword($pdo, $inputData);
         break;
-        
+
     case 'forgot_password':
         handleForgotPassword($pdo, $inputData);
         break;
-        
+
     case 'reset_password':
         handleResetPassword($pdo, $inputData);
         break;
-        
+
     default:
         echo json_encode(['error' => 'Invalid action']);
         break;
@@ -95,7 +99,8 @@ switch ($action) {
 // --- API ACTIONS HANDLERS ---
 
 // 1. Sign Up
-function validateSignupData($pdo, $email, $password, $username) {
+function validateSignupData($pdo, $email, $password, $username)
+{
     if (empty($email) || empty($password) || empty($username)) {
         return 'Minden mező kitöltése kötelező (felhasználónév, e-mail, jelszó)!';
     }
@@ -120,7 +125,8 @@ function validateSignupData($pdo, $email, $password, $username) {
     return null;
 }
 
-function handleSignup($pdo, $data) {
+function handleSignup($pdo, $data)
+{
     $email = isset($data['email']) ? trim($data['email']) : '';
     $password = isset($data['password']) ? $data['password'] : '';
     $username = isset($data['username']) ? trim($data['username']) : '';
@@ -136,10 +142,11 @@ function handleSignup($pdo, $data) {
 
         // Insert new user
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        $verificationToken = bin2hex(random_bytes(32));
         $pdo->beginTransaction();
 
-        $stmt = $pdo->prepare("INSERT INTO users (email, password_hash, username, age_range) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$email, $passwordHash, $username, $ageRange]);
+        $stmt = $pdo->prepare("INSERT INTO users (email, password_hash, username, age_range, is_verified, verification_token) VALUES (?, ?, ?, ?, 0, ?)");
+        $stmt->execute([$email, $passwordHash, $username, $ageRange, $verificationToken]);
         $userId = $pdo->lastInsertId();
 
         // Migrate guest progress data if available
@@ -159,6 +166,16 @@ function handleSignup($pdo, $data) {
 
         $pdo->commit();
 
+        // Send verification email
+        try {
+            require_once __DIR__ . '/lib/Mailer.php';
+            $mailer = new Mailer();
+            $mailer->sendVerificationEmail($email, htmlspecialchars($username, ENT_QUOTES, 'UTF-8'), $verificationToken);
+        } catch (Exception $mailEx) {
+            // Log but don't fail registration
+            error_log('Failed to send verification email: ' . $mailEx->getMessage());
+        }
+
         // Establish PHP session right away (direct sign-up)
         session_regenerate_id(true);
         $_SESSION['user_id'] = $userId;
@@ -174,7 +191,6 @@ function handleSignup($pdo, $data) {
                 'age_range' => $ageRange
             ]
         ]);
-
     } catch (Exception $e) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
@@ -184,8 +200,38 @@ function handleSignup($pdo, $data) {
     }
 }
 
+function handleVerifyEmail($pdo, $data)
+{
+    $token = isset($data['token']) ? trim($data['token']) : (isset($_GET['token']) ? trim($_GET['token']) : '');
+
+    if (empty($token)) {
+        echo json_encode(['error' => 'Hiányzó megerősítő kód.']);
+        return;
+    }
+
+    try {
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE verification_token = ?");
+        $stmt->execute([$token]);
+        $user = $stmt->fetch();
+
+        if (!$user) {
+            echo json_encode(['error' => 'Érvénytelen vagy már felhasznált megerősítő kód.']);
+            return;
+        }
+
+        $updateStmt = $pdo->prepare("UPDATE users SET is_verified = 1, verification_token = NULL WHERE id = ?");
+        $updateStmt->execute([$user['id']]);
+
+        echo json_encode(['success' => true]);
+    } catch (Exception $e) {
+        error_log('Verification error: ' . $e->getMessage());
+        echo json_encode(['error' => 'Hiba történt a megerősítés során.']);
+    }
+}
+
 // 2. Log In
-function handleLogin($pdo, $data) {
+function handleLogin($pdo, $data)
+{
     $email = isset($data['email']) ? trim($data['email']) : '';
     $password = isset($data['password']) ? $data['password'] : '';
 
@@ -195,7 +241,12 @@ function handleLogin($pdo, $data) {
     }
 
     try {
-        $stmt = $pdo->prepare("SELECT id, email, password_hash, username, age_range FROM users WHERE email = ?");
+        $stmt = $pdo->prepare("
+            SELECT u.id, u.email, u.password_hash, u.username, u.age_range, u.is_verified, s.role 
+            FROM users u
+            LEFT JOIN user_subscriptions s ON u.id = s.user_id
+            WHERE u.email = ?
+        ");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
@@ -216,10 +267,11 @@ function handleLogin($pdo, $data) {
                 'id' => $user['id'],
                 'email' => $user['email'],
                 'username' => htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8'),
-                'age_range' => $user['age_range']
+                'age_range' => $user['age_range'],
+                'is_verified' => (bool)$user['is_verified'],
+                'role' => isset($user['role']) ? $user['role'] : 'user'
             ]
         ]);
-
     } catch (Exception $e) {
         error_log('Login error: ' . $e->getMessage());
         echo json_encode(['error' => 'Hiba történt a bejelentkezés során. Kérjük, próbáld újra később.']);
@@ -227,13 +279,19 @@ function handleLogin($pdo, $data) {
 }
 
 // 3. Log Out
-function handleLogout() {
+function handleLogout()
+{
     $_SESSION = [];
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000,
-            $params["path"], $params["domain"],
-            $params["secure"], $params["httponly"]
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
         );
     }
     session_destroy();
@@ -241,7 +299,8 @@ function handleLogout() {
 }
 
 // 4. Get Current Session State (Retrieves user data + progress details)
-function formatUserProgress($progress) {
+function formatUserProgress($progress)
+{
     if (!$progress) {
         return [
             'points' => 0,
@@ -279,7 +338,8 @@ function formatUserProgress($progress) {
 }
 
 // 4. Get Current Session State (Retrieves user data + progress details)
-function handleGetSession($pdo) {
+function handleGetSession($pdo)
+{
     if (!isset($_SESSION['user_id'])) {
         echo json_encode(['session' => null]);
         return;
@@ -289,7 +349,7 @@ function handleGetSession($pdo) {
 
     try {
         // Load User main details
-        $stmtUser = $pdo->prepare("SELECT email, username, age_range FROM users WHERE id = ?");
+        $stmtUser = $pdo->prepare("SELECT email, username, age_range, is_verified FROM users WHERE id = ?");
         $stmtUser->execute([$userId]);
         $user = $stmtUser->fetch();
 
@@ -310,14 +370,18 @@ function handleGetSession($pdo) {
         $stmtSub->execute([$userId]);
         $sub = $stmtSub->fetch();
 
-        echo json_encode([
-            'session' => [
-                'user' => [
-                    'id' => $userId,
-                    'email' => $user['email'],
-                    'user_metadata' => [
-                        'username' => htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8'),
-                        'age_range' => $user['age_range']
+        echo json_encode(
+            [
+                'session' => [
+                    'user' => [
+                        'id' => $userId,
+                        'email' => $user['email'],
+                        'user_metadata' => [
+                            'username' => htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8'),
+                            'age_range' => $user['age_range'],
+                            'is_verified' => (bool)$user['is_verified'],
+                            'role' => $sub ? $sub['role'] : 'user'
+                        ]
                     ]
                 ],
                 'progress' => formatUserProgress($progress),
@@ -326,15 +390,15 @@ function handleGetSession($pdo) {
                     'subscription_tier' => $sub ? $sub['subscription_tier'] : 'free'
                 ]
             ]
-        ]);
-
+        );
     } catch (Exception $e) {
         error_log('Session load error: ' . $e->getMessage());
         echo json_encode(['error' => 'Hiba a munkamenet betöltésekor. Kérjük, próbáld újra később.']);
     }
 }
 
-function parseProgressData($data) {
+function parseProgressData($data)
+{
     return [
         'points' => isset($data['points']) ? intval($data['points']) : 0,
         'completed' => isset($data['completed']) ? json_encode($data['completed']) : json_encode(new stdClass()),
@@ -354,7 +418,8 @@ function parseProgressData($data) {
 }
 
 // 5. Save Progress
-function handleSaveProgress($pdo, $data) {
+function handleSaveProgress($pdo, $data)
+{
     if (!isset($_SESSION['user_id'])) {
         echo json_encode(['error' => 'Munkamenet lejárt! Kérjük, jelentkezz be újra.']);
         return;
@@ -382,11 +447,23 @@ function handleSaveProgress($pdo, $data) {
             active_quests = VALUES(active_quests),
             quest_progress = VALUES(quest_progress),
             completed_quests_today = VALUES(completed_quests_today)");
-            
+
         $stmt->execute([
-            $userId, $parsed['points'], $parsed['completed'], $parsed['scores'], 
-            $parsed['level'], $parsed['streak_count'], $parsed['streak_shields'], $parsed['last_active_date'], $parsed['unlocked_items'], $parsed['active_theme'], $parsed['earned_xp_per_node'],
-            $parsed['daily_quests_date'], $parsed['active_quests'], $parsed['quest_progress'], $parsed['completed_quests_today']
+            $userId,
+            $parsed['points'],
+            $parsed['completed'],
+            $parsed['scores'],
+            $parsed['level'],
+            $parsed['streak_count'],
+            $parsed['streak_shields'],
+            $parsed['last_active_date'],
+            $parsed['unlocked_items'],
+            $parsed['active_theme'],
+            $parsed['earned_xp_per_node'],
+            $parsed['daily_quests_date'],
+            $parsed['active_quests'],
+            $parsed['quest_progress'],
+            $parsed['completed_quests_today']
         ]);
 
         echo json_encode(['success' => true]);
@@ -397,7 +474,8 @@ function handleSaveProgress($pdo, $data) {
 }
 
 // 6. Update Password (profile page password change verification)
-function handleUpdatePassword($pdo, $data) {
+function handleUpdatePassword($pdo, $data)
+{
     if (!isset($_SESSION['user_id'])) {
         echo json_encode(['error' => 'Munkamenet lejárt! Kérjük, jelentkezz be újra.']);
         return;
@@ -441,7 +519,8 @@ function handleUpdatePassword($pdo, $data) {
 }
 
 // 7. Request Forgot Password (generates token and mails it)
-function handleForgotPassword($pdo, $data) {
+function handleForgotPassword($pdo, $data)
+{
     $email = isset($data['email']) ? trim($data['email']) : '';
 
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -478,19 +557,19 @@ function handleForgotPassword($pdo, $data) {
         // Email details
         $to = $email;
         $subject = "Jelszo visszaallitasa - Neolix Studio";
-        
+
         $message = "Szia " . htmlspecialchars($user['username']) . "!\r\n\r\n" .
-                   "Jelszo-visszaallitasi kerelem erkezett a fiokodhoz.\r\n" .
-                   "Kérjük, kattints az alabbi linkre a jelszavad megvaltoztatasahoz:\r\n\r\n" .
-                   $resetLink . "\r\n\r\n" .
-                   "Ez a link 1 oraig ervenyes.\r\n" .
-                   "Ha nem te kerted a jelszo visszaallitasat, hagyd figyelmen kivul ezt az e-mailt.\r\n\r\n" .
-                   "Udvozlettel,\r\nNeolix Studio";
+            "Jelszo-visszaallitasi kerelem erkezett a fiokodhoz.\r\n" .
+            "Kérjük, kattints az alabbi linkre a jelszavad megvaltoztatasahoz:\r\n\r\n" .
+            $resetLink . "\r\n\r\n" .
+            "Ez a link 1 oraig ervenyes.\r\n" .
+            "Ha nem te kerted a jelszo visszaallitasat, hagyd figyelmen kivul ezt az e-mailt.\r\n\r\n" .
+            "Udvozlettel,\r\nNeolix Studio";
 
         $headers = "From: no-reply@neolix.studio\r\n" .
-                   "Reply-To: no-reply@neolix.studio\r\n" .
-                   "Content-Type: text/plain; charset=UTF-8\r\n" .
-                   "X-Mailer: PHP/" . phpversion();
+            "Reply-To: no-reply@neolix.studio\r\n" .
+            "Content-Type: text/plain; charset=UTF-8\r\n" .
+            "X-Mailer: PHP/" . phpversion();
 
         // Send email
         if (mail($to, $subject, $message, $headers)) {
@@ -498,7 +577,6 @@ function handleForgotPassword($pdo, $data) {
         } else {
             echo json_encode(['error' => 'Nem sikerült elküldeni az e-mailt. Kérjük, próbáld meg később.']);
         }
-
     } catch (Exception $e) {
         error_log('Forgot password error: ' . $e->getMessage());
         echo json_encode(['error' => 'Hiba történt a kérelem feldolgozása során. Kérjük, próbáld újra később.']);
@@ -506,7 +584,8 @@ function handleForgotPassword($pdo, $data) {
 }
 
 // 8. Execute Reset Password via Token
-function handleResetPassword($pdo, $data) {
+function handleResetPassword($pdo, $data)
+{
     $token = isset($data['token']) ? trim($data['token']) : '';
     $newPassword = isset($data['password']) ? $data['password'] : '';
 
@@ -537,7 +616,6 @@ function handleResetPassword($pdo, $data) {
         $stmtUpdate->execute([$passwordHash, $user['id']]);
 
         echo json_encode(['success' => true, 'message' => 'A jelszó sikeresen megváltoztatva! Most már bejelentkezhetsz.']);
-
     } catch (Exception $e) {
         error_log('Reset password error: ' . $e->getMessage());
         echo json_encode(['error' => 'Hiba történt a jelszó visszaállítása során. Kérjük, próbáld újra később.']);
