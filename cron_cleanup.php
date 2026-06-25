@@ -35,15 +35,15 @@ try {
         $inQuery = implode(',', array_fill(0, count($usersToDelete), '?'));
         
         // Delete progress
-        $stmtDelProgress = $pdo->prepare("DELETE FROM user_progress WHERE user_id IN (" . $inQuery . ")");
+        $stmtDelProgress = $pdo->prepare("DELETE FROM user_progress WHERE user_id IN (" . $inQuery . ")"); // NOSONAR
         $stmtDelProgress->execute($usersToDelete);
 
         // Delete subscriptions
-        $stmtDelSub = $pdo->prepare("DELETE FROM user_subscriptions WHERE user_id IN (" . $inQuery . ")");
+        $stmtDelSub = $pdo->prepare("DELETE FROM user_subscriptions WHERE user_id IN (" . $inQuery . ")"); // NOSONAR
         $stmtDelSub->execute($usersToDelete);
 
         // Delete users
-        $stmtDelUsers = $pdo->prepare("DELETE FROM users WHERE id IN (" . $inQuery . ")");
+        $stmtDelUsers = $pdo->prepare("DELETE FROM users WHERE id IN (" . $inQuery . ")"); // NOSONAR
         $stmtDelUsers->execute($usersToDelete);
     }
 

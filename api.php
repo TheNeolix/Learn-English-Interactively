@@ -475,45 +475,52 @@ function handleSaveProgress($pdo, $data)
     }
 }
 
-// 6. Update Password (profile page password change verification)
+function validatePasswordUpdate($currentPassword, $newPassword)
+{
+    if (empty($currentPassword) || empty($newPassword)) {
+        return 'A jelenlegi és az új jelszót is meg kell adni!';
+    }
+    if (strlen($newPassword) < 6) {
+        return 'Az új jelszónak legalább 6 karakterből kell állnia!';
+    }
+    return null;
+}
+
 function handleUpdatePassword($pdo, $data)
 {
     if (!isset($_SESSION['user_id'])) {
         echo json_encode(['error' => 'Munkamenet lejárt! Kérjük, jelentkezz be újra.']);
-    } else {
-        $userId = $_SESSION['user_id'];
-        $currentPassword = isset($data['current_password']) ? $data['current_password'] : '';
-        $newPassword = isset($data['new_password']) ? $data['new_password'] : '';
+        return;
+    }
+    
+    $userId = $_SESSION['user_id'];
+    $currentPassword = isset($data['current_password']) ? $data['current_password'] : '';
+    $newPassword = isset($data['new_password']) ? $data['new_password'] : '';
 
-        $error = null;
-        if (empty($currentPassword) || empty($newPassword)) {
-            $error = 'A jelenlegi és az új jelszót is meg kell adni!';
-        } elseif (strlen($newPassword) < 6) {
-            $error = 'Az új jelszónak legalább 6 karakterből kell állnia!';
+    $error = validatePasswordUpdate($currentPassword, $newPassword);
+    if ($error) {
+        echo json_encode(['error' => $error]);
+        return;
+    }
+
+    try {
+        $stmt = $pdo->prepare("SELECT password_hash FROM users WHERE id = ?");
+        $stmt->execute([$userId]);
+        $user = $stmt->fetch();
+
+        if (!$user || !password_verify($currentPassword, $user['password_hash'])) {
+            echo json_encode(['error' => 'A jelenlegi jelszó helytelen!']);
+            return;
         }
 
-        if ($error) {
-            echo json_encode(['error' => $error]);
-        } else {
-            try {
-                $stmt = $pdo->prepare("SELECT password_hash FROM users WHERE id = ?");
-                $stmt->execute([$userId]);
-                $user = $stmt->fetch();
+        $newHash = password_hash($newPassword, PASSWORD_DEFAULT);
+        $stmtUpdate = $pdo->prepare("UPDATE users SET password_hash = ? WHERE id = ?");
+        $stmtUpdate->execute([$newHash, $userId]);
 
-                if (!$user || !password_verify($currentPassword, $user['password_hash'])) {
-                    echo json_encode(['error' => 'A jelenlegi jelszó helytelen!']);
-                } else {
-                    $newHash = password_hash($newPassword, PASSWORD_DEFAULT);
-                    $stmtUpdate = $pdo->prepare("UPDATE users SET password_hash = ? WHERE id = ?");
-                    $stmtUpdate->execute([$newHash, $userId]);
-
-                    echo json_encode(['success' => true, 'message' => 'A jelszó sikeresen megváltoztatva! Most már bejelentkezhetsz.']);
-                }
-            } catch (Exception $e) {
-                error_log('Update password error: ' . $e->getMessage());
-                echo json_encode(['error' => 'Hiba történt a jelszó módosítása során.']);
-            }
-        }
+        echo json_encode(['success' => true, 'message' => 'A jelszó sikeresen megváltoztatva! Most már bejelentkezhetsz.']);
+    } catch (Exception $e) {
+        error_log('Update password error: ' . $e->getMessage());
+        echo json_encode(['error' => 'Hiba történt a jelszó módosítása során.']);
     }
 }
 

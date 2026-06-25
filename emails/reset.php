@@ -25,7 +25,7 @@ $resetUrl = $resetUrl ?? '#';
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         .header {
-            background-color: #18181b; 
+            background-color: #18181b;
             padding: 30px 20px;
             text-align: center;
             border-bottom: 3px solid #ef4444; /* Red accent for security actions */

@@ -5,6 +5,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+class MailerException extends \Exception {}
+
 class Mailer {
     private $mail;
 
@@ -62,7 +64,7 @@ class Mailer {
     private function renderTemplate($templateName, $data = []) {
         $templatePath = __DIR__ . '/../emails/' . $templateName . '.php';
         if (!file_exists($templatePath)) {
-            throw new RuntimeException("Email template not found: {$templateName}");
+            throw new MailerException("Email template not found: {$templateName}");
         }
 
         // Extract variables to be available in the template scope
