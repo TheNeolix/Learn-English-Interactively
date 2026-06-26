@@ -1021,6 +1021,7 @@ async function initUserProgress() {
                 userProgress = {
                     username: loggedInUser,
                     email: user.email || "",
+                    is_verified: user.user_metadata?.is_verified ?? false,
                     points: progress.points || 0,
                     completed: completedObj,
                     scores: scoresObj,
@@ -1084,6 +1085,48 @@ async function initUserProgress() {
 
     updateProgressUI();
     refreshProfileDOM(); // Ensure "Betöltés" states are wiped for guests too
+    
+    // Check Email Verification Status
+    checkVerificationState();
+}
+
+function checkVerificationState() {
+    const urlParams = new URLSearchParams(globalThis.location.search);
+    const token = urlParams.get('verify');
+    
+    if (token) {
+        // Clear the URL parameter so it doesn't stay there
+        globalThis.history.replaceState({}, document.title, globalThis.location.pathname);
+        
+        fetch(`${API_URL}?action=verify_email&token=${token}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Sikeres email megerősítés! Köszönjük.");
+                    globalThis.location.reload();
+                } else {
+                    alert(data.error || "Hiba történt a megerősítés során.");
+                }
+            })
+            .catch(err => {
+                console.error("Verification failed:", err);
+                alert("Hiba történt a megerősítés során.");
+            });
+    } else if (!ProgressManager.isGuest && userProgress && userProgress.role !== 'admin' && userProgress.is_verified === false) {
+        // Show unverified banner
+        const banner = document.createElement("div");
+        banner.style.backgroundColor = "var(--color-danger, #ef4444)";
+        banner.style.color = "white";
+        banner.style.textAlign = "center";
+        banner.style.padding = "12px 20px";
+        banner.style.fontWeight = "bold";
+        banner.style.zIndex = "9999";
+        banner.style.position = "sticky";
+        banner.style.top = "0";
+        banner.style.boxShadow = "0 2px 4px rgba(0,0,0,0.2)";
+        banner.innerHTML = `⚠️ Kérjük, erősítsd meg az e-mail címedet a kiküldött linkre kattintva a teljes fiókbiztonság érdekében.`;
+        document.body.insertBefore(banner, document.body.firstChild);
+    }
 }
 
 // Explicit Profile DOM refresh to avoid "Betöltés" loading hangs
