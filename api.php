@@ -27,6 +27,12 @@ if (!file_exists(__DIR__ . '/db_config.php')) {
 }
 require_once __DIR__ . '/db_config.php';
 
+// Define password validation constants
+if (!defined('PASSWORD_REGEX')) {
+    define('PASSWORD_REGEX', '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/');
+    define('PASSWORD_ERR_MSG', 'A jelszónak legalább 8 karakterből kell állnia, és tartalmaznia kell kisbetűt, nagybetűt, számot és speciális karaktert!');
+}
+
 // Initialize Database Connection
 try {
     $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
@@ -101,25 +107,34 @@ switch ($action) {
 // 1. Sign Up
 function validateSignupData($pdo, $email, $password, $username)
 {
-    $error = null;
     if (empty($email) || empty($password) || empty($username)) {
-        $error = 'Minden mező kitöltése kötelező (felhasználónév, e-mail, jelszó)!';
-    } elseif (mb_strlen($username) > 50) {
-        $error = 'A felhasználónév maximum 50 karakter hosszú lehet!';
-    } elseif (mb_strlen($email) > 100) {
-        $error = 'Az e-mail cím maximum 100 karakter hosszú lehet!';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Érvénytelen e-mail cím formátum!';
-    } elseif (strlen($password) < 6) {
-        $error = 'A jelszónak legalább 6 karakterből kell állnia!';
-    } else {
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        if ($stmt->fetch()) {
-            $error = 'Ez az e-mail cím már regisztrálva van!';
-        }
+        return 'Minden mező kitöltése kötelező (felhasználónév, e-mail, jelszó)!';
     }
-    return $error;
+    if (mb_strlen($username) > 50) {
+        return 'A felhasználónév maximum 50 karakter hosszú lehet!';
+    }
+    if (mb_strlen($email) > 100) {
+        return 'Az e-mail cím maximum 100 karakter hosszú lehet!';
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return 'Érvénytelen e-mail cím formátum!';
+    }
+    if (!preg_match(PASSWORD_REGEX, $password)) {
+        return PASSWORD_ERR_MSG;
+    }
+    // Check if email already exists
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    if ($stmt->fetch()) {
+        return 'Ez az e-mail cím már regisztrálva van!';
+    }
+    // Check if username already exists
+    $stmtUser = $pdo->prepare("SELECT id FROM users WHERE username = ?");
+    $stmtUser->execute([$username]);
+    if ($stmtUser->fetch()) {
+        return 'Ez a felhasználónév már foglalt!';
+    }
+    return null;
 }
 
 function handleSignup($pdo, $data)
@@ -480,8 +495,8 @@ function validatePasswordUpdate($currentPassword, $newPassword)
     if (empty($currentPassword) || empty($newPassword)) {
         return 'A jelenlegi és az új jelszót is meg kell adni!';
     }
-    if (strlen($newPassword) < 6) {
-        return 'Az új jelszónak legalább 6 karakterből kell állnia!';
+    if (!preg_match(PASSWORD_REGEX, $newPassword)) {
+        return PASSWORD_ERR_MSG;
     }
     return null;
 }
@@ -600,8 +615,8 @@ function handleResetPassword($pdo, $data)
         return;
     }
 
-    if (empty($newPassword) || strlen($newPassword) < 6) {
-        echo json_encode(['error' => 'Az új jelszónak legalább 6 karakterből kell állnia!']);
+    if (empty($newPassword) || !preg_match(PASSWORD_REGEX, $newPassword)) {
+        echo json_encode(['error' => PASSWORD_ERR_MSG]);
         return;
     }
 
