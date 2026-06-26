@@ -965,9 +965,8 @@ async function initUserProgress() {
 
     // Hook sign out to ALL logout buttons unconditionally at the START
     // This allows users to always log out, regardless of early returns or guest mode
-    const logoutBtns = document.querySelectorAll(".btn-logout");
+    const logoutBtns = document.querySelectorAll("#logout-btn, .btn-logout");
     logoutBtns.forEach(logoutBtn => {
-        logoutBtn.textContent = "Kijelentkezés";
         const newLogoutBtn = logoutBtn.cloneNode(true);
         logoutBtn.parentNode.replaceChild(newLogoutBtn, logoutBtn);
         newLogoutBtn.addEventListener("click", async (e) => {

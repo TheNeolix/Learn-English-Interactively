@@ -595,3 +595,32 @@ a {
         font-size: 1.8rem;
     }
 }
+
+/* Hungarian flag vertical text gradient with scrolling animation */
+@keyframes scrollGradient {
+    0% {
+        background-position: 0% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.hungarian-gradient-text,
+.hero-title.hungarian-gradient-text {
+    background: linear-gradient(
+        to bottom,
+        #C8102E 0%, #C8102E 17.5%, 
+        #FFFFFF 17.5%, #FFFFFF 32.5%, 
+        #43B02A 32.5%, #43B02A 50%,
+        #C8102E 50%, #C8102E 67.5%, 
+        #FFFFFF 67.5%, #FFFFFF 82.5%, 
+        #43B02A 82.5%, #43B02A 100%
+    );
+    background-size: 100% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #FFFFFF; /* Fallback for older browsers */
+    animation: scrollGradient 8s linear infinite;
+}

@@ -329,6 +329,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
+                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,16}$/;
+                    if (!passwordRegex.test(password)) {
+                        errorEl.textContent = "A jelszónak 8-16 karakter hosszúnak kell lennie, és tartalmaznia kell kisbetűt, nagybetűt, számot és speciális karaktert.";
+                        return;
+                    }
+
                     // Check for existing guest data to migrate
                     const guestKey = "neolix_guest_progress";
                     const guestDataRaw = localStorage.getItem(guestKey);
@@ -438,8 +444,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            if (password.length < 6) {
-                errorEl.textContent = "A jelszónak legalább 6 karakterből kell állnia!";
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,16}$/;
+            if (!passwordRegex.test(password)) {
+                errorEl.textContent = "A jelszónak 8-16 karakter hosszúnak kell lennie, és tartalmaznia kell kisbetűt, nagybetűt, számot és speciális karaktert.";
                 return;
             }
 
